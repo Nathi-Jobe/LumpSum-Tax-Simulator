@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lump Sum Tax Simulator</title>
+<meta name="description" content="Retiring, resigning or retrenched? See the tax on your retirement fund lump sum and what you keep, including the two-pot system (SARS 2026/27 tables).">
+<meta property="og:title" content="Lump Sum Tax Simulator">
+<meta property="og:description" content="Retire, cash out or preserve? See the tax on your retirement fund and what you keep.">
+
+<style>
+:root{
+  --ink:#14213d; --muted:#5b6475; --line:#dde2ea; --bg:#f4f7fa; --card:#ffffff;
+  --accent:#0b6b4f; --accent-ink:#ffffff; --soft:#e6f3ee; --warn:#fff6e0; --warn-line:#f0d9a0;
+  --wa:#1fa855; --bad:#b3261e;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#eef1f6; --muted:#a4adbd; --line:#2b3446; --bg:#0f1522; --card:#182033;
+    --accent:#2fb585; --accent-ink:#06231a; --soft:#133126; --warn:#2c2512; --warn-line:#5a4a1d; --bad:#ff8a80; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.55;padding-bottom:84px;padding-top:env(safe-area-inset-top,0px)}
+a{color:var(--accent)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+section{padding:26px 0 6px}
+h1{font-size:1.6rem;line-height:1.2;margin:0 0 8px}
+h2{font-size:1.3rem;margin:0 0 6px}
+h3{font-size:1.05rem;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 16px}
+.small{font-size:.85rem;color:var(--muted)}
+
+header{position:sticky;top:0;z-index:40;background:var(--card);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+header .wrap{display:flex;align-items:center;gap:14px;height:52px}
+.logo{flex:none;width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:800;display:grid;place-items:center}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:none;text-decoration:none;color:var(--ink);padding:8px 10px;border-radius:8px;font-size:.92rem;font-weight:600}
+nav a:hover{background:var(--soft)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.steps{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:10px}
+.steps li{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;display:grid;place-items:center;font-size:.9rem}
+.steps strong{display:block}
+.steps .d{color:var(--muted);font-size:.95rem}
+.opts{display:grid;gap:10px;margin-bottom:12px}
+.opt{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px}
+.opt.cash{border-left-color:#c2410c}
+.opt.sev{border-left-color:#1d4ed8}
+.opt p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--accent);margin-bottom:6px}
+.note{background:var(--warn);border:1px solid var(--warn-line);border-radius:12px;padding:12px 14px;font-size:.92rem;margin-bottom:12px}
+.warnbox{background:var(--warn);border:1px solid var(--warn-line);border-radius:10px;padding:10px 12px;font-size:.9rem;margin-top:10px}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 14px;margin-bottom:8px}
+summary{cursor:pointer;padding:14px 0;font-weight:600;min-height:44px}
+details p,details li{color:var(--muted);font-size:.95rem}
+details p{margin:0 0 12px}
+details ul{margin:0 0 12px;padding-left:20px}
+
+label.q{display:block;font-weight:700;margin:0 0 4px}
+.help{color:var(--muted);font-size:.9rem;margin:0 0 8px}
+.field{margin-bottom:20px}
+.sub{font-weight:600;font-size:.92rem;margin:10px 0 4px;display:block}
+.choices{display:grid;gap:8px}
+.choice{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:var(--card)}
+.choice input{margin-top:4px;accent-color:var(--accent);width:20px;height:20px;flex:none}
+.choice b{display:block}
+.choice span{color:var(--muted);font-size:.9rem}
+.choice:has(input:checked){border-color:var(--accent);background:var(--soft)}
+.money{display:flex;align-items:center;border:2px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.money:focus-within{border-color:var(--accent)}
+.money span{padding:0 4px 0 14px;font-weight:700;color:var(--muted);font-size:1.2rem}
+.money input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font-size:1.25rem;font-weight:700;padding:13px 14px 13px 4px;outline:none;font-family:inherit}
+.total{display:flex;justify-content:space-between;align-items:baseline;background:var(--soft);border-radius:12px;padding:12px 14px;margin-top:4px}
+.total b{font-size:1.5rem}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;margin-top:12px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--accent);flex:none;margin-top:2px}
+.hide{display:none}
+
+#result{display:none}
+.big{font-size:2rem;font-weight:800;line-height:1.1}
+.rows{margin:12px 0 0}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.row b{white-space:nowrap}
+.row.strong{background:var(--soft);margin:0 -16px;padding:10px 16px}
+.keep{background:var(--soft);border-radius:12px;padding:14px;margin-bottom:12px}
+.bar{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0 4px;display:flex}
+.bar i{display:block;height:100%}
+.bar .u{background:var(--muted)} .bar .t{background:var(--accent)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.cmp>div{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.88rem}
+.cmp>div>b{display:block;font-size:.95rem;margin-bottom:4px}
+.cmp span{display:flex;justify-content:space-between;gap:6px}
+
+.btns{display:grid;gap:10px;margin-top:14px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;padding:12px 16px;border-radius:12px;font-weight:700;font-size:1rem;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:inherit}
+.btn.book{background:var(--accent);color:var(--accent-ink)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:focus-visible,summary:focus-visible,nav a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.cta{background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:18px}
+
+.bar-fixed{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+.bar-fixed .btn{flex:1;min-height:48px;font-size:.95rem;padding:8px}
+@media(min-width:760px){ .bar-fixed{display:none} body{padding-bottom:30px} .btns{grid-template-columns:1fr 1fr} .opts{grid-template-columns:1fr 1fr 1fr} }
+footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
+@media print{ header,.bar-fixed,.btns,.noprint{display:none!important} body{padding:0;background:#fff;color:#000} }
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo" aria-hidden="true">R</div>
+    <nav aria-label="Sections">
+      <a href="#calculator">Simulator</a>
+      <a href="#how">How it works</a>
+      <a href="#options">Your options</a>
+      <a href="#tfsa">Tax-free</a>
+      <a href="#method">Method</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="intro">
+  <h1>Lump Sum Tax Simulator</h1>
+  <p class="lead">Retiring, resigning or retrenched? See roughly how much tax you could pay on your retirement fund, how much you keep, and what is left to buy an annuity. Works with the two-pot system. Nothing is saved or sent anywhere.</p>
+  <a class="btn book" href="#calculator">Start the simulator</a>
+</section>
+
+<section id="how">
+  <h2>How it works</h2>
+  <p class="lead">Four quick steps.</p>
+  <ol class="steps">
+    <li><div class="n">1</div><div><strong>Enter what is in your fund</strong><span class="d">Your fund statement shows up to three amounts: vested, savings and retirement. The simulator adds them up.</span></div></li>
+    <li><div class="n">2</div><div><strong>Say what you are doing</strong><span class="d">Retire, leave your job and take cash, or leave your job and preserve your fund.</span></div></li>
+    <li><div class="n">3</div><div><strong>Choose how much cash</strong><span class="d">When retiring, one third can usually be cash and the rest buys an annuity. You can take less.</span></div></li>
+    <li><div class="n">4</div><div><strong>Add earlier lump sums</strong><span class="d">Cash you took before affects the tax rate. Leave it at 0 if none. Then read your result.</span></div></li>
+  </ol>
+  <details>
+    <summary>Why is it not a flat percentage?</summary>
+    <p>Lump sums are taxed in bands. The first part is tax-free, and each higher part is taxed at a higher rate (18%, then 27%, then 36%). A bigger lump sum therefore has a higher overall percentage.</p>
+  </details>
+  <details>
+    <summary>What are the three pots in a two-pot fund?</summary>
+    <ul>
+      <li><b>Vested pot:</b> what you had saved up to 31 August 2024, plus its growth. The old rules still apply: cash on leaving your job, or up to one third in cash at retirement.</li>
+      <li><b>Savings pot:</b> one third of new contributions since 1 September 2024. You can withdraw from it once per tax year (at least R2,000) and it is taxed at your normal tax rate. At retirement the balance can be taken as cash.</li>
+      <li><b>Retirement pot:</b> two thirds of new contributions. It is locked until retirement and must buy an annuity (unless your fund is very small).</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Why does the simulator ask about earlier lump sums?</summary>
+    <p>SARS counts your lump sums over your whole lifetime, not one at a time. Earlier payouts have already used up the cheaper bands, so a new one can be taxed at higher rates.</p>
+  </details>
+</section>
+
+<section id="options">
+  <h2>Retiring or leaving your job? Know your options</h2>
+  <p class="lead">Your fund and your severance pay are two different things. Decide on each separately.</p>
+  <div class="opts">
+    <div class="opt">
+      <span class="tag">At retirement</span>
+      <h3>Cash plus annuity</h3>
+      <p>You can usually take up to one third of the vested pot, plus your savings pot, as cash. The rest buys an annuity that pays you a monthly income. You may take less cash if you prefer more income.</p>
+    </div>
+    <div class="opt cash">
+      <span class="tag" style="color:#c2410c;background:#fdeee3">Leaving your job</span>
+      <h3>Take cash now</h3>
+      <p>You can cash out your vested pot (taxed at 18% to 36%, only the first R27,500 is tax-free) and your savings pot (taxed at your normal rate). The retirement pot stays locked.</p>
+    </div>
+    <div class="opt sev">
+      <span class="tag" style="color:#1d4ed8;background:#e5edff">Leaving your job</span>
+      <h3>Preserve your fund</h3>
+      <p>Move your fund to a preservation fund or leave it where it is. No tax is paid now and it keeps growing. At retirement you get the better tax table, where the first R550,000 is tax-free.</p>
+    </div>
+  </div>
+  <div class="note">If you are retrenched, the severance package from your employer is separate from your fund and is taxed on the better table too. You can add it in the simulator. Leave pay, notice pay and bonuses are taxed as normal salary and are not included.</div>
+</section>
+
+<section id="calculator">
+  <h2>Simulator</h2>
+  <p class="lead">Answer the questions in order. The result appears at the bottom and updates as you type.</p>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div class="field">
+      <label class="q">1. What is in your fund?</label>
+      <p class="help">Find these three amounts on your fund statement or app. If your fund has not been split into pots, put the whole balance under vested.</p>
+
+      <span class="sub">Vested pot</span>
+      <div class="money"><span>R</span><input data-money id="v" inputmode="numeric" autocomplete="off" value="0" aria-label="Vested pot in rand"></div>
+      <span class="sub">Savings pot</span>
+      <div class="money"><span>R</span><input data-money id="s" inputmode="numeric" autocomplete="off" value="0" aria-label="Savings pot in rand"></div>
+      <span class="sub">Retirement pot</span>
+      <div class="money"><span>R</span><input data-money id="r" inputmode="numeric" autocomplete="off" value="0" aria-label="Retirement pot in rand"></div>
+
+      <div class="total"><span>Total in your fund</span><b id="totalFund">R0</b></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="field">
+      <label class="q" id="q2">2. What are you doing?</label>
+      <div class="choices" role="radiogroup" aria-labelledby="q2">
+        <label class="choice"><input type="radio" name="scn" value="retire" checked>
+          <div><b>I am retiring</b><span>Take some cash and buy an annuity with the rest.</span></div></label>
+        <label class="choice"><input type="radio" name="scn" value="cash">
+          <div><b>I am leaving my job and taking cash</b><span>Resigned or retrenched, and cashing out my fund.</span></div></label>
+        <label class="choice"><input type="radio" name="scn" value="preserve">
+          <div><b>I am leaving my job and preserving my fund</b><span>Keep it invested, no cash now.</span></div></label>
+      </div>
+
+      <div id="grpProv" class="check-wrap">
+        <label class="check"><input type="checkbox" id="prov">
+          <span>My fund is a provident fund and I was 55 or older on 1 March 2021. I can take my whole vested pot as cash. (Not sure? Ask your fund.)</span></label>
+      </div>
+
+      <div id="grpSev" class="hide" style="margin-top:14px">
+        <label class="q" for="sev">Severance package from your employer</label>
+        <p class="help">Only if you were retrenched. Type the rand amount before tax, excluding leave pay, notice pay and bonuses. Leave at 0 if none.</p>
+        <div class="money"><span>R</span><input data-money id="sev" inputmode="numeric" autocomplete="off" value="0" aria-label="Severance package in rand"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="field" id="grpAmt">
+      <label class="q" id="q3">3. How much cash do you want to take?</label>
+      <div class="total" style="margin:0 0 10px"><span id="maxLabel">Most you can take as cash</span><b id="maxCash">R0</b></div>
+      <p class="help" id="maxWhy"></p>
+      <div class="choices" role="radiogroup" aria-labelledby="q3">
+        <label class="choice"><input type="radio" name="cmode" value="max" checked>
+          <div><b id="lblMax">Take the maximum</b></div></label>
+        <label class="choice"><input type="radio" name="cmode" value="part">
+          <div><b>Take a smaller amount</b><span>Type how much cash you want. The rest stays in the fund or buys an annuity.</span></div></label>
+      </div>
+      <div id="partBox" class="hide" style="margin-top:10px">
+        <div class="money"><span>R</span><input data-money id="camt" inputmode="numeric" autocomplete="off" placeholder="Enter the cash amount you want" aria-label="Cash amount you want in rand"></div>
+      </div>
+    </div>
+
+    <div class="field hide" id="grpInc">
+      <label class="q" for="inc">Your yearly salary (before tax)</label>
+      <p class="help">Savings pot cash is taxed at your normal tax rate, so we need your yearly taxable income. Type the total for the year. Leave at 0 if you do not know.</p>
+      <div class="money"><span>R</span><input data-money id="inc" inputmode="numeric" autocomplete="off" value="0" aria-label="Yearly salary in rand"></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="field" style="margin-bottom:0">
+      <label class="q" for="prev">4. Lump sums you took before</label>
+      <p class="help">Add up cash you already received from a pension, provident or retirement annuity fund, or as a severance package. Leave it at 0 if you never took any.</p>
+      <div class="money"><span>R</span><input data-money id="prev" inputmode="numeric" autocomplete="off" value="0" aria-label="Total of earlier lump sums in rand"></div>
+      <details style="margin-top:10px">
+        <summary>What counts as an earlier lump sum?</summary>
+        <ul>
+          <li>Cash from a pension, provident or retirement annuity fund when you retired (since 1 October 2007).</li>
+          <li>Cash from a fund when you resigned or were retrenched (since 1 March 2009).</li>
+          <li>Severance packages from retrenchments (since 1 March 2011).</li>
+          <li>Enter the cash amount you received, not the tax you paid. Old payout letters, tax directives or IRP5s show it.</li>
+          <li>Savings pot withdrawals and transfers to another fund do not count.</li>
+        </ul>
+      </details>
+    </div>
+    <div id="warn"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" aria-live="polite">
+    <div class="card">
+      <div class="small" id="taxLbl">Estimated tax</div>
+      <div class="big" id="rTax">R0</div>
+      <div class="rows" id="rRows"></div>
+    </div>
+
+    <div class="keep">
+      <div class="small" id="netLbl">You would keep</div>
+      <div class="big" id="rNet" style="color:var(--accent)"></div>
+      <div class="small" id="netSub" style="margin-top:6px"></div>
+    </div>
+
+    <div class="card" id="barCard">
+      <h3>Your tax-free amount</h3>
+      <p class="small" id="freeTxt" style="margin:0"></p>
+      <div class="bar" aria-hidden="true"><i class="u" id="bU"></i><i class="t" id="bT"></i></div>
+      <div class="small"><span style="color:var(--muted)">&#9632;</span> used before &nbsp; <span style="color:var(--accent)">&#9632;</span> used by this lump sum</div>
+    </div>
+
+    <div class="card" id="cmpCard">
+      <h3 id="cmpTitle">Cash now or retire later?</h3>
+      <p class="small" style="margin:0" id="cmpSub"></p>
+      <div class="cmp" id="cmpBody"></div>
+      <p class="small" id="cmpTxt" style="margin-bottom:0"></p>
+    </div>
+
+    <div class="cta">
+      <h2>Want help making sense of this?</h2>
+      <p class="lead" style="margin-bottom:0">A financial adviser can explain what this means for you and what to do next. If you do not have one, book a time with me or send me a WhatsApp. Your numbers are included automatically.</p>
+      <div class="btns">
+        <a class="btn book" href="#" data-book target="_blank" rel="noopener">Book an appointment</a>
+        <a class="btn wa" href="#" data-wa target="_blank" rel="noopener">Send me a WhatsApp</a>
+        <button class="btn ghost noprint" type="button" onclick="window.print()">Save or print this result</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tfsa">
+  <h2>Your tax-free amount</h2>
+  <p class="lead">Everyone gets a lifetime tax-free allowance on lump sums. Using it wisely can save a lot of tax.</p>
+  <div class="card">
+    <p style="margin-top:0"><b>R550,000</b> for lump sums taken at retirement, and for severance packages, counted over your whole lifetime.</p>
+    <p><b>R27,500</b> for vested cash taken when you leave your job, counted over your lifetime.</p>
+    <p style="margin-bottom:0"><b>No tax-free amount</b> for savings pot withdrawals. They are added to your income and taxed at your normal rate.</p>
+  </div>
+  <div class="note">Cashing out when you leave your job can use up part of the R550,000 you may prefer to keep for retirement. Speak to an adviser before you cash out.</div>
+</section>
+
+<section id="method">
+  <h2>Method</h2>
+  <p class="lead">SARS tables for the 2026/27 tax year (1 March 2026 to 28 February 2027). The lump sum tables have not changed since 1 March 2023.</p>
+
+  <details>
+    <summary>What each choice does in the simulator</summary>
+    <ul>
+      <li><b>Retire:</b> maximum cash is the savings pot plus one third of the vested pot. The retirement pot and the rest of the vested pot buy an annuity. If your retirement pot plus two thirds of your vested pot is R165,000 or less, you may take everything as cash.</li>
+      <li><b>Leave and take cash:</b> you can reach your vested and savings pots. The retirement pot stays locked. A smaller amount is taken from the vested pot first, then the savings pot. A severance package is assumed to be received first.</li>
+      <li><b>Leave and preserve:</b> no tax today. The simulator shows what you could take if you retired later, using today's balances and ignoring growth.</li>
+    </ul>
+  </details>
+  <details open>
+    <summary>Retirement and severance table</summary>
+    <ul>
+      <li>R0 to R550,000: 0%</li>
+      <li>R550,001 to R770,000: 18% of the amount above R550,000</li>
+      <li>R770,001 to R1,155,000: R39,600 plus 27% above R770,000</li>
+      <li>Above R1,155,000: R143,550 plus 36% above R1,155,000</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Vested cash when leaving your job (withdrawal table)</summary>
+    <ul>
+      <li>R0 to R27,500: 0%</li>
+      <li>R27,501 to R726,000: 18% of the amount above R27,500</li>
+      <li>R726,001 to R1,089,000: R125,730 plus 27% above R726,000</li>
+      <li>Above R1,089,000: R223,740 plus 36% above R1,089,000</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Savings pot withdrawals (income tax table)</summary>
+    <p>Taxed as extra income. The simulator works out the tax on your salary with and without the withdrawal, using the 2026/27 brackets (18%, 26%, 31%, 36%, 39%, 41%, 45%) and the R17,820 primary rebate. Age rebates and other deductions are ignored.</p>
+  </details>
+  <details>
+    <summary>How the lump sum tax is worked out</summary>
+    <p>Your earlier lump sums are added to the new one and the table is applied to the total. The tax on the earlier lump sums alone is then subtracted. The difference is the tax on this lump sum. This is the cumulative method SARS uses.</p>
+  </details>
+  <details>
+    <summary>What this simulator does not cover</summary>
+    <ul>
+      <li>Leave pay, notice pay and bonuses (taxed as salary).</li>
+      <li>The tax on monthly annuity income.</li>
+      <li>Fund-specific rules, tax directives, age rebates and your other income.</li>
+    </ul>
+  </details>
+</section>
+
+<section id="sources">
+  <h2>Sources</h2>
+  <ul class="small" style="padding-left:20px">
+    <li><a href="https://www.sars.gov.za/types-of-tax/retirement-lump-sum-benefits/" target="_blank" rel="noopener">SARS: Retirement lump sum benefits</a></li>
+    <li><a href="https://www.sars.gov.za/tax-rates/income-tax/rates-of-tax-for-individuals/" target="_blank" rel="noopener">SARS: Rates of tax for individuals</a></li>
+    <li><a href="https://www.sars.gov.za/lapd-it-g03-guide-on-the-calculation-of-the-tax-payable-on-lump-sum-benefits" target="_blank" rel="noopener">SARS: Guide on the calculation of tax payable on lump sum benefits</a></li>
+    <li><a href="https://www.treasury.gov.za/2024%20Two-Pot%20System%20-%20FAQ.pdf" target="_blank" rel="noopener">National Treasury: Two-pot system FAQ</a></li>
+    <li>National Treasury and SARS Budget 2026 Tax Guide</li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>Important:</b> This simulator gives an estimate for information only. It is not financial, tax or legal advice. Fund rules differ, and your actual tax is confirmed by SARS through your fund or employer's tax directive and depends on your full situation.</p>
+  <p>Nathi Sithole, Financial Adviser. Code: 236694</p>
+</footer>
+
+</main>
+
+<div class="bar-fixed" role="complementary" aria-label="Contact Nathi">
+  <a class="btn book" href="#" data-book target="_blank" rel="noopener">Book</a>
+  <a class="btn wa" href="#" data-wa target="_blank" rel="noopener">WhatsApp</a>
+</div>
+
+<script>
+/* ========================= EDIT ME ========================= */
+var WHATSAPP_NUMBER = "27XXXXXXXXX";  /* your number, international format, no + or spaces. 0821234567 becomes 27821234567 */
+var BOOKING_URL     = "https://absa.profileme.app/nathisithole";
+/* =========================================================== */
+
+/* ===== CALCULATIONS (2026/27). Table rows: [from, base tax, rate] ===== */
+var RET = [[0,0,0],[550000,0,0.18],[770000,39600,0.27],[1155000,143550,0.36]];
+var WDR = [[0,0,0],[27500,0,0.18],[726000,125730,0.27],[1089000,223740,0.36]];
+var INC = [[0,0,0.18],[245100,44118,0.26],[383100,79998,0.31],[530200,125599,0.36],[695800,185215,0.39],[887000,259783,0.41],[1878600,666339,0.45]];
+var REBATE = 17820, DEMIN = 165000, FREE = {ret:550000, wdr:27500};
+
+function taxOn(t,x){ var b=t[0]; for (var i=0;i<t.length;i++){ if (x>=t[i][0]) b=t[i]; } return b[1]+b[2]*(x-b[0]); }
+function lumpTax(t,prev,amt){ return amt>0 ? taxOn(t,prev+amt)-taxOn(t,prev) : 0; }
+function incTax(i){ return Math.max(0, taxOn(INC,i)-REBATE); }
+
+/* Retiring: cash + annuity */
+function retireCalc(p, prev, mode, amt, prov){
+  var total = p.v+p.s+p.r;
+  var dem = total>0 && (p.r + p.v*2/3) <= DEMIN;
+  var max = dem ? total : p.s + (prov ? p.v : p.v/3);
+  var cash = mode==="max" ? max : Math.min(amt,max);
+  var tax = lumpTax(RET, prev, cash);
+  return {total:total, dem:dem, max:max, cash:cash, tax:tax, net:cash-tax, annuity:total-cash, over:(mode!=="max" && amt>max)};
+}
+/* Leaving job: cash from vested then savings. Retirement pot locked */
+function cashCalc(p, prev, mode, amt, inc){
+  var acc = p.v+p.s;
+  var x = mode==="max" ? acc : Math.min(amt,acc);
+  var fromV = Math.min(x,p.v), fromS = x-fromV;
+  var taxV = lumpTax(WDR, prev, fromV);
+  var taxS = fromS>0 ? incTax(inc+fromS)-incTax(inc) : 0;
+  return {acc:acc, x:x, fromV:fromV, fromS:fromS, taxV:taxV, taxS:taxS, tax:taxV+taxS, net:x-taxV-taxS, left:acc-x, locked:p.r, over:(mode!=="max" && amt>acc)};
+}
+
+/* ===== PAGE ===== */
+var $ = function(id){ return document.getElementById(id); };
+function num(el){ return parseInt((el.value||"").replace(/\D/g,""),10) || 0; }
+function fmtInput(el){ var v=(el.value||"").replace(/\D/g,""); el.value = v ? Number(v).toLocaleString("en-ZA").replace(/\u00a0/g," ") : ""; }
+function R(n){ return "R" + Math.round(n).toLocaleString("en-ZA").replace(/\u00a0/g," "); }
+function pct(a,b){ return b>0 ? (a/b*100).toFixed(1)+"%" : "0%"; }
+function radio(name){ var r=document.querySelector('input[name="'+name+'"]:checked'); return r?r.value:""; }
+function show(id,on){ $(id).classList.toggle("hide",!on); }
+function row(l,v,strong){ return '<div class="row'+(strong?' strong':'')+'"><span>'+l+'</span><b>'+v+'</b></div>'; }
+
+var SCN_NAME = {retire:"Retiring", cash:"Leaving my job and taking cash", preserve:"Leaving my job and preserving my fund"};
+
+function update(){
+  var p = {v:num($("v")), s:num($("s")), r:num($("r"))};
+  var total = p.v+p.s+p.r, prev=num($("prev")), sev=num($("sev")), inc=num($("inc")), camt=num($("camt"));
+  var scn = radio("scn"), cmode = radio("cmode"), prov = $("prov").checked;
+  $("totalFund").textContent = R(total);
+
+  /* show/hide inputs */
+  show("grpProv", scn==="retire");
+  show("grpSev", scn!=="retire");
+  show("grpAmt", scn!=="preserve");
+  show("grpInc", scn!=="retire" && p.s>0);
+  show("partBox", cmode==="part" && scn!=="preserve");
+
+  var warns = [];
+  var rows = "", taxToday = 0, netToday = 0, msg = "";
+  var bar = null, cmp = null;
+  var taxSev = (scn!=="retire" && sev>0) ? lumpTax(RET, prev, sev) : 0;
+  var p2 = prev + (scn!=="retire" ? sev : 0);
+
+  if (!total && !sev){ $("result").style.display="none"; $("warn").innerHTML=""; setLinks(defaultMsg()); return; }
+
+  if (scn==="retire"){
+    var c = retireCalc(p, prev, cmode, camt, prov);
+    $("maxLabel").textContent = "Most you can take as cash";
+    $("maxCash").textContent = R(c.max);
+    $("lblMax").textContent = "Take the maximum cash (" + R(c.max) + ")";
+    $("maxWhy").textContent = c.dem
+      ? "Your fund is small enough (retirement pot plus two thirds of vested is R165,000 or less), so you may take all of it as cash."
+      : "That is your savings pot (" + R(p.s) + ") plus " + (prov ? "your whole" : "one third of your") + " vested pot (" + R(prov?p.v:p.v/3) + "). Your retirement pot (" + R(p.r) + ")" + (prov ? "" : " and the other two thirds of the vested pot") + " must buy an annuity.";
+    if (c.over) warns.push("You typed more than the maximum, so the simulator used " + R(c.max) + ".");
+    taxToday = c.tax; netToday = c.net;
+    $("taxLbl").textContent = "Estimated tax on your cash lump sum";
+    $("netLbl").textContent = "Cash you would keep";
+    $("netSub").textContent = c.annuity > 0 ? R(c.annuity) + " would buy an annuity that pays you a monthly income." : "Nothing is left for an annuity.";
+    rows = row("Total in your fund", R(c.total)) + row("Cash lump sum (before tax)", R(c.cash)) +
+           row("Tax on the cash", R(c.tax)) + row("Effective tax rate", pct(c.tax,c.cash)) +
+           row("Buys an annuity", R(c.annuity), true);
+    bar = {t:RET, prev:prev, amt:c.cash, free:FREE.ret};
+    msg = "Situation: Retiring\nFund total: "+R(c.total)+"\nCash taken: "+R(c.cash)+"\nTax: "+R(c.tax)+"\nCash I keep: "+R(c.net)+"\nAnnuity: "+R(c.annuity);
+  }
+
+  if (scn==="cash"){
+    var k = cashCalc(p, p2, cmode, camt, inc);
+    $("maxLabel").textContent = "Most you can take as cash";
+    $("maxCash").textContent = R(k.acc);
+    $("lblMax").textContent = "Take everything I can (" + R(k.acc) + ")";
+    $("maxWhy").textContent = "That is your vested pot (" + R(p.v) + ") plus your savings pot (" + R(p.s) + ")." + (p.r>0 ? " Your retirement pot (" + R(p.r) + ") is locked until retirement and stays invested." : "");
+    if (k.over) warns.push("You typed more than you can reach, so the simulator used " + R(k.acc) + ".");
+    if (k.fromS>0 && k.fromS<2000) warns.push("A savings pot withdrawal must be at least R2,000, and you can make only one per tax year.");
+    if (k.fromS>0 && inc===0) warns.push("Add your yearly salary above for a better estimate of the tax on the savings pot cash.");
+    taxToday = taxSev + k.tax; netToday = sev - taxSev + k.net;
+    $("taxLbl").textContent = "Estimated total tax today";
+    $("netLbl").textContent = "Cash you would keep";
+    $("netSub").textContent = (k.locked + k.left) > 0 ? R(k.locked + k.left) + " stays in your fund." : "";
+    rows = "";
+    if (sev>0) rows += row("Severance package", R(sev)) + row("Tax on severance", R(taxSev));
+    rows += row("Cash from vested pot", R(k.fromV)) + row("Tax on vested cash", R(k.taxV));
+    if (p.s>0) rows += row("Cash from savings pot", R(k.fromS)) + row("Tax on savings cash", R(k.taxS));
+    rows += row("Total cash (before tax)", R(sev + k.x)) + row("Effective tax rate", pct(taxToday, sev + k.x));
+    if (k.locked + k.left > 0) rows += row("Stays in your fund", R(k.locked + k.left), true);
+    if (k.fromV>0) bar = {t:WDR, prev:p2, amt:k.fromV, free:FREE.wdr};
+    else if (sev>0) bar = {t:RET, prev:prev, amt:sev, free:FREE.ret};
+    var later = retireCalc(p, p2, "max", 0, prov);
+    cmp = {title:"Cash now or retire later?",
+      sub:"Today's balances, ignoring growth. The amounts are different, so look at the tax on each.",
+      a:{h:"Cash out now", cash:k.x, tax:k.tax, extra:null},
+      b:{h:"Preserve, retire later", cash:later.cash, tax:later.tax, extra:["Annuity", later.annuity]},
+      txt:"Cashing out gives you money now but you pay more tax per rand and you lose retirement income. Preserving keeps the money growing and uses the better tax table."};
+    msg = "Situation: Leaving my job, taking cash\nFund total: "+R(total)+"\nCash taken: "+R(sev+k.x)+"\nTotal tax: "+R(taxToday)+"\nCash I keep: "+R(netToday);
+  }
+
+  if (scn==="preserve"){
+    taxToday = taxSev; netToday = sev - taxSev;
+    var now = cashCalc(p, p2, "max", 0, inc);
+    var lat = retireCalc(p, p2, "max", 0, prov);
+    $("taxLbl").textContent = sev>0 ? "Estimated tax today (on severance)" : "Tax today";
+    $("netLbl").textContent = sev>0 ? "Severance you would keep" : "Fund preserved";
+    $("netSub").textContent = "";
+    rows = row("Moved to a preservation fund", R(total)) + row("Tax on the transfer", "R0");
+    if (sev>0) rows += row("Severance package", R(sev)) + row("Tax on severance", R(taxSev));
+    rows += row("Keeps growing in your fund", R(total), true);
+    if (sev>0) bar = {t:RET, prev:prev, amt:sev, free:FREE.ret};
+    else bar = null;
+    if (sev===0) $("rNet").dataset.pres = "1"; else delete $("rNet").dataset.pres;
+    cmp = {title:"Cash now or retire later?",
+      sub:"Today's balances, ignoring growth. Shows what you give up or gain by waiting.",
+      a:{h:"If you cashed out now", cash:now.x, tax:now.tax, extra:null},
+      b:{h:"If you retire later", cash:lat.cash, tax:lat.tax, extra:["Annuity", lat.annuity]},
+      txt:"Preserving avoids tax today. At retirement you can take cash on the better table and get a monthly income for the rest."};
+    if (p.s>0) warns.push("While preserved you can still make one savings pot withdrawal per tax year (at least R2,000), taxed at your normal rate. Rules differ by fund.");
+    msg = "Situation: Leaving my job, preserving my fund\nFund total: "+R(total)+"\nTax today: "+R(taxToday);
+  }
+
+  /* headline numbers */
+  $("rTax").textContent = R(taxToday);
+  $("rRows").innerHTML = rows;
+  $("rNet").textContent = (scn==="preserve" && sev===0) ? R(total) : R(netToday);
+
+  /* tax-free bar */
+  show("barCard", !!bar);
+  if (bar){
+    var fb = Math.max(0, bar.free - bar.prev), used = Math.min(bar.amt, fb), left = fb - used;
+    $("bU").style.width = (Math.min(bar.prev, bar.free)/bar.free*100) + "%";
+    $("bT").style.width = (used/bar.free*100) + "%";
+    $("freeTxt").textContent = fb===0
+      ? "Your " + R(bar.free) + " tax-free amount is already used up by earlier lump sums."
+      : "You have " + R(fb) + " of your " + R(bar.free) + " tax-free amount available. This lump sum uses " + R(used) + ", leaving " + R(left) + ".";
+  }
+
+  /* comparison */
+  show("cmpCard", !!cmp);
+  if (cmp){
+    $("cmpTitle").textContent = cmp.title; $("cmpSub").textContent = cmp.sub; $("cmpTxt").textContent = cmp.txt;
+    var box = function(o){ return '<div><b>'+o.h+'</b><span>Cash<em style="font-style:normal">'+R(o.cash)+'</em></span><span>Tax<em style="font-style:normal">'+R(o.tax)+'</em></span><span>Rate<em style="font-style:normal">'+pct(o.tax,o.cash)+'</em></span>'+(o.extra?'<span>'+o.extra[0]+'<em style="font-style:normal">'+R(o.extra[1])+'</em></span>':'')+'</div>'; };
+    $("cmpBody").innerHTML = box(cmp.a) + box(cmp.b);
+  }
+
+  $("warn").innerHTML = warns.map(function(w){ return '<div class="warnbox">'+w+'</div>'; }).join("");
+  $("result").style.display = "block";
+
+  setLinks("Hi Nathi, I used your Lump Sum Tax Simulator and would like some guidance.\n\n" + msg +
+    "\nVested: "+R(p.v)+", Savings: "+R(p.s)+", Retirement: "+R(p.r)+"\nEarlier lump sums: "+R(prev));
+}
+
+function defaultMsg(){ return "Hi Nathi, I used your Lump Sum Tax Simulator and would like some guidance."; }
+function setLinks(m){
+  var wa = (WHATSAPP_NUMBER.indexOf("X")>-1 ? "https://wa.me/" : "https://wa.me/"+WHATSAPP_NUMBER) + "?text=" + encodeURIComponent(m);
+  [].forEach.call(document.querySelectorAll("[data-wa]"), function(a){ a.href = wa; });
+  [].forEach.call(document.querySelectorAll("[data-book]"), function(a){ a.href = BOOKING_URL; });
+}
+
+[].forEach.call(document.querySelectorAll("[data-money]"), function(el){
+  el.addEventListener("input", function(){ fmtInput(this); update(); });
+  el.addEventListener("focus", function(){ if (this.value==="0") this.select(); });
+  el.addEventListener("blur",  function(){ if (!this.value && this.id!=="camt") { this.value="0"; update(); } });
+});
+[].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#prov'), function(r){ r.addEventListener("change", update); });
+update();
+</script>
+</body>
+</html>
