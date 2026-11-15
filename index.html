@@ -3,21 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121212">
+<script>(function(){var t;try{t=localStorage.getItem("lsts-theme")}catch(e){}if(!/^(graphite|slate|stone)$/.test(t||""))t="graphite";document.documentElement.setAttribute("data-theme",t)})()</script>
 <title>Lump Sum Tax Simulator</title>
 <meta name="description" content="Retiring, resigning or retrenched? See the tax on your retirement fund lump sum and what you keep, including the two-pot system (SARS 2026/27 tables).">
 <meta property="og:title" content="Lump Sum Tax Simulator">
 <meta property="og:description" content="Retire, cash out or preserve? See the tax on your retirement fund and what you keep.">
 
 <style>
-:root{
-  --ink:#14213d; --muted:#5b6475; --line:#dde2ea; --bg:#f4f7fa; --card:#ffffff;
-  --accent:#0b6b4f; --accent-ink:#ffffff; --soft:#e6f3ee; --warn:#fff6e0; --warn-line:#f0d9a0;
-  --wa:#1fa855; --bad:#b3261e;
-}
-@media (prefers-color-scheme: dark){
-  :root{ --ink:#eef1f6; --muted:#a4adbd; --line:#2b3446; --bg:#0f1522; --card:#182033;
-    --accent:#2fb585; --accent-ink:#06231a; --soft:#133126; --warn:#2c2512; --warn-line:#5a4a1d; --bad:#ff8a80; }
-}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -139,6 +132,82 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 #requestStatus{padding:12px;border-radius:10px;line-height:1.45}
 #requestStatus.status-error{border:2px solid var(--bad);font-weight:700}
 #requestStatus.status-sending{border:1px solid var(--line);font-weight:600}
+
+/* ===== THEMES (switch with data-theme on <html>) ===== */
+:root,[data-theme=graphite]{--ink:#fff;--muted:#a1a1aa;--line:#2b2b2e;--bg:#121212;--card:#1c1c1e;--accent:#1f7a55;--gtext:#3fa07a;--rfill:#b3382c;--soft:#1b2a24;--wa:#1f7a55;--hdr:rgba(18,18,18,.92);--hero:linear-gradient(160deg,#1f2a25,#1c1c1e 70%);--shadow:0 8px 24px rgba(0,0,0,.35);--accent-ink:#fff;--warn:#2a2412;--warn-line:#5a4a1d;--wa-ink:#fff;--bad:#ff8a80;--c2:#fb923c;--c3:#8ab4ff;--r:18px;--lr:12px;--chip:#e5e7eb;--chip-ink:#111;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+[data-theme=slate]{--ink:#fff;--muted:#9ca3af;--line:#374151;--bg:#111827;--card:#1f2937;--accent:#1d7a5a;--gtext:#3ba383;--rfill:#a8372c;--soft:#1a2f2e;--wa:#1d7a5a;--hdr:rgba(17,24,39,.92);--hero:linear-gradient(160deg,#1d3a3a,#1f2937 70%);--shadow:0 8px 24px rgba(0,0,0,.35);--accent-ink:#fff;--warn:#2a2412;--warn-line:#5a4a1d;--wa-ink:#fff;--bad:#ff8a80;--c2:#fb923c;--c3:#8ab4ff;--r:18px;--lr:12px;--chip:#e5e7eb;--chip-ink:#111;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+[data-theme=stone]{--ink:#111;--muted:#4b5563;--line:#d1d5db;--bg:#f3f4f6;--card:#fff;--accent:#1b6b4a;--gtext:#1b6b4a;--rfill:#a63228;--soft:#e6f1ec;--wa:#1b6b4a;--hdr:rgba(255,255,255,.92);--hero:linear-gradient(160deg,#e6f1ec,#fff 75%);--shadow:0 1px 2px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.07);--accent-ink:#fff;--warn:#fff6e0;--warn-line:#efd89a;--wa-ink:#fff;--bad:#b3261e;--c2:#c2410c;--c3:#1d4ed8;--r:18px;--lr:12px;--chip:#e5e7eb;--chip-ink:#111;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+
+/* ===== MOBILE-FIRST POLISH ===== */
+html{-webkit-text-size-adjust:100%}
+body{font-size:16px;padding-bottom:140px;transition:background .25s,color .25s;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,.big{font-family:var(--hf)}
+h1{font-size:clamp(1.75rem,7.5vw,2.3rem);letter-spacing:-.02em}
+h2{font-size:clamp(1.3rem,5.4vw,1.65rem)}
+header{background:var(--hdr);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px)}
+header .wrap{height:58px}
+nav{min-width:0}
+.logo{border-radius:var(--lr)}
+#intro{background:var(--hero);border:1px solid var(--line);border-radius:calc(var(--r) + 6px);padding:22px 18px;margin-top:14px;box-shadow:var(--shadow)}
+.card,.steps li,.opt,details,.cta,.keep,.note,.choice,.money,.form-select,.ctl,.warnbox,.release-block{border-radius:var(--r)}
+.card,.steps li,.opt,details,.cta{box-shadow:var(--shadow)}
+.btn{border-radius:var(--r);min-height:54px;transition:transform .08s}
+.btn:active{transform:scale(.98)}
+.btn.wa{background:var(--wa);color:var(--wa-ink)}
+.choice{min-height:60px;transition:border-color .15s,background .15s}
+.choice input{width:22px;height:22px}
+.money{min-height:56px}
+.money input,.form-select,.ctl{font-size:16px}
+.ctl{display:block;width:100%;padding:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;margin:8px 0 4px}
+.ctl:focus,.form-select:focus{outline:none;border-color:var(--accent)}
+.card>.field{padding-bottom:20px;border-bottom:1px dashed var(--line)}
+.opt.cash{border-left-color:var(--c2)}.opt.sev{border-left-color:var(--c3)}
+.tag.t2{color:var(--c2);background:color-mix(in srgb,var(--c2) 14%,transparent)}
+.tag.t3{color:var(--c3);background:color-mix(in srgb,var(--c3) 14%,transparent)}
+.keep{background:var(--accent);color:var(--accent-ink);padding:18px;box-shadow:var(--shadow)}
+.keep .small{color:inherit;opacity:.9}
+.keep .big{font-size:2.3rem}
+.bar{height:14px}
+.themebtn{flex:none;margin-left:auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.15rem;cursor:pointer}
+.themebtn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+dialog#themeSheet{border:0;padding:0;background:var(--card);color:var(--ink);width:100%;max-width:560px;margin:auto auto 0;border-radius:24px 24px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+dialog#themeSheet::backdrop{background:rgba(0,0,0,.5)}
+@media(min-width:760px){dialog#themeSheet{margin:auto;border-radius:24px}}
+.sheet{padding:20px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.tcard{position:relative;display:flex;gap:14px;align-items:center;border:2px solid var(--line);border-radius:var(--r);padding:12px;margin:10px 0;cursor:pointer;min-height:76px}
+.tcard input{position:absolute;opacity:0;pointer-events:none}
+.tcard:has(input:checked){border-color:var(--accent);background:var(--soft)}
+.tcard:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.tcard b{display:block}.tcard .d{color:var(--muted);font-size:.9rem}
+.sw{flex:none;display:flex;width:68px;height:48px;border-radius:12px;overflow:hidden;border:1px solid rgba(128,128,128,.45)}
+.sw i{flex:1}
+#liveBar{display:none}
+@media(max-width:759px){
+ #liveBar{position:fixed;left:12px;right:12px;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:49;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;border:0;border-radius:99px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:translateY(160%);opacity:0;pointer-events:none;transition:transform .25s,opacity .25s}
+ #liveBar.on{transform:none;opacity:1;pointer-events:auto}
+ #liveBar small{display:block;font-weight:600;opacity:.9;font-size:.74rem;line-height:1.2}
+ #liveBar b{font-size:1.2rem;white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.keep{background:#fff!important;color:#000!important}.keep .small{color:#000}#liveBar,.themebtn,#themeSheet{display:none!important}}
+
+/* ===== v2: darker palette, chips, split bar, info popovers ===== */
+a,.tag,h2{color:var(--gtext)}
+h2{font-weight:800}
+.keep{background:var(--card);color:var(--ink);border:2px solid var(--accent)}
+.keep .big,.big{color:var(--ink)}
+.splitlbl{display:flex;justify-content:space-between;font-weight:700;font-size:.9rem}
+.split{display:flex;height:48px;border-radius:99px;overflow:hidden;margin:8px 0 2px;gap:2px;background:var(--line)}
+.split>div{display:flex;align-items:center;justify-content:center;min-width:88px;padding:0 6px}
+#spN{background:var(--accent)}#spT{background:var(--rfill)}
+.chip{background:var(--chip);color:var(--chip-ink);font-weight:800;border-radius:99px;padding:5px 11px;font-size:.92rem;white-space:nowrap}
+.moved{display:none!important}.info{flex:none}
+.info{position:relative;width:44px;height:44px;margin:-12px -8px -12px 2px;padding:0;border:0;background:none;color:var(--gtext);cursor:pointer;vertical-align:middle}
+.info::before{content:"i";position:absolute;inset:11px;border:2px solid currentColor;border-radius:50%;display:grid;place-items:center;font:700 .85rem Georgia,serif}
+.info:focus-visible{outline:3px solid var(--gtext);border-radius:50%}
+#tip{position:fixed;z-index:90;display:none;max-width:min(320px,calc(100vw - 24px));background:var(--card);color:var(--ink);border:1px solid var(--gtext);border-radius:14px;padding:12px 14px;font-size:.9rem;line-height:1.45;box-shadow:var(--shadow)}
+#tip b{color:var(--ink)}
+@media print{#tip,.info{display:none!important}.moved{display:block!important}#splitCard{display:none!important}}
 </style>
 </head>
 
@@ -153,7 +222,9 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
       <a href="#tfsa">Tax-free</a>
       <a href="#method">Method</a>
       <a href="#sources">Sources</a>
+       <a href="#appointment-request">Contact</a>
     </nav>
+    <button class="themebtn" type="button" id="themeBtn" aria-label="Change appearance" aria-haspopup="dialog">&#127912;</button>
   </div>
 </header>
 
@@ -161,9 +232,12 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 
 <section id="intro">
   <h1>Lump Sum Tax Simulator</h1>
-  <p class="lead">Explore estimated cash, lump-sum tax and preservation options under the 2026/27 SARS tables. This is an educational estimate—not a SARS tax directive or a substitute for personalised advice. Your calculations run in this browser. Nothing is sent to the adviser automatically. If you request a consultation, only the contact details you submit are sent through the booking service. If you deliberately include a result in a WhatsApp message, that summary will be shared when you send it.</p>
+  <p class="lead">Explore estimated cash, lump-sum tax and preservation options under the 2026/27 SARS tables. An educational estimate, not a SARS tax directive or personalised advice.</p>
+  <details><summary>How your information is handled</summary><p>Your calculations run in this browser. Nothing is sent to the adviser automatically. If you request a consultation, only the contact details you submit are sent through the booking service. If you deliberately include a result in a WhatsApp message, that summary will be shared when you send it.</p></details>
   <div class="note" role="note"><b>Important:</b> Results are illustrative, not a SARS tax directive or confirmation that a fund will permit the selected withdrawal. Previous lump sums, fund-specific vested rights and savings-component access may materially change the result. Verify the figures before making a financial decision.</div>
   <a class="btn book" href="#calculator">Start the simulator</a>
+  <a class="btn ghost" href="#appointment-request" style="margin-top:10px">Request personal guidance</a>
+   <button class="btn ghost" type="button" id="themeBtn2" style="width:100%;margin-top:10px">&#127912; Choose your look</button>
 </section>
 
 <section id="how">
@@ -203,12 +277,12 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
       <p>You can usually take the savings component, one-third of non-protected vested benefits, and any confirmed protected provident rights in cash. Small-benefit exceptions and fund rules may change the result.</p>
     </div>
     <div class="opt cash">
-      <span class="tag" style="color:#c2410c;background:#fdeee3">Leaving your job</span>
+      <span class="tag t2">Leaving your job</span>
       <h3>Take cash now</h3>
       <p>Depending on your fund and exit rules, vested-component cash generally uses the withdrawal lump-sum table, while any savings-component withdrawal uses normal income tax. The retirement component is generally preserved.</p>
     </div>
     <div class="opt sev">
-      <span class="tag" style="color:#1d4ed8;background:#e5edff">Leaving your job</span>
+      <span class="tag t3">Leaving your job</span>
       <h3>Preserve your fund</h3>
       <p>An eligible tax-neutral transfer can preserve retirement savings. Retirement lump-sum tax is calculated under a different table; the first R550,000 may be tax-free only if prior relevant lump sums have not used it up.</p>
     </div>
@@ -345,6 +419,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 
   <!-- RESULT -->
   <div id="result" aria-live="polite">
+    <div class="card" id="splitCard"><div class="splitlbl"><span>Net cash</span><span>SARS tax</span></div><div class="split"><div id="spN"><span class="chip" id="chN"></span></div><div id="spT"><span class="chip" id="chT"></span></div></div></div>
     <div class="card">
       <div class="small" id="taxLbl">Estimated tax</div>
       <div class="big" id="rTax">R0</div>
@@ -353,7 +428,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 
     <div class="keep">
       <div class="small" id="netLbl">You would keep</div>
-      <div class="big" id="rNet" style="color:var(--accent)"></div>
+      <div class="big" id="rNet"></div>
       <div class="small" id="netSub" style="margin-top:6px"></div>
     </div>
 
@@ -380,7 +455,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
         <button class="btn ghost noprint" type="button" onclick="window.print()">Save or print this result</button>
       </div>
       <label class="check hide" id="shareSummaryRow"><input id="shareSummary" type="checkbox"><span><b>Optional:</b> include my estimated cash and tax figures in the pre-filled WhatsApp message. I understand that the message will be shared with WhatsApp and the adviser <b>only if I choose to send it</b>.</span></label>
-      <p id="contact" class="small">The appointment-request form below sends only the contact and scheduling details you enter. It does not send your pot balances or simulator results. Requests are not confirmed appointments. Direct WhatsApp becomes available when the adviser verifies their number; otherwise email is available.</p>
+      <p id="contact" class="small">The appointment-request form below sends only the contact and scheduling details you enter. It does not send your pot balances or simulator results. Requests are not confirmed appointments. The WhatsApp action becomes available after the adviser confirms their WhatsApp Business number. Until then, the contact button opens your email app. Appointment requests are processed by Formspree, not by WhatsApp.</p>
     </div>
   </div>
 </section>
@@ -388,6 +463,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 <section id="appointment-request" class="noprint">
   <h2>Request a consultation</h2>
   <p class="lead">Choose how you would like to be contacted and suggest a convenient time. This is an appointment <b>request</b>, not a confirmed booking. I will contact you using your preferred method to agree the time.</p>
+   <p class="help">Prefer not to complete a form? <a id="directEmail" href="mailto:nathis6040@gmail.com?subject=Lump%20Sum%20Tax%20Simulator%20enquiry">Email the adviser directly</a>. Please avoid sending confidential records or identity numbers. Emailing does not confirm an appointment.</p>
   <div id="bookingSuccess" class="card booking-success hide" role="status" aria-live="polite" tabindex="-1">
     <h3>✓ Appointment request sent successfully</h3>
     <p><strong>Your request was accepted by our appointment service.</strong></p>
@@ -397,13 +473,13 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
   </div>
   <div class="card" id="bookingFormCard">
     <form id="appointmentForm" method="POST" action="https://formspree.io/f/xpppgvrv" autocomplete="on">
-      <div class="field"><label class="q" for="requestName">Your name</label><input id="requestName" required maxlength="100" autocomplete="name" style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"></div>
-      <div class="field"><label class="q" for="requestContact">Cellphone number (for WhatsApp or calls)</label><input id="requestContact" required type="tel" maxlength="25" autocomplete="tel" placeholder="e.g. 082 123 4567" style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"></div>
-      <div class="field"><label class="q" for="requestChannel">How would you prefer me to contact you?</label><p class="help">Choose one. This is separate from how you want to have the consultation.</p><select id="requestChannel" required style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"><option value="">Select your preferred contact method</option><option value="WhatsApp message">WhatsApp message</option><option value="Phone call">Phone call</option><option value="Email">Email</option></select></div>
-      <div class="field hide" id="requestEmailBox"><label class="q" for="requestEmail">Email address</label><input id="requestEmail" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"><p class="help">Required only if you prefer to be contacted by email.</p></div>
-      <div class="field"><label class="q" for="requestType">Meeting preference</label><select id="requestType" required style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"><option value="">Select</option><option>Phone call</option><option>Online consultation</option><option>In-person consultation (subject to location)</option></select></div>
-      <div class="field"><label class="q" for="requestTime">Preferred date and time</label><input id="requestTime" type="datetime-local" required style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"></div>
-      <div class="field"><label class="q" for="requestSubject">What would you like to discuss?</label><select id="requestSubject" required style="width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"><option value="">Select</option><option>Retirement or resignation lump sum</option><option>Preserving retirement savings</option><option>Retrenchment</option><option>General financial planning</option></select></div>
+      <div class="field"><label class="q" for="requestName">Your name</label><input id="requestName" required maxlength="100" autocomplete="name" class="ctl"></div>
+      <div class="field"><label class="q" for="requestContact">Cellphone number (for WhatsApp or calls)</label><input id="requestContact" required type="tel" maxlength="25" autocomplete="tel" placeholder="e.g. 082 123 4567" class="ctl"></div>
+      <div class="field"><label class="q" for="requestChannel">How would you prefer me to contact you?</label><p class="help">Choose one. This is separate from how you want to have the consultation.</p><select id="requestChannel" required class="ctl"><option value="">Select your preferred contact method</option><option value="WhatsApp message">WhatsApp message</option><option value="Phone call">Phone call</option><option value="Email">Email</option></select></div>
+      <div class="field hide" id="requestEmailBox"><label class="q" for="requestEmail">Email address</label><input id="requestEmail" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" class="ctl"><p class="help">Required only if you prefer to be contacted by email.</p></div>
+      <div class="field"><label class="q" for="requestType">Meeting preference</label><select id="requestType" required class="ctl"><option value="">Select</option><option>Phone call</option><option>Online consultation</option><option>In-person consultation (subject to location)</option></select></div>
+      <div class="field"><label class="q" for="requestTime">Preferred date and time</label><input id="requestTime" type="datetime-local" required class="ctl"></div>
+      <div class="field"><label class="q" for="requestSubject">What would you like to discuss?</label><select id="requestSubject" required class="ctl"><option value="">Select</option><option>Retirement or resignation lump sum</option><option>Preserving retirement savings</option><option>Retrenchment</option><option>Savings-pot withdrawal while employed</option><option>Understanding my tax estimate</option><option>General financial planning</option></select></div>
       <label class="check"><input id="requestConsent" type="checkbox" required><span>I consent to the adviser using my provided details to respond to this consultation request by my selected contact method. I understand that the meeting is not yet confirmed. This is not consent to receive marketing messages.</span></label>
       <div class="hide" aria-hidden="true" style="position:absolute;left:-9999px"><label for="requestWebsite">Website (leave blank)</label><input id="requestWebsite" autocomplete="off" tabindex="-1"></div>
       <button id="requestSubmit" class="btn book" style="width:100%;margin-top:16px" type="submit">Send appointment request</button>
@@ -500,6 +576,14 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 
 </main>
 
+<div id="tip" role="tooltip"></div>
+<dialog id="themeSheet" aria-label="Choose appearance"><div class="sheet"><h2 style="margin-bottom:2px">Choose your look</h2><p class="small" style="margin:0 0 6px">Saved on this phone only.</p>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#121212"></i><i style="background:#1c1c1e"></i><i style="background:#1f7a55"></i></span><span><b>A · Graphite Emerald</b><span class="d">Charcoal and deep green. Default.</span></span><input type="radio" name="theme" value="graphite"></label>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#111827"></i><i style="background:#1f2937"></i><i style="background:#1d7a5a"></i></span><span><b>B · Slate Forest</b><span class="d">Blue-grey with teal green.</span></span><input type="radio" name="theme" value="slate"></label>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#f3f4f6"></i><i style="background:#ffffff"></i><i style="background:#1b6b4a"></i></span><span><b>C · Light Stone</b><span class="d">Light gray and white. Best in daylight.</span></span><input type="radio" name="theme" value="stone"></label>
+<button class="btn book" type="button" id="themeDone" style="width:100%;margin-top:8px">Done</button></div></dialog>
+<button id="liveBar" type="button" aria-label="Jump to your result"><span><small id="liveLbl"></small><b id="liveVal"></b></span><span aria-hidden="true">&#8595;</span></button>
+
 <div class="bar-fixed" role="complementary" aria-label="Contact Nathi">
   <a class="btn book" href="#appointment-request">Request appointment</a>
   <a class="btn wa" href="mailto:nathis6040@gmail.com?subject=Lump%20Sum%20Tax%20Simulator%20enquiry" data-wa target="_blank" rel="noopener noreferrer">Email</a>
@@ -509,6 +593,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 /* ========================= EDIT ME ========================= */
 var WHATSAPP_NUMBER = ""; /* Set only after verifying your actual WhatsApp Business number: 27 followed by nine digits. Empty => email fallback, never a dead link. */
 var BOOKING_EMAIL   = "nathis6040@gmail.com";
+var BOOKING_PUBLIC_URL = "#appointment-request"; /* Link to the on-page appointment form. Do not substitute an employer-specific booking site without confirming approval. */
 var FORMSPREE_ENDPOINT = "https://formspree.io/f/xpppgvrv"; /* Paste your verified Formspree endpoint, e.g. https://formspree.io/f/abcdefgh. Blank disables direct sending. */
 /* =========================================================== */
 
@@ -519,7 +604,7 @@ var INC = [[0,0,0.18],[245100,44118,0.26],[383100,79998,0.31],[530200,125599,0.3
 var REBATE = 17820, DEMIN = 240000, GENERAL_DEMIN = 360000, FREE = {ret:550000, wdr:27500};
 
 function taxOn(t,x){ var b=t[0]; for (var i=0;i<t.length;i++){ if (x>=t[i][0]) b=t[i]; } return b[1]+b[2]*(x-b[0]); }
-function lumpTax(t,prev,amt){ return amt>0 ? taxOn(t,prev+amt)-taxOn(t,prev) : 0; }
+function lumpTax(t,prev,amt){ return amt>0 ? Math.round(taxOn(t,prev+amt)-taxOn(t,prev)) : 0; }
 function incTax(i,ageGroup){
   var rebate=REBATE + (ageGroup==="65to74" || ageGroup==="75plus" ? 9765 : 0) + (ageGroup==="75plus" ? 3249 : 0);
   return Math.max(0,taxOn(INC,Math.max(0,i))-rebate);
@@ -529,7 +614,7 @@ function incTax(i,ageGroup){
 function savingsWithdrawalTax(annualTaxableIncome, withdrawal, ageGroup){
   var inc = Number.isFinite(annualTaxableIncome) ? Math.max(0,annualTaxableIncome) : 0;
   var cash = Number.isFinite(withdrawal) ? Math.max(0,withdrawal) : 0;
-  var additional = Math.max(0,incTax(inc+cash, ageGroup)-incTax(inc,ageGroup));
+  var additional = Math.max(0,Math.round(incTax(inc+cash, ageGroup)-incTax(inc,ageGroup)));
   return {tax:additional, net:cash-additional, rate:cash>0?additional/cash:0};
 }
 
@@ -554,7 +639,7 @@ function cashCalc(p, prev, mode, amt, inc, includeSavings, ageGroup){
   var x = mode==="max" ? acc : Math.min(amt,acc);
   var fromV = Math.min(x,p.v), fromS = x-fromV;
   var taxV = lumpTax(WDR, prev, fromV);
-  var taxS = fromS>0 ? incTax(inc+fromS,ageGroup)-incTax(inc,ageGroup) : 0;
+  var taxS = fromS>0 ? Math.round(incTax(inc+fromS,ageGroup)-incTax(inc,ageGroup)) : 0;
   return {acc:acc, x:x, fromV:fromV, fromS:fromS, taxV:taxV, taxS:taxS, tax:taxV+taxS, net:x-taxV-taxS, left:p.v+p.s-x, locked:p.r, over:(mode!=="max" && amt>acc)};
 }
 
@@ -700,7 +785,7 @@ function update(){
     rows = "";
     if (sev>0) rows += row("Severance package", R(sev)) + row("Tax on severance", R(taxSev));
     rows += row("Cash from vested pot", R(k.fromV)) + row("Tax on vested cash", R(k.taxV));
-    if (p.s>0) rows += row("Cash from savings pot", R(k.fromS)) + row("Tax on savings cash", R(k.taxS));
+    if (includeSavings) rows += row("Cash from savings pot", R(k.fromS)) + row("Tax on savings cash", R(k.taxS));
     rows += row("Total cash (before tax)", R(sev + k.x)) + row("Effective tax rate", pct(taxToday, sev + k.x));
     if (k.locked + k.left > 0) rows += row("Stays in your fund", R(k.locked + k.left), true);
     if (k.fromV>0) bar = {t:WDR, prev:p2, amt:k.fromV, free:FREE.wdr};
@@ -775,7 +860,7 @@ function setLinks(){
   var readyWa = /^27[0-9]{9}$/.test(WHATSAPP_NUMBER);
   var opted = $("shareSummary").checked && !!lastSummary;
   var msg = defaultMsg() + (opted ? "\n\nHere is the estimate I chose to share:\n" + lastSummary + "\n\nI understand this is indicative, not a SARS directive." : "");
-  var url = readyWa ? "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg) : "mailto:" + BOOKING_EMAIL + "?subject=" + encodeURIComponent("Lump Sum Tax Simulator enquiry");
+  var url = readyWa ? "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg) : "mailto:" + BOOKING_EMAIL + "?subject=" + encodeURIComponent("Lump Sum Tax Simulator enquiry") + "&body=" + encodeURIComponent("Hello, I used your Lump Sum Tax Simulator and would like to discuss my options. Please contact me.\n\nPlease do not include sensitive financial records in this email.");
   [].forEach.call(document.querySelectorAll("[data-wa]"), function(a){
     a.href = url;
     a.textContent = readyWa ? (a.closest(".bar-fixed") ? "WhatsApp" : "Send me a WhatsApp") : (a.closest(".bar-fixed") ? "Email" : "Email the adviser");
@@ -789,6 +874,8 @@ $("shareSummary").addEventListener("change", setLinks);
 /* Direct submission uses Formspree only after the adviser configures a verified form ID.
    Never send client simulator balances or prior benefit history. */
 var bookingReady = /^https:\/\/formspree\.io\/f\/[A-Za-z0-9]+$/.test(FORMSPREE_ENDPOINT);
+// The URL format alone does not prove that the form endpoint receives email.
+// Verify delivery by submitting a consented test on a hosted staging page before public release.
 var submitButton = $("requestSubmit");
 function updateRequestChannel(){
   var needsEmail = $("requestChannel").value === "Email";
@@ -801,6 +888,7 @@ updateRequestChannel();
 if (!bookingReady) {
   submitButton.disabled = true;
   submitButton.title = "The adviser has not yet connected the appointment service";
+  requestStatus("Online appointment requests are not active. Please use the direct email link above.", true);
 }
 function requestStatus(message, isError){
   var node = $("requestStatus");
@@ -875,6 +963,58 @@ $("appointmentForm").addEventListener("submit",async function(e){
     submitButton.textContent="Send appointment request";
   }
 });
+
+/* ===== MINIMAL TEXT: info popovers + split bar ===== */
+var tip=$("tip"),tipBtn=null,canHover=matchMedia("(hover:hover)").matches;
+function showTip(b){ tip.innerHTML=b._html; tip.style.display="block"; if(tipBtn) tipBtn.setAttribute("aria-expanded","false"); tipBtn=b; b.setAttribute("aria-expanded","true");
+  var r=b.getBoundingClientRect(),w=tip.offsetWidth,hh=tip.offsetHeight,l=Math.max(12,Math.min(r.left+r.width/2-w/2,innerWidth-w-12)),t=r.bottom+4;
+  if(t+hh>innerHeight-12) t=Math.max(12,r.top-hh-4); tip.style.left=l+"px"; tip.style.top=t+"px"; }
+function hideTip(){ tip.style.display="none"; if(tipBtn) tipBtn.setAttribute("aria-expanded","false"); tipBtn=null; }
+function addInfo(anchor,src){
+  var b=document.createElement("button"); b.type="button"; b.className="info"; b.setAttribute("aria-label","More information"); b.setAttribute("aria-expanded","false"); b.setAttribute("aria-controls","tip");
+  b._html=src.innerHTML; src.classList.add("moved"); anchor.appendChild(b);
+  b.addEventListener("click",function(e){ e.preventDefault(); e.stopPropagation(); (tipBtn===b && !canHover) ? hideTip() : showTip(b); });
+  if(canHover){ b.addEventListener("mouseenter",function(){ showTip(b); }); b.addEventListener("mouseleave",hideTip); }
+}
+[].forEach.call(document.querySelectorAll("#calculator .help:not([id])"),function(p){
+  var a=p.previousElementSibling, n=0; while(a && !/^(LABEL|H3|SPAN)$/.test(a.tagName) && n<6){ a=a.previousElementSibling; n++; }
+  if(a && !a.classList.contains("check")) addInfo(a,p); else if(a) addInfo(a,p);
+});
+[].forEach.call(document.querySelectorAll("#calculator .choice"),function(c){ var b=c.querySelector("div>b"), d=c.querySelector("div>span"); if(b&&d) addInfo(b,d); });
+(function(){ var l=document.querySelector("#calculator>.lead"), h2=document.querySelector("#calculator>h2"); if(l&&h2) addInfo(h2,l); })();
+document.addEventListener("click",function(e){ if(!e.target.closest||!e.target.closest(".info")) hideTip(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") hideTip(); });
+addEventListener("scroll",hideTip,{passive:true}); addEventListener("resize",hideTip);
+function syncSplit(){
+  var shown=$("result").style.display==="block", tax=+($("rTax").textContent.replace(/\D/g,"")), net=+($("rNet").textContent.replace(/\D/g,""));
+  var on=shown && $("rNet").dataset.pres!=="1" && (tax+net)>0;
+  $("splitCard").style.display=on?"":"none";
+  if(on){ $("spN").style.flex=Math.max(net,1)+" 1 0"; $("spT").style.flex=Math.max(tax,0)+" 1 0"; $("spT").style.display=tax>0?"flex":"none"; $("spN").style.display=net>0?"flex":"none"; $("chN").textContent=R(net); $("chT").textContent=R(tax); }
+}
+/* ===== THEMES + LIVE RESULT BAR ===== */
+var THEME_COLOR={graphite:"#121212",slate:"#111827",stone:"#f3f4f6"};
+function setTheme(t,save){
+  if(!THEME_COLOR[t]) t="graphite";
+  document.documentElement.setAttribute("data-theme",t);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content",THEME_COLOR[t]);
+  var r=document.querySelector('input[name="theme"][value="'+t+'"]'); if(r) r.checked=true;
+  if(save){ try{ localStorage.setItem("lsts-theme",t); }catch(e){} }
+}
+setTheme(document.documentElement.getAttribute("data-theme"),false);
+[].forEach.call(document.querySelectorAll('input[name="theme"]'),function(r){ r.addEventListener("change",function(){ setTheme(this.value,true); }); });
+function openSheet(){ var d=$("themeSheet"); if(d.showModal) d.showModal(); else d.setAttribute("open",""); }
+$("themeBtn").addEventListener("click",openSheet); $("themeBtn2").addEventListener("click",openSheet);
+$("themeDone").addEventListener("click",function(){ $("themeSheet").close(); });
+$("themeSheet").addEventListener("click",function(e){ if(e.target===this) this.close(); });
+var resultInView=false;
+function syncLive(){
+  var shown=$("result").style.display==="block";
+  if(shown){ $("liveLbl").textContent=$("netLbl").textContent; $("liveVal").textContent=$("rNet").textContent; }
+  $("liveBar").classList.toggle("on",shown && !resultInView);
+}
+if("IntersectionObserver" in window){ new IntersectionObserver(function(en){ resultInView=en[0].isIntersecting; syncLive(); },{threshold:.15}).observe($("result")); }
+$("liveBar").addEventListener("click",function(){ $("result").scrollIntoView({behavior:"smooth",block:"start"}); });
+var _update=update; update=function(){ _update(); syncLive(); syncSplit(); };
 
 [].forEach.call(document.querySelectorAll("[data-money]"), function(el){
   el.addEventListener("input", function(){ fmtInput(this); update(); });
