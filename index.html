@@ -223,7 +223,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
   <div class="card">
 
     <!-- STEP 1 -->
-    <div class="field">
+    <div class="field" id="stepBalances">
       <label class="q">1. What is in your fund?</label>
       <p class="help">Find these three amounts on your fund statement or app. If your fund has not been split into pots, put the whole balance under vested.</p>
 
@@ -238,7 +238,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
     </div>
 
     <!-- STEP 2 -->
-    <div class="field">
+    <div class="field" id="stepFundType">
       <label class="q" for="fundType">2. Which retirement fund is this?</label>
       <p class="help">Fund type affects whether leaving your job gives access to cash. An RA also has savings, vested and retirement components under the two-pot system, but resignation from an employer does <b>not</b> ordinarily unlock an RA. Preservation funds have their own withdrawal and transfer conditions. If unsure, check your benefit statement.</p>
       <select id="fundType" required class="form-select"><option value="">Select your fund type</option><option value="pension">Occupational pension fund</option><option value="provident">Occupational provident fund</option><option value="pension-pres">Pension preservation fund</option><option value="provident-pres">Provident preservation fund</option><option value="ra">Retirement annuity (RA)</option><option value="gepf">Government Employees Pension Fund (GEPF)</option><option value="other">Other / Not sure</option></select>
@@ -254,6 +254,25 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
           <div><b>I am leaving my job and taking cash</b><span>Resigned or retrenched, and cashing out my fund.</span></div></label>
         <label class="choice"><input type="radio" name="scn" value="preserve">
           <div><b>I am leaving my job and preserving my fund</b><span>Keep it invested, no cash now.</span></div></label>
+        <label class="choice"><input type="radio" name="scn" value="workingSavings">
+          <div><b>I'm still working — withdraw from my savings pot</b><span>Estimate additional income tax and net cash without resigning or retiring.</span></div></label>
+      </div>
+
+      <div id="workingSavingsFields" class="field hide" style="margin-top:14px" aria-label="Savings pot withdrawal while employed">
+        <h3>Savings pot withdrawal while still employed</h3>
+        <p class="help">Use the available savings-component balance shown by your fund, not your entire retirement fund balance. Withdrawals are generally permitted once per tax year, with a minimum of R2,000. You must request the withdrawal through your fund.</p>
+        <label class="q" for="workBalance">Available savings-component balance (R)</label>
+        <div class="money"><span>R</span><input data-money id="workBalance" inputmode="numeric" autocomplete="off" value="50000" aria-label="Available savings component balance in rand"></div>
+        <label class="q" for="workAmount">Amount you wish to withdraw (R)</label>
+        <div class="money"><span>R</span><input data-money id="workAmount" inputmode="numeric" autocomplete="off" value="30000" aria-label="Requested savings component withdrawal in rand"></div>
+        <label class="q" for="workIncome">Estimated taxable income for the full 2026/27 tax year, before this withdrawal (R)</label>
+        <p class="help">Enter your total estimated annual taxable income <b>after allowable deductions</b>, not just your monthly salary or take-home pay. Include all other taxable income.</p>
+        <div class="money"><span>R</span><input data-money id="workIncome" inputmode="numeric" autocomplete="off" placeholder="Annual taxable income" aria-label="Annual taxable income before savings withdrawal in rand"></div>
+        <label class="q" for="workAge">Age group during the tax year</label>
+        <select id="workAge" class="form-select"><option value="under65">Under 65</option><option value="65to74">65–74</option><option value="75plus">75 or older</option></select>
+        <label class="check"><input id="workEligible" type="checkbox"><span>I have confirmed with my fund that this withdrawal is available and I have not already used my permitted withdrawal for this tax year.</span></label>
+        <label class="check"><input id="workIncomeConfirmed" type="checkbox"><span>I have checked the annual taxable-income estimate above, including other income and deductions.</span></label>
+        <p class="help">Estimated tax is calculated as annual income tax <b>with</b> the withdrawal minus annual income tax <b>without</b> it. This is not the SARS directive rate, the exact payout, or a tax-free R30,000 benefit. Fees and SARS debts can further reduce cash paid. A withdrawal also reduces retirement capital.</p>
       </div>
 
       <div id="grpProv" style="margin-top:14px">
@@ -305,7 +324,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
     </div>
 
     <!-- STEP 4 -->
-    <div class="field" style="margin-bottom:0">
+    <div class="field" id="stepPrevious" style="margin-bottom:0">
       <label class="q" for="prev">5. Lump sums you took before</label>
       <p class="help">Enter the combined GROSS amount of prior relevant retirement-fund lump sums (from 1 October 2007), retirement-fund withdrawal benefits (from 1 March 2009) and severance benefits (from 1 March 2011), including amounts withheld as tax. Exclude two-pot savings-component withdrawals taxed as ordinary income. Leave R0 only if you know you had none.</p>
       <select id="prevStatus" class="form-select" aria-label="Whether previous lump sums are known"><option value="unknown">I don't know / have not checked previous benefits</option><option value="none">I have confirmed no relevant previous lump sums</option><option value="known">I know the combined gross amount</option></select>
@@ -463,6 +482,7 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
     <li><a href="https://www.treasury.gov.za/2024%20Two-Pot%20System%20-%20FAQ.pdf" target="_blank" rel="noopener">National Treasury: Two-pot system FAQ</a></li>
     <li><a href="https://www.sars.gov.za/latest-news/tax-directives-legislative-changes-and-system-enhancements/" target="_blank" rel="noopener noreferrer">SARS (17 April 2026): R360,000 de minimis increase from 1 March 2026</a></li>
     <li><a href="https://www.sars.gov.za/guide-to-complete-the-lump-sum-tax-directive-application-forms/" target="_blank" rel="noopener noreferrer">SARS: Two-pot fund components, R240,000 annuitisation test and provident vested rights</a></li>
+    <li><a href="https://www.sars.gov.za/two-pot-retirement-system/" target="_blank" rel="noopener noreferrer">SARS: Two-pot savings withdrawals, income tax and tax debts</a></li>
     <li><a href="https://www.sars.gov.za/about/sars-tax-and-customs-system/budget/budget-2026-frequently-asked-questions/" target="_blank" rel="noopener noreferrer">SARS: Budget 2026 FAQs, including savings withdrawals and 2026/27 tax measures</a></li>
   </ul>
 </section>
@@ -503,6 +523,14 @@ function lumpTax(t,prev,amt){ return amt>0 ? taxOn(t,prev+amt)-taxOn(t,prev) : 0
 function incTax(i,ageGroup){
   var rebate=REBATE + (ageGroup==="65to74" || ageGroup==="75plus" ? 9765 : 0) + (ageGroup==="75plus" ? 3249 : 0);
   return Math.max(0,taxOn(INC,Math.max(0,i))-rebate);
+}
+
+/* Independent savings-component tax for a member who remains employed. */
+function savingsWithdrawalTax(annualTaxableIncome, withdrawal, ageGroup){
+  var inc = Number.isFinite(annualTaxableIncome) ? Math.max(0,annualTaxableIncome) : 0;
+  var cash = Number.isFinite(withdrawal) ? Math.max(0,withdrawal) : 0;
+  var additional = Math.max(0,incTax(inc+cash, ageGroup)-incTax(inc,ageGroup));
+  return {tax:additional, net:cash-additional, rate:cash>0?additional/cash:0};
 }
 
 /* Retiring: cash + annuity */
@@ -555,12 +583,44 @@ function update(){
   lastSummary = "";
 
   /* show/hide inputs */
+  var workingOnly = scn === "workingSavings";
+  show("stepBalances", !workingOnly);
+  show("stepFundType", !workingOnly);
+  show("stepPrevious", !workingOnly);
+  show("workingSavingsFields", workingOnly);
   show("grpProv", scn==="retire");
-  show("grpSev", scn!=="retire");
-  show("grpAmt", scn!=="preserve");
+  show("grpSev", scn==="cash" || scn==="preserve");
+  show("grpAmt", scn==="retire" || scn==="cash");
   show("grpSavingsElection", scn==="cash" && p.s>0);
   show("savingsCheck", includeSavings);
   show("grpInc", includeSavings);
+  if (workingOnly) {
+    show("barCard", false); show("cmpCard", false);
+    var balance = num($("workBalance")), amount = num($("workAmount")), income = num($("workIncome"));
+    var age = $("workAge").value;
+    var errors = [];
+    if (balance < 2000) errors.push("Available savings balance must be at least R2,000 for an ordinary pre-retirement withdrawal.");
+    if (amount < 2000) errors.push("Enter a requested withdrawal of at least R2,000.");
+    if (amount > balance) errors.push("Requested withdrawal exceeds your available savings-component balance.");
+    if (!$("workEligible").checked) errors.push("Confirm your fund's eligibility and the one-withdrawal-per-tax-year requirement.");
+    if (!$("workIncomeConfirmed").checked || !$("workIncome").value.trim()) errors.push("Confirm your full annual taxable income. Enter R0 only if your expected taxable income really is zero.");
+    if (errors.length) {
+      $("result").style.display = "none";
+      $("warn").innerHTML = '<div class="release-block"><b>Savings-pot calculation paused</b><ul>' + errors.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul></div>';
+      setLinks(defaultMsg()); return;
+    }
+    var impact = savingsWithdrawalTax(income, amount, age);
+    $("taxLbl").textContent = "Estimated additional income tax on savings withdrawal";
+    $("rTax").textContent = R(impact.tax);
+    $("netLbl").textContent = "Estimated cash after income tax (before fees and SARS debts)";
+    $("rNet").textContent = R(impact.net);
+    $("netSub").textContent = "Savings component remaining: " + R(balance-amount) + ". Tax and fees may reduce the actual payment. Your fund must confirm eligibility.";
+    $("rRows").innerHTML = row("Savings pot balance",R(balance)) + row("Requested gross withdrawal",R(amount)) + row("Annual taxable income before",R(income)) + row("Income including withdrawal",R(income+amount)) + row("Estimated extra income tax",R(impact.tax)) + row("Effective tax on withdrawal",pct(impact.tax,amount)) + row("Remaining savings pot",R(balance-amount),true);
+    $("warn").innerHTML = '<div class="warnbox">Indicative only: final SARS directive withholding, outstanding tax debt, fund administration charges, other income, medical credits and final assessment can change the amount paid. Savings withdrawals reduce retirement savings. This is NOT the retirement lump-sum tax table.</div>';
+    $("result").style.display = "block";
+    lastSummary = "Situation: Still working — savings-component withdrawal\nGross withdrawal: " + R(amount) + "\nEstimated additional tax: " + R(impact.tax) + "\nEstimated net before fees and SARS debts: " + R(impact.net) + "\nRemaining savings pot: " + R(balance-amount);
+    setLinks(); return;
+  }
   show("prevInput", priorStatus==="known");
   $("fundLimit").textContent = fundType==="gepf" ? "GEPF benefits are defined by specific fund rules: manual benefit statement required." : fundType==="ra" ? "RA exit is generally not triggered by resignation. Retirement eligibility must be confirmed." : "Figures are indicative and depend on the rules of your particular fund.";
   show("partBox", cmode==="part" && scn!=="preserve");
@@ -821,7 +881,7 @@ $("appointmentForm").addEventListener("submit",async function(e){
   el.addEventListener("focus", function(){ if (this.value==="0") this.select(); });
   el.addEventListener("blur",  function(){ if (!this.value && this.id!=="camt") { this.value="0"; update(); } });
 });
-[].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#fundType,#retireEligible,#sevVerified,#savingsElection,#savingsEligible,#incomeKnown,#ageGroup,#prevStatus'), function(r){ r.addEventListener("change", update); });
+[].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#fundType,#retireEligible,#sevVerified,#savingsElection,#savingsEligible,#incomeKnown,#ageGroup,#prevStatus,#workAge,#workEligible,#workIncomeConfirmed'), function(r){ r.addEventListener("change", update); });
 // In-memory only: prevent accidental navigation after editing calculator inputs.
 // Browser prompts are best-effort, and some mobile browsers do not show them.
 var unsavedCalculatorChanges = false;
