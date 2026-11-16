@@ -1721,13 +1721,18 @@ function showClientResults(){
   if(missing.length){
     missing.forEach(function(item){var el=$(item[0]);if(el){var wrap=el.closest('.field')||el.closest('.check')||el.parentElement;if(wrap)wrap.classList.add('field-attention');el.setAttribute('aria-invalid','true');}});
     attentionFor(missing[0][0],missing[0][1]);
+    var outstanding=missing.map(function(item){return item[1];});
+    $('actionFeedback').textContent='Before results can be shown, please complete or confirm: '+outstanding.join('; ')+'. The first missing field is highlighted.';
+    $('actionFeedback').setAttribute('role','alert');
     return;
   }
   if($('result').style.display==='block'){
     $('result').scrollIntoView({behavior:'smooth',block:'start'});
   }else{
-    $('actionFeedback').textContent='The calculation needs additional fund or SARS confirmation. See the explanation directly below.';
-    $('warn').scrollIntoView({behavior:'smooth',block:'center'});
+    var details=$('warn').textContent.trim();
+    $('actionFeedback').textContent='The estimate cannot yet be displayed. '+(details || 'Review the fund eligibility and tax-history confirmations above.');
+    $('actionFeedback').setAttribute('role','alert');
+    ($('warn').textContent.trim()?$('warn'):$('actionFeedback')).scrollIntoView({behavior:'smooth',block:'center'});
   }
 }
 $('viewResultsButton').addEventListener('click',showClientResults);
