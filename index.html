@@ -422,6 +422,13 @@ h2{font-weight:800}
 .report-choice:has(input[value="visual"])::after{background:linear-gradient(#0c5367 0 16%,#fff 16% 29%,#e4f6e5 29% 43%,#fff0eb 43% 55%,#e5f1ff 55% 66%,#fff 66% 74%,#e7f3ed 74%)}
 #infographicReport{display:none}
 @media print{
+ body.print-visual #infographicReport .inf-source-details{display:block!important;margin-top:16px!important;border-top:3px solid #08757b!important;padding-top:8px!important;break-inside:auto!important}
+ body.print-visual #infographicReport .inf-original-detail{display:block!important;background:#fff!important;color:#122a45!important;border:0!important;padding:0!important;break-inside:auto!important}
+ body.print-visual #infographicReport .inf-original-detail .decision-table{width:100%!important;border-collapse:collapse!important}
+ body.print-visual #infographicReport .inf-original-detail .decision-table th,body.print-visual #infographicReport .inf-original-detail .decision-table td{padding:5px!important;border-bottom:1px solid #ccd9e3!important}
+ body.print-visual #infographicReport .inf-original-detail p,body.print-visual #infographicReport .inf-original-detail li{color:#233b53!important}
+ body.print-visual #infographicReport .inf-original-detail h2,body.print-visual #infographicReport .inf-original-detail h3{color:#0d5571!important}
+
  body.print-visual #result>:not(#infographicReport){display:none!important}
  body.print-visual #infographicReport{display:block!important;color:#122a45!important;font:8pt/1.28 system-ui,sans-serif!important;background:#fff!important}
  body.print-visual #infographicReport *{box-sizing:border-box;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
@@ -1715,6 +1722,17 @@ function buildInfographicReport(){
  var notes=E('section','inf-notes',null,dest);E('h3','','Before You Act — Important Checks',notes);
  var checks=E('ul','',null,notes);source.querySelectorAll('.directive-items li').forEach(function(li){E('li','',li.textContent,checks)});
  ['singleAssumptions','decisionAssumptions','singleCautions','decisionCautions'].forEach(function(id){var el=source.querySelector('#'+id);if(el&&el.textContent.trim())E('p','inf-caveat',el.textContent,dest)});
+ /* The visual report must retain the complete client-facing detail from the
+    standard report. The panels above are a visual summary, not a replacement. */
+ var appendix=E('section','inf-source-details',null,dest);
+ E('h2','inf-section','Full Calculation, Assumptions and Explanations',appendix);
+ var complete=source.cloneNode(true);
+ complete.removeAttribute('id');
+ complete.removeAttribute('style');
+ complete.classList.add('inf-original-detail');
+ complete.querySelectorAll('[id]').forEach(function(el){el.removeAttribute('id')});
+ complete.querySelectorAll('.print-head,.print-highlights,.print-tax-bar,.print-footer,.noprint,button').forEach(function(el){el.remove()});
+ appendix.appendChild(complete);
  var footer=source.querySelector('.print-footer');if(footer){var copy=footer.cloneNode(true);copy.className='inf-footer';dest.appendChild(copy)}
 }
 
