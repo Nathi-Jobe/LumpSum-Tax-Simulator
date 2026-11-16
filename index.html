@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#121212">
-<script>(function(){var t;try{t=localStorage.getItem("lsts-theme")}catch(e){}if(!/^(graphite|slate|stone|sunrise)$/.test(t||""))t="sunrise";document.documentElement.setAttribute("data-theme",t)})()</script>
+<script>(function(){var t;try{t=localStorage.getItem("lsts-theme")}catch(e){}if(!/^(graphite|slate|stone|sunrise)$/.test(t||""))t="stone";document.documentElement.setAttribute("data-theme",t)})()</script>
 <title>Lump Sum Tax Simulator</title>
 <meta name="description" content="Retiring, resigning or retrenched? See the tax on your retirement fund lump sum and what you keep, including the two-pot system (SARS 2026/27 tables).">
 <meta property="og:title" content="Lump Sum Tax Simulator">
@@ -358,6 +358,21 @@ h2{font-weight:800}
 #actionFeedback {display:none;margin:12px 0;padding:14px;border:2px solid #ea580c;background:#fff7ed;color:#7c2d12;border-radius:12px;font-weight:650;scroll-margin-top:92px;}
 #actionFeedback:not(:empty){display:block}
 @media(prefers-reduced-motion:reduce){.field-attention{animation:none}}
+/* Intent-led introduction and optional comparison */
+@media screen {
+ body:not(.route-selected) #calculator .route-conditional,
+ body:not(.route-selected) #scenarioChoiceField,
+ body:not(.route-selected) #grpAmt,
+ body:not(.route-selected) #grpSavingsElection,
+ body:not(.route-selected) #grpInc,
+ body:not(.route-selected) #result,
+ body:not(.route-selected) #viewResultsButton {display:none!important}
+ #scenarioChoiceField > .choices,#q2{display:none!important}
+ #decisionReport:not(.expanded)>:not(h2):not(#decisionToggle){display:none!important}
+ #decisionReport:not(.expanded){padding:12px 16px}
+ #decisionToggle{width:100%;margin:10px 0 0}
+}
+@media print{#decisionToggle{display:none!important}#clientJourney{display:none!important}}
 </style>
 </head>
 
@@ -382,7 +397,7 @@ h2{font-weight:800}
 
 <section id="intro" class="quick-intro">
   <h1>Lump Sum Tax Simulator</h1>
-  <p class="lead">Retiring, resigning or retrenched? Enter your fund amounts to compare your estimated cash, tax and preservation options.</p>
+  <p class="lead">Withdraw from your savings pot, leave employment or retire. Select your situation first, then see estimated net cash and tax.</p>
   <p class="help">Indicative 2026/27 SARS estimates, not a tax directive or financial advice. No contact details needed to see results.</p>
   <details class="quick-disclosure"><summary>Privacy and important limitations</summary>
     <p>Calculations run in this browser. Nothing is sent to an adviser automatically. Contact or appointment details are sent only if you choose to submit them.</p>
@@ -396,12 +411,38 @@ h2{font-weight:800}
 
 <section id="calculator">
   <h2>Simulator</h2>
-  <p class="lead">Answer the questions in order. The calculator shows estimates only for supported and sufficiently confirmed situations. Unverified fund rules or earlier benefit history will pause results rather than guess.</p>
+  <p class="lead">Start by choosing what you want to calculate. Only relevant questions will appear.</p>
 
   <div class="card">
+    <div class="field" id="clientJourney">
+      <label class="q" id="journeyLabel">What would you like to calculate?</label>
+      <div class="choices" role="radiogroup" aria-labelledby="journeyLabel">
+        <label class="choice"><input type="radio" name="clientRoute" value="savings"><div><b>Withdraw from my two-pot savings</b><span>See how much cash I may receive after tax.</span></div></label>
+        <label class="choice"><input type="radio" name="clientRoute" value="leaving"><div><b>I'm leaving employment</b><span>Retirement, resignation, dismissal or retrenchment.</span></div></label>
+      </div>
+      <div id="leavingRouteOptions" class="hide" style="margin-top:14px">
+        <label class="q" for="leaveSituation">Why are you leaving?</label>
+        <select id="leaveSituation" class="form-select">
+          <option value="">Choose your situation</option>
+          <option value="retire">I am retiring</option>
+          <option value="resign">I am resigning</option>
+          <option value="dismissal">My employment is being terminated / dismissed</option>
+          <option value="retrenchment">I am being retrenched</option>
+        </select>
+        <div id="leaveActionBox" class="hide">
+          <label class="q" for="leaveAction">What would you like to compare?</label>
+          <select class="form-select" id="leaveAction"><option value="cash">Taking cash now</option><option value="preserve">Preserving my retirement savings</option></select>
+        </div>
+      </div>
+      <div id="statementGuide" class="hide" style="margin-top:14px">
+        <label class="q" for="statementStatus">Do you have a fund statement?</label>
+        <select class="form-select" id="statementStatus"><option value="statement">Yes, I have my fund statement</option><option value="estimate">No, I will use estimates</option></select>
+        <p id="statementNotice" class="help">Use your statement's vested, savings and retirement component amounts.</p>
+      </div>
+    </div>
 
     <!-- STEP 1 -->
-    <div class="field" id="stepBalances">
+    <div class="field route-conditional" id="stepBalances">
       <label class="q">1. What is in your fund?</label>
       <p class="help">Find these three amounts on your fund statement or app. Use the balances shown on your fund statement. If your fund is exempt from the two-pot structure or does not report these components, do not assume the entire balance is vested; ask your administrator for the correct breakdown.</p>
 
@@ -416,7 +457,7 @@ h2{font-weight:800}
     </div>
 
     <!-- STEP 2 -->
-    <div class="field" id="stepFundType">
+    <div class="field route-conditional" id="stepFundType">
       <label class="q" for="fundType">2. Which retirement fund is this?</label>
       <p class="help">Fund type affects whether leaving your job gives access to cash. An RA also has savings, vested and retirement components under the two-pot system, but resignation from an employer does <b>not</b> ordinarily unlock an RA. Preservation funds have their own withdrawal and transfer conditions. If unsure, check your benefit statement.</p>
       <select id="fundType" required class="form-select"><option value="">Select your fund type</option><option value="pension">Occupational pension fund</option><option value="provident">Occupational provident fund</option><option value="pension-pres">Pension preservation fund</option><option value="provident-pres">Provident preservation fund</option><option value="ra">Retirement annuity (RA)</option><option value="gepf">Government Employees Pension Fund (GEPF)</option><option value="other">Other / Not sure</option></select>
@@ -424,7 +465,7 @@ h2{font-weight:800}
       <div id="fundRouteGuide" class="fund-route-guide" role="status" aria-live="polite"><strong>Fund-specific decision guide</strong><p>Choose a fund type and age to see what this calculator can and cannot estimate.</p></div>
       <label class="check"><input type="checkbox" id="retireEligible"><span><b>For retirement estimates:</b> my fund has confirmed I am eligible to retire or receive this retirement benefit now.</span></label>
     </div>
-    <div class="field" id="ageField">
+    <div class="field route-conditional" id="ageField">
       <label class="q" for="clientAge">3. How old are you?</label>
       <p class="help">Your age changes which retirement routes may be available. Age alone never guarantees a fund payout or the retirement tax table.</p>
       <input id="clientAge" class="age-input" type="number" inputmode="numeric" min="16" max="100" placeholder="Your age in completed years" aria-describedby="ageGuide" />
@@ -439,7 +480,7 @@ h2{font-weight:800}
         <p class="help">An ordinary resignation below 55 does not qualify as retirement merely because the member wants to stop working. Do not use retirement tax rates without confirmed eligibility.</p>
       </div>
     </div>
-    <div class="field">
+    <div class="field" id="scenarioChoiceField">
       <label class="q" id="q2">4. What are you doing?</label>
       <div class="choices" role="radiogroup" aria-labelledby="q2">
         <label class="choice"><input type="radio" name="scn" value="retire" checked>
@@ -531,7 +572,7 @@ h2{font-weight:800}
     </div>
 
     <!-- STEP 4 -->
-    <div class="field" id="stepPrevious" style="margin-bottom:0">
+    <div class="field route-conditional" id="stepPrevious" style="margin-bottom:0">
       <label class="q" for="prev">5. Have you received previous taxable retirement or severance lump sums?</label>
       <p class="help">Enter the combined GROSS amount of prior relevant retirement-fund lump sums (from 1 October 2007), retirement-fund withdrawal benefits (from 1 March 2009) and severance benefits (from 1 March 2011), including amounts withheld as tax. Exclude two-pot savings-component withdrawals taxed as ordinary income. Leave R0 only if you know you had none.</p>
       <select id="prevStatus" class="form-select" aria-label="Whether previous lump sums are known"><option value="unknown">I don't know / have not checked previous benefits</option><option value="none">I have confirmed no relevant previous lump sums</option><option value="known">Yes — earlier lump sums need a directive-level check</option></select>
@@ -557,6 +598,7 @@ h2{font-weight:800}
     <div id="decisionReport" class="card" style="display:none">
       <div class="print-head"><strong>LUMP SUM TAX SIMULATOR — CLIENT DECISION SUMMARY · 2026/27 ESTIMATE</strong><p>Independent educational estimate | Prepared <span id="printDate"></span></p></div>
       <h2 id="decisionHeading">Your choices, side by side</h2>
+      <button type="button" id="decisionToggle" class="btn ghost noprint" aria-expanded="false">Compare withdrawal and preservation options</button>
       <div class="decision-guide" id="decisionGuide"><strong>Your money, your choice</strong><span class="pill">Cash now</span><span class="pill">Tax today</span><span class="pill">Keep invested</span><p>See the outcome of each permitted route before deciding whether to seek advice. Figures are indicative—not a tax directive or guarantee.</p></div>
       <p class="decision-summary" id="decisionIntro"></p>
       <p id="decisionAssumptions" class="report-small"></p>
@@ -795,10 +837,10 @@ h2{font-weight:800}
 
 <div id="tip" role="tooltip"></div>
 <dialog id="themeSheet" aria-label="Choose appearance"><div class="sheet"><h2 style="margin-bottom:2px">Choose your look</h2><p class="small" style="margin:0 0 6px">Saved on this phone only.</p>
-<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#4f46e5"></i><i style="background:#0d9488"></i><i style="background:#f97363"></i></span><span><b>D · Colourful Horizon</b><span class="d">Bright indigo, teal and coral. Recommended.</span></span><input type="radio" name="theme" value="sunrise"></label>
-<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#121212"></i><i style="background:#1c1c1e"></i><i style="background:#1f7a55"></i></span><span><b>A · Graphite Emerald</b><span class="d">Charcoal and deep green. Default.</span></span><input type="radio" name="theme" value="graphite"></label>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#4f46e5"></i><i style="background:#0d9488"></i><i style="background:#f97363"></i></span><span><b>D · Colourful Horizon</b><span class="d">Bright indigo, teal and coral.</span></span><input type="radio" name="theme" value="sunrise"></label>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#121212"></i><i style="background:#1c1c1e"></i><i style="background:#1f7a55"></i></span><span><b>A · Graphite Emerald</b><span class="d">Charcoal and deep green.</span></span><input type="radio" name="theme" value="graphite"></label>
 <label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#111827"></i><i style="background:#1f2937"></i><i style="background:#1d7a5a"></i></span><span><b>B · Slate Forest</b><span class="d">Blue-grey with teal green.</span></span><input type="radio" name="theme" value="slate"></label>
-<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#f3f4f6"></i><i style="background:#ffffff"></i><i style="background:#1b6b4a"></i></span><span><b>C · Light Stone</b><span class="d">Light gray and white. Best in daylight.</span></span><input type="radio" name="theme" value="stone"></label>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#f3f4f6"></i><i style="background:#ffffff"></i><i style="background:#1b6b4a"></i></span><span><b>C · Light Stone</b><span class="d">Light gray and white. Default appearance.</span></span><input type="radio" name="theme" value="stone"></label>
 <button class="btn book" type="button" id="themeDone" style="width:100%;margin-top:8px">Done</button></div></dialog>
 <button id="liveBar" type="button" aria-label="Jump to your result"><span><small id="liveLbl"></small><b id="liveVal"></b></span><span aria-hidden="true">&#8595;</span></button>
 
@@ -949,7 +991,7 @@ function renderSingleReport(title, intro, pairs, assumptions, cautions){
   $('singleDate').textContent=new Date().toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'});
 }
 function printActiveReport(){
-  if($('result').style.display!=='block') {alert('Complete a supported calculation before saving a report.');return;}
+  if(!document.body.classList.contains("route-selected") || $('result').style.display!=='block') {alert('Complete a supported calculation before saving a report.');return;}
   var decision=$('decisionReport').style.display==='block';
   var single=$('singleReport').style.display==='block';
   if(!decision && !single){alert('No verified report is available for these inputs.');return;}
@@ -1038,6 +1080,7 @@ function updateDirectiveReadiness(scn, exitReason, sev, fundType, includeSavings
 }
 
 function update(){
+  delete $("rNet").dataset.pres;
   var p = {v:num($("v")), s:num($("s")), r:num($("r"))};
   var total = p.v+p.s+p.r, prev=num($("prev")), sev=num($("sev")), inc=num($("inc")), camt=num($("camt")), protectedRights=num($("protected"));
   var scn = radio("scn"), cmode = radio("cmode");
@@ -1064,6 +1107,7 @@ function update(){
 
   /* show/hide inputs */
   var workingOnly = scn === "workingSavings";
+  show("ageField", !workingOnly);
   show("stepBalances", !workingOnly);
   show("stepFundType", !workingOnly);
   show("stepPrevious", !workingOnly);
@@ -1456,6 +1500,52 @@ function syncSplit(){
   $("splitCard").style.display=on?"":"none";
   if(on){ $("spN").style.flex=Math.max(net,1)+" 1 0"; $("spT").style.flex=Math.max(tax,0)+" 1 0"; $("spT").style.display=tax>0?"flex":"none"; $("spN").style.display=net>0?"flex":"none"; $("chN").textContent=R(net); $("chT").textContent=R(tax); }
 }
+/* Route-first client journey, reusing existing calculations and safeguarding hidden controls. */
+function applyClientRoute(){
+  var choice=document.querySelector('input[name="clientRoute"]:checked');
+  var route=choice?choice.value:'';
+  var leave=$('leaveSituation').value;
+  var hasSituation=route==='leaving' && !!leave;
+  document.body.classList.toggle('route-selected',route==='savings'||hasSituation);
+  show('leavingRouteOptions',route==='leaving');
+  show('leaveActionBox',hasSituation && leave!=='retire');
+  show('statementGuide',hasSituation);
+  if(!route){$('result').style.display='none';return;}
+  var dest=route==='savings'?'workingSavings':leave==='retire'?'retire':$('leaveAction').value;
+  if(route==='leaving' && !leave){$('result').style.display='none';return;}
+  var r=document.querySelector('input[name="scn"][value="'+dest+'"]');
+  if(r)r.checked=true;
+  if(route==='leaving'){
+    $('exitReason').value=leave==='retrenchment'?'retrenchment':'ordinary';
+    if(leave==='dismissal')$('retrenchFundConfirmed').checked=false;
+  }
+  update();
+}
+document.querySelectorAll('input[name="clientRoute"]').forEach(function(el){el.addEventListener('change',applyClientRoute);});
+$('leaveSituation').addEventListener('change',applyClientRoute);
+$('leaveAction').addEventListener('change',applyClientRoute);
+$('statementStatus').addEventListener('change',function(){
+  $('statementNotice').textContent=this.value==='estimate'
+    ? 'Estimated values can help you explore options, but a total balance is not a reliable three-pot breakdown. Confirm your components and eligibility with the fund before acting.'
+    : 'Use the vested, savings and retirement component amounts on your statement.';
+});
+// The original guidance sections were nested inside the report. Moving them out
+// makes the header links work even while the detailed comparison is collapsed.
+var guideParent=document.querySelector('main.wrap');
+var appointmentSection=$('appointment-request');
+guideParent.insertBefore($('how'),appointmentSection);
+guideParent.insertBefore($('options'),appointmentSection);
+// Relevant questions follow the chosen journey before other fund questions.
+$('clientJourney').appendChild($('exitReasonField'));
+$('clientJourney').appendChild($('workingSavingsFields'));
+$('clientJourney').appendChild($('grpSev'));
+$('scenarioChoiceField').querySelector('.choices').setAttribute('aria-hidden','true');
+$('scenarioChoiceField').querySelectorAll('input[name="scn"]').forEach(function(e){e.tabIndex=-1;});
+$('decisionToggle').addEventListener('click',function(){
+ var expanded=$('decisionReport').classList.toggle('expanded');
+ this.setAttribute('aria-expanded',String(expanded));
+ this.textContent=expanded?'Hide detailed comparison':'Compare withdrawal and preservation options';
+});
 /* ===== THEMES + LIVE RESULT BAR ===== */
 var THEME_COLOR={sunrise:"#f3f7ff",graphite:"#121212",slate:"#111827",stone:"#f3f4f6"};
 function setTheme(t,save){
