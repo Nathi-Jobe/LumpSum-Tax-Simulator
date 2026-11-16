@@ -373,6 +373,48 @@ h2{font-weight:800}
  #decisionToggle{width:100%;margin:10px 0 0}
 }
 @media print{#decisionToggle{display:none!important}#clientJourney{display:none!important}}
+
+.report-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.report-choice{display:flex;align-items:flex-start;gap:10px;border:2px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;background:var(--card)}
+.report-choice:has(input:checked){border-color:var(--accent);background:var(--soft)}
+.report-choice input{width:20px;height:20px;accent-color:var(--accent);flex:none;margin:4px 0 0}
+.report-choice b{display:block}.report-choice small{display:block;font-size:.85rem;color:var(--muted);margin-top:3px}
+@media(max-width:540px){.report-choice-grid{grid-template-columns:1fr}}
+.print-highlights,.print-tax-bar{display:none}
+@media print{
+ html,body{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ #pdfChoice{display:none!important}
+ body.print-standard #decisionReport .print-head,body.print-standard #singleReport .print-head{background:#102c47!important;color:#fff!important;padding:9px 13px!important;border:0!important;border-bottom:4px solid #179b87!important}
+ body.print-standard #decisionReport .print-head *,body.print-standard #singleReport .print-head *{color:#fff!important}
+ body.print-standard #decisionReport h2,body.print-standard #singleReport h2{color:#102c47!important;border-left:4px solid #179b87;padding-left:9px!important}
+ body.print-standard #decisionReport .decision-table tr:first-child,body.print-standard #singleReport .decision-table tr:first-child{background:#eaf3f6!important}
+ body.print-standard #decisionReport .decision-table td:last-child,body.print-standard #singleReport .decision-table td:last-child{color:#066779!important}
+ body.print-standard #decisionReport .directive-card,body.print-standard #singleReport .directive-card{border-left:4px solid #179b87!important}
+ body.print-standard #decisionReport .print-footer,body.print-standard #singleReport .print-footer{border-top:2px solid #179b87!important}
+ body.print-visual #decisionReport,body.print-visual #singleReport{font-family:system-ui,-apple-system,Segoe UI,sans-serif!important}
+ body.print-visual #decisionReport .print-head,body.print-visual #singleReport .print-head{background:linear-gradient(110deg,#0d3551,#08646b)!important;color:white!important;padding:10px 14px!important;border:0!important;border-bottom:4px solid #edba3c!important}
+ body.print-visual #decisionReport .print-head *,body.print-visual #singleReport .print-head *{color:white!important}
+ body.print-visual #decisionReport h2,body.print-visual #singleReport h2{color:#123454!important;border-left:5px solid #edba3c;padding:4px 9px!important}
+ body.print-visual .print-highlights{display:grid!important;grid-template-columns:repeat(3,1fr);gap:7px;margin:9px 0 5px!important}
+ body.print-visual .ph{border:1px solid;border-radius:9px;padding:9px 8px;min-height:62px;overflow-wrap:anywhere}
+ body.print-visual .ph span{display:block;font-size:7.1pt;font-weight:700}
+ body.print-visual .ph b{display:block;font-size:13.3pt;line-height:1.3;margin-top:3px}
+ body.print-visual .ph-net{background:#e4f6e8!important;border-color:#a5d8b0!important;color:#125d2d!important}
+ body.print-visual .ph-tax{background:#fff0ea!important;border-color:#f4bfa9!important;color:#a83c20!important}
+ body.print-visual .ph-rem{background:#e8f3ff!important;border-color:#a6cef3!important;color:#0e5287!important}
+ body.print-visual .ph *{color:inherit!important}
+ body.print-visual .print-tax-bar{display:flex!important;height:7px;background:#e1e7ed!important;border-radius:9px;overflow:hidden;margin:4px 0 10px!important}
+ body.print-visual .print-bar-net{background:#20884f!important}
+ body.print-visual .print-bar-tax{background:#dc7752!important}
+ body.print-visual .decision-table thead{background:#dcecf8!important}
+ body.print-visual .decision-table tbody tr:nth-child(even){background:#f1f6fc!important}
+ body.print-visual .decision-table tr:has(th:first-child){border-left:2px solid #dcecf8}
+ body.print-visual .decision-metrics>div:first-child{background:#fff3e8!important;border:1px solid #eec6a6!important}
+ body.print-visual .decision-metrics>div:last-child{background:#e5f6f2!important;border:1px solid #a4d6c6!important}
+ body.print-visual .directive-card{background:#f0f8ff!important;border-left:5px solid #218dba!important}
+ body.print-visual .print-footer{background:#f0f8f5!important;border-top:2px solid #19927f!important;padding:7px!important}
+ body.print-visual #decisionReport .report-small,body.print-visual #singleReport .report-small{color:#283a4c!important}
+}
 </style>
 </head>
 
@@ -598,6 +640,8 @@ h2{font-weight:800}
     <div id="decisionReport" class="card" style="display:none">
       <div class="print-head"><strong>LUMP SUM TAX SIMULATOR — CLIENT DECISION SUMMARY · 2026/27 ESTIMATE</strong><p>Independent educational estimate | Prepared <span id="printDate"></span></p></div>
       <h2 id="decisionHeading">Your choices, side by side</h2>
+<div class="print-highlights" aria-label="Colourful result summary"><div class="ph ph-net"><span id="decisionHeadlineLabel">Estimated net cash</span><b class="ph-net-value"></b></div><div class="ph ph-tax"><span>Estimated tax</span><b class="ph-tax-value"></b></div><div class="ph ph-rem"><span class="ph-rem-label">Remaining in fund</span><b class="ph-rem-value"></b></div></div>
+<div class="print-tax-bar" aria-hidden="true"><div class="print-bar-net"></div><div class="print-bar-tax"></div></div>
       <button type="button" id="decisionToggle" class="btn ghost noprint" aria-expanded="false">Compare withdrawal and preservation options</button>
       <div class="decision-guide" id="decisionGuide"><strong>Your money, your choice</strong><span class="pill">Cash now</span><span class="pill">Tax today</span><span class="pill">Keep invested</span><p>See the outcome of each permitted route before deciding whether to seek advice. Figures are indicative—not a tax directive or guarantee.</p></div>
       <p class="decision-summary" id="decisionIntro"></p>
@@ -670,6 +714,8 @@ h2{font-weight:800}
     <div id="singleReport" class="card" style="display:none" aria-label="Client calculation report">
       <div class="print-head"><strong>LUMP SUM TAX SIMULATOR — CLIENT ESTIMATE · 2026/27 ESTIMATE</strong><p>Independent educational estimate | Prepared <span id="singleDate"></span></p></div>
       <h2 id="singleTitle">Your estimate</h2>
+<div class="print-highlights" aria-label="Colourful result summary"><div class="ph ph-net"><span id="singleHeadlineLabel">Estimated net cash</span><b class="ph-net-value"></b></div><div class="ph ph-tax"><span>Estimated tax</span><b class="ph-tax-value"></b></div><div class="ph ph-rem"><span class="ph-rem-label">Remaining in fund</span><b class="ph-rem-value"></b></div></div>
+<div class="print-tax-bar" aria-hidden="true"><div class="print-bar-net"></div><div class="print-bar-tax"></div></div>
       <p id="singleIntro" class="decision-summary"></p>
       <table class="decision-table" aria-label="Estimated gross withdrawal tax and amount remaining"><tbody id="singleRows"></tbody></table>
       <p id="singleAssumptions" class="report-small"></p>
@@ -705,6 +751,16 @@ h2{font-weight:800}
       <p class="small" id="cmpTxt" style="margin-bottom:0"></p>
     </div>
 
+    <div id="pdfChoice" class="card noprint" aria-label="Choose your PDF report design">
+      <h3>Choose your PDF report</h3>
+      <p class="small">Both versions use the same figures, assumptions, safeguards and adviser contact details. Only the presentation changes.</p>
+      <div class="report-choice-grid" role="radiogroup" aria-label="PDF presentation">
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="standard" checked><span><b>Standard · Simple & clear</b><small>Neat table, Navy & Emerald highlights, all explanatory text.</small></span></label>
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="visual"><span><b>Visual · Colourful overview</b><small>Colour-coded result cards, visual comparison and the full explanatory text.</small></span></label>
+      </div>
+      <button type="button" class="btn book" id="printChosenPdf" style="width:100%;margin-top:12px">Preview / Save selected PDF</button>
+      <p class="small">In the browser print window, choose <b>Save as PDF</b> and enable <b>Background graphics</b> for the most accurate colours. No contact details are required.</p>
+    </div>
     <div class="cta">
       <h2>Would you like independent guidance?</h2>
       <p class="lead" style="margin-bottom:0">Your comparison is available above and you can save it without contacting anyone. If you would like to discuss implementation, you may request an appointment or contact the adviser. Your estimated figures are <b>not shared automatically</b>. You can explicitly opt in to include a short summary in a WhatsApp draft; you still choose whether to send it.</p>
@@ -995,8 +1051,34 @@ function printActiveReport(){
   var decision=$('decisionReport').style.display==='block';
   var single=$('singleReport').style.display==='block';
   if(!decision && !single){alert('No verified report is available for these inputs.');return;}
-  document.body.classList.remove('print-decision','print-single');
-  document.body.classList.add(decision?'print-decision':'print-single');
+  var choice=document.querySelector('input[name="pdfStyle"]:checked');
+  var selectedStyle=choice?choice.value:'standard';
+  var current=decision?$('decisionReport'):$('singleReport');
+  var estimateNet=$('rNet').textContent;
+  var estimateTax=$('rTax').textContent;
+  var isPreservation=radio('scn')==='preserve' && num($('sev'))===0;
+  var label=isPreservation?'Fund preserved':'Estimated net cash';
+  var remainingLabel='Remaining in fund', remainingValue='Not applicable';
+  if(decision){
+    remainingLabel='Amount invested: partial option';
+    remainingValue=$('decisionPreserved').textContent;
+  }else{
+    var rows=Array.from($('singleRows').querySelectorAll('tr'));
+    var relevant=rows.find(function(r){return /savings.component balance remaining|fund remaining invested|estimated amount for annuity|total proposed remaining retirement savings|fund amount proposed for preservation/i.test(r.cells[0]?.textContent||'');});
+    if(relevant){remainingLabel=relevant.cells[0].textContent;remainingValue=relevant.cells[1].textContent;}
+  }
+  current.querySelector('.ph-net-value').textContent=estimateNet;
+  current.querySelector('.ph-tax-value').textContent=estimateTax;
+  current.querySelector('.ph-rem-label').textContent=remainingLabel;
+  current.querySelector('.ph-rem-value').textContent=remainingValue;
+  var headline=current.querySelector('[id$="HeadlineLabel"]');
+  if(headline)headline.textContent=label;
+  var moneyValue=function(x){return Number((x||'').replace(/[^\\d]/g,''))||0;};
+  var n=moneyValue(estimateNet),t=moneyValue(estimateTax),gross=n+t;
+  current.querySelector('.print-bar-net').style.width=(gross?100*n/gross:100)+'%';
+  current.querySelector('.print-bar-tax').style.width=(gross?100*t/gross:0)+'%';
+  document.body.classList.remove('print-decision','print-single','print-standard','print-visual');
+  document.body.classList.add(decision?'print-decision':'print-single','print-'+selectedStyle);
   window.print();
 }
 
@@ -1592,6 +1674,7 @@ $('downloadReport').addEventListener('click',function(){
   printActiveReport();
 });
 $('downloadSingle').addEventListener('click',printActiveReport);
+$('printChosenPdf').addEventListener('click',printActiveReport);
 /* All result actions validate, explain, highlight, and navigate to the relevant input. */
 function clearFieldAttention(){
   document.querySelectorAll('.field-attention').forEach(function(n){n.classList.remove('field-attention');});
