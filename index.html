@@ -380,6 +380,50 @@ h2{font-weight:800}
 .report-choice input{width:20px;height:20px;accent-color:var(--accent);flex:none;margin:4px 0 0}
 .report-choice b{display:block}.report-choice small{display:block;font-size:.85rem;color:var(--muted);margin-top:3px}
 @media(max-width:540px){.report-choice-grid{grid-template-columns:1fr}}
+/* Client-facing report chooser: visual previews, not a bare radio list. */
+#pdfChoice{padding:clamp(16px,3.5vw,32px);border-radius:20px;background:var(--card)}
+.pdf-chooser-heading{display:flex;gap:16px;align-items:center;justify-content:center;margin:0 0 20px}
+.pdf-chooser-heading h3{font-size:clamp(1.45rem,3vw,2rem);margin:0;color:var(--ink);line-height:1.2}
+.pdf-chooser-heading p{margin:4px 0 0;color:var(--muted)}
+.pdf-chooser-icon{display:grid;place-items:center;flex:0 0 52px;height:64px;border:4px solid #26a34a;border-radius:8px;color:#198a36;font-weight:900;background:#f6fff7;font-size:1.15rem}
+#pdfChoice .report-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#pdfChoice .report-choice{align-items:flex-start;min-width:0;border:2px solid #b8c7d3;border-radius:17px;padding:16px 13px;background:var(--card);box-shadow:0 2px 7px #0b32421b}
+#pdfChoice .report-choice:has(input:checked){border-color:#299d35;background:color-mix(in srgb,var(--card) 95%,#dcf9df);box-shadow:0 0 0 1px #299d3533}
+#pdfChoice .report-choice input{margin:4px 7px 0 2px;flex:0 0 23px;width:23px;height:23px}
+.report-choice-body{display:block;min-width:0;width:100%}
+.report-choice-body>strong{display:block;font-size:clamp(1.05rem,2.2vw,1.38rem);color:var(--ink);line-height:1.25}
+.report-choice-body>small{display:block;min-height:3.7em;margin:5px 0 12px;font-size:.9rem;line-height:1.38;color:var(--muted)}
+.pdf-mini-page{display:block;background:#fff;color:#122641;border:1px solid #d1dce4;border-radius:10px;overflow:hidden;box-shadow:0 3px 10px #061a2730;font-size:clamp(8px,1.05vw,12px);line-height:1.3}
+.pdf-mini-top{display:flex;flex-direction:column;gap:1px;background:linear-gradient(95deg,#066477,#0a465f);color:white;padding:8px 12px;border-bottom:3px solid #b5e693}
+.pdf-mini-top b{color:white!important;font-size:1.12em}.pdf-mini-top small{color:#e2f8fc!important;font-size:.8em}
+.pdf-mini-main{display:flex;flex-direction:column;gap:7px;padding:10px}
+.pdf-mini-title{font-size:1.18em;color:#091a3a}
+.pdf-mini-caption{border-left:3px solid #35b34a;padding-left:6px;font-size:1em;color:#142744}
+.pdf-mini-table{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);border:1px solid #cdd8df;border-radius:4px;overflow:hidden}
+.pdf-mini-table>*{padding:4px 5px;border-bottom:1px solid #e2e8eb;background:#f5f8fa;min-width:0;overflow-wrap:anywhere}
+.pdf-mini-table>b{text-align:right;background:#e7f5e8;color:#102943;font-size:1em}
+.pdf-mini-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.pdf-mini-metric{display:flex;flex-direction:column;gap:3px;padding:7px 4px;text-align:center;border-radius:7px;min-width:0}
+.pdf-mini-metric small{font-size:.8em;color:inherit!important;line-height:1.1}.pdf-mini-metric b{font-size:1.18em;color:inherit!important;overflow-wrap:anywhere}
+.pdf-mini-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.pdf-mini-panel{display:flex;flex-direction:column;gap:4px;padding:7px;background:#eff4f8;border:1px solid #cfdce7;border-radius:7px;min-width:0}
+.pdf-mini-panel b{font-size:.95em;color:#163554}.pdf-mini-panel small{font-size:.85em;color:#253d55!important;overflow-wrap:anywhere}
+.pdf-mini-tag{align-self:flex-start;background:#208eb6;color:#fff;border-radius:12px;padding:2px 7px;font-size:.78em;font-weight:700}
+.pdf-mini-metric.green,.pdf-mini-panel.green{background:#dbf7df;color:#11652b}.pdf-mini-metric.coral{background:#ffebe6;color:#af3b22}.pdf-mini-metric.blue,.pdf-mini-panel.blue{background:#e1f1ff;color:#155787}
+.pdf-chooser-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0 6px}
+.pdf-chooser-actions .btn{width:auto;min-width:205px}
+.pdf-chooser-note{text-align:center;color:var(--muted);font-size:.86rem;font-style:italic;margin:12px 0 0}
+.pdf-preview-dialog{width:min(1080px,96vw);max-height:88vh;border:1px solid #b8ccd9;border-radius:18px;padding:20px;background:var(--card);color:var(--ink);overflow:auto}
+.pdf-preview-dialog::backdrop{background:#071e39bc}
+.pdf-preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pdf-preview-toolbar h3{margin:0}
+.pdf-preview-dialog .report-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pdf-preview-dialog .report-choice{cursor:default;display:block}
+.pdf-preview-dialog .report-choice input{display:none}
+.pdf-preview-dialog .report-choice-body>small{min-height:0}
+@media(max-width:620px){#pdfChoice .report-choice-grid,.pdf-preview-dialog .report-choice-grid{grid-template-columns:1fr}#pdfChoice .report-choice{padding:14px}.report-choice-body>small{min-height:0}.pdf-mini-page{font-size:11px}.pdf-chooser-heading{justify-content:flex-start}.pdf-chooser-actions .btn{width:100%}}
+@media print{#bothPdfPreview{display:none!important}}
+
 .print-highlights,.print-tax-bar{display:none}
 @media print{
  html,body{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
@@ -814,14 +858,14 @@ h2{font-weight:800}
     </div>
 
     <div id="pdfChoice" class="card noprint" aria-label="Choose your PDF report design">
-      <h3>Choose your PDF report</h3>
-      <p class="small">Both versions use the same figures, assumptions, safeguards and adviser contact details. Only the presentation changes.</p>
-      <div class="report-choice-grid" role="radiogroup" aria-label="PDF presentation">
-        <label class="report-choice"><input type="radio" name="pdfStyle" value="standard" checked><span><b>Standard · Simple & clear</b><small>Navy & Emerald report with a straightforward calculation table.</small></span></label>
-        <label class="report-choice"><input type="radio" name="pdfStyle" value="visual"><span><b>Visual · Colourful overview</b><small>Three result cards, illustrated comparison and safeguards.</small></span></label>
+      <div class="pdf-chooser-heading"><span class="pdf-chooser-icon" aria-hidden="true">PDF</span><div><h3>Choose your PDF report</h3><p>Select the version you want to print or save.</p></div></div>
+      <div class="report-choice-grid" role="radiogroup" aria-label="Choose PDF design">
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="standard"><span class="report-choice-body"><strong>Standard · Simple & Clear</strong><small>A straightforward, table-based report with a clean, professional layout.</small><span class="pdf-mini-page standard-mini"><span class="pdf-mini-top"><b>Retirement Fund Tax Simulator</b><small>Client Results Report</small></span><span class="pdf-mini-main"><b class="pdf-mini-title">Client Calculation Report</b><b class="pdf-mini-caption">Key Results</b><span class="pdf-mini-table"><span>Net cash to you</span><b data-report-net>—</b><span>Estimated SARS tax</span><b data-report-tax>—</b><span>Amount involved</span><b data-report-gross>—</b></span><b class="pdf-mini-caption">Your Inputs</b><span class="pdf-mini-table"><span>Calculation</span><b data-report-route>—</b><span>Fund / withdrawal</span><b data-report-gross>—</b></span><b class="pdf-mini-caption">Comparison: Cash vs Preserve</b><span class="pdf-mini-table"><span>Take cash</span><b data-report-net>—</b><span>Preserve</span><b data-report-preserved>—</b></span></span></span></span></label>
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="visual" checked><span class="report-choice-body"><strong>Visual · Colourful Overview</strong><small>A more visual, colourful report with key results, highlights and easy-to-read sections.</small><span class="pdf-mini-page visual-mini"><span class="pdf-mini-top"><b>Retirement Fund Tax Simulator</b><small>Client Results Report</small></span><span class="pdf-mini-main"><span class="pdf-mini-tag">Your retirement decision</span><b class="pdf-mini-title">Client Results Summary</b><b class="pdf-mini-caption">Key Results</b><span class="pdf-mini-metrics"><span class="pdf-mini-metric green"><small>Net Cash to You</small><b data-report-net>—</b></span><span class="pdf-mini-metric coral"><small>Estimated SARS Tax</small><b data-report-tax>—</b></span><span class="pdf-mini-metric blue"><small>Fund / Withdrawal</small><b data-report-gross>—</b></span></span><span class="pdf-mini-columns"><span class="pdf-mini-panel"><b>Your Inputs</b><small data-report-route>—</small><small data-report-gross>—</small></span><span class="pdf-mini-panel"><b>How the Result Works</b><small>Estimated tax, not a directive</small><small>Fund rules apply</small></span></span><b class="pdf-mini-caption">Compare Your Options</b><span class="pdf-mini-columns"><span class="pdf-mini-panel green"><b>Take Cash Now</b><small data-report-net>—</small></span><span class="pdf-mini-panel blue"><b>Keep Invested</b><small data-report-preserved>—</small></span></span></span></span></span></label>
       </div>
-      <button type="button" class="btn book" id="printChosenPdf" style="width:100%;margin-top:12px">Print / Save selected PDF</button>
-      <p class="small">In the browser print window, choose <b>Save as PDF</b> and enable <b>Background graphics</b> for the most accurate colours. No contact details are required.</p>
+      <div class="pdf-chooser-actions"><button type="button" class="btn book" id="printChosenPdf">▣ &nbsp;Print / Save selected PDF</button><button type="button" class="btn ghost" id="previewBothPdf">◉ &nbsp;Preview both</button></div>
+      <p class="pdf-chooser-note">Both versions use the same calculated figures; only the presentation changes. In the print window select <b>Save as PDF</b> and enable <b>Background graphics</b> for accurate colours.</p>
+      <dialog id="bothPdfPreview" class="pdf-preview-dialog" aria-label="Preview both PDF designs"><div class="pdf-preview-toolbar"><h3>Preview both PDF designs</h3><button type="button" class="btn ghost" id="closePdfPreview">Close</button></div><p class="small">These are on-screen layout previews using your current figures. The PDF includes full explanations, calculations and disclaimers.</p><div id="bothPdfPreviewPanels" class="report-choice-grid"></div></dialog>
     </div>
     <div class="cta">
       <h2>Would you like independent guidance?</h2>
@@ -1783,6 +1827,40 @@ $('downloadReport').addEventListener('click',function(){
 });
 $('downloadSingle').addEventListener('click',printActiveReport);
 $('printChosenPdf').addEventListener('click',printActiveReport);
+/* Keep both visible examples bound to the calculation, never fixed sample amounts. */
+function updatePdfChooserPreviews(){
+  var scn=radio('scn');
+  var work=scn==='workingSavings';
+  var decision=$('decisionReport').style.display==='block';
+  var gross=work?num($('workAmount')):num($('v'))+num($('s'))+num($('r'));
+  var preserved=work?gross:decision?num($('v'))+num($('s'))+num($('r')):num($('r'))+num($('s'));
+  if(decision && $('decisionPreserved'))preserved=Number(($('decisionPreserved').textContent||'').replace(/[^\d]/g,''))||preserved;
+  var route=work?'Savings-pot withdrawal':scn==='retire'?'Retirement':scn==='preserve'?'Preservation':'Employment exit';
+  [['net',$('rNet').textContent],['tax',$('rTax').textContent],['gross',R(gross)],['preserved',R(preserved)],['route',route]].forEach(function(item){
+    document.querySelectorAll('[data-report-'+item[0]+']').forEach(function(el){el.textContent=item[1];});
+  });
+  var ready=$('result').style.display==='block' && document.body.classList.contains('route-selected');
+  $('printChosenPdf').disabled=!ready;
+  $('previewBothPdf').disabled=!ready;
+}
+$('previewBothPdf').addEventListener('click',function(){
+  if($('result').style.display!=='block')return;
+  updatePdfChooserPreviews();
+  var panels=$('bothPdfPreviewPanels');
+  panels.replaceChildren();
+  document.querySelectorAll('#pdfChoice .report-choice').forEach(function(el){
+    var copy=el.cloneNode(true);
+    copy.querySelectorAll('input').forEach(function(r){r.remove();});
+    panels.appendChild(copy);
+  });
+  var d=$('bothPdfPreview');
+  if(d.showModal)d.showModal();else d.setAttribute('open','');
+});
+$('closePdfPreview').addEventListener('click',function(){var d=$('bothPdfPreview');if(d.close)d.close();else d.removeAttribute('open');});
+$('bothPdfPreview').addEventListener('click',function(e){if(e.target===this)this.close();});
+var baseUpdatePdf=update;
+update=function(){baseUpdatePdf();updatePdfChooserPreviews();};
+
 /* All result actions validate, explain, highlight, and navigate to the relevant input. */
 function clearFieldAttention(){
   document.querySelectorAll('.field-attention').forEach(function(n){n.classList.remove('field-attention');});
