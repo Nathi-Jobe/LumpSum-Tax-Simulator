@@ -305,6 +305,19 @@ h2{font-weight:800}
 .fund-route-guide p{margin:4px 0 0}
 .fund-route-guide small{display:block;color:var(--muted);margin-top:6px}
 @media print {.fund-route-guide{display:none!important}}
+
+/* Client-first layout: calculation before optional learning */
+.quick-intro{padding:16px 18px!important;margin-top:10px!important}
+.quick-intro h1{margin:0 0 7px!important}
+.quick-intro .lead{margin:0 0 6px!important}
+.quick-intro .help{margin:0 0 8px!important}
+.quick-disclosure{margin-top:8px!important}
+.secondary-guide{padding:9px 0 2px!important}
+.secondary-guide .guidance-toggle{padding:10px 14px}
+.guidance-toggle > summary{cursor:pointer;list-style:revert}
+.guide-hint{font-weight:400;font-size:.85em;color:var(--muted)}
+#calculator{padding-top:14px!important}
+@media print{.secondary-guide,.quick-disclosure{display:none!important}}
 </style>
 <style>
 .directive-card{margin:14px 0;padding:14px 17px;border-radius:14px;background:#f0f7ff;border:1px solid #b3d5fb;color:#173253;break-inside:avoid-page}
@@ -359,65 +372,19 @@ h2{font-weight:800}
 
 <main class="wrap">
 
-<section id="intro">
+<section id="intro" class="quick-intro">
   <h1>Lump Sum Tax Simulator</h1>
-  <p class="lead">Explore estimated cash, lump-sum tax and preservation options under the 2026/27 SARS tables. An educational estimate, not a SARS tax directive or personalised advice.</p>
-  <details><summary>How your information is handled</summary><p>Your calculations run in this browser. Nothing is sent to the adviser automatically. If you request a consultation, only the contact details you submit are sent through the booking service. If you deliberately include a result in a WhatsApp message, that summary will be shared when you send it.</p></details>
-  <div class="note" role="note"><b>Important:</b> Results are illustrative, not a SARS tax directive or confirmation that a fund will permit the selected withdrawal. Previous lump sums, fund-specific vested rights and savings-component access may materially change the result. Verify the figures before making a financial decision.</div>
-  <a class="btn book" href="#calculator">Start the simulator</a>
-  <p class="help">You can review and save your results before deciding whether to speak to an adviser.</p>
-   <button class="btn ghost" type="button" id="themeBtn2" style="width:100%;margin-top:10px">&#127912; Choose your look</button>
-</section>
-
-<section id="how">
-  <h2>How it works</h2>
-  <p class="lead">Confirm your fund type and earlier tax history before relying on an estimate.</p>
-  <ol class="steps">
-    <li><div class="n">1</div><div><strong>Enter what is in your fund</strong><span class="d">Your fund statement shows up to three amounts: vested, savings and retirement. The simulator adds them up.</span></div></li>
-    <li><div class="n">2</div><div><strong>Say what you are doing</strong><span class="d">Retire, leave your job and take cash, or leave your job and preserve your fund.</span></div></li>
-    <li><div class="n">3</div><div><strong>Choose how much cash</strong><span class="d">When retiring, one third can usually be cash and the rest buys an annuity. You can take less.</span></div></li>
-    <li><div class="n">4</div><div><strong>Compare and save the result</strong><span class="d">Confirm previous lump sums, review full cash versus partial preservation versus full preservation, then save the comparison as a PDF. Adviser contact is optional.</span></div></li>
-  </ol>
-  <details>
-    <summary>Why is it not a flat percentage?</summary>
-    <p>Lump sums are taxed in bands. The first part is tax-free, and each higher part is taxed at a higher rate (18%, then 27%, then 36%). A bigger lump sum therefore has a higher overall percentage.</p>
-  </details>
-  <details>
-    <summary>What are the three pots in a two-pot fund?</summary>
-    <ul>
-      <li><b>Vested component:</b> generally accumulated before 1 September 2024, plus growth. Its cash-at-retirement rights depend partly on the fund type and any pre-2021 protected provident benefits.</li>
-      <li><b>Savings component:</b> generally one-third of new contributions since 1 September 2024, subject to fund allocations and initial seeding (generally 10% of the 31 August 2024 interest, capped at R30,000, where applicable). Pre-retirement withdrawals usually require at least R2,000 and are taxed as ordinary income; special exit exceptions can apply. At retirement, any remaining savings-component balance may be taken as part of a retirement lump sum and taxed under the retirement lump-sum table, not the pre-retirement ordinary-income rules.</li>
-      <li><b>Retirement component:</b> generally two-thirds of new contributions. Ordinarily preserved to retirement for an annuity, subject to exceptions including the small-benefit rule.</li>
-    </ul>
-  </details>
-  <details>
-    <summary>Why does the simulator ask about earlier lump sums?</summary>
-    <p>SARS counts your lump sums over your whole lifetime, not one at a time. Earlier payouts may have used lower tax bands, so a later benefit can be taxed at higher rates. For example, R400,000 gross from an earlier resignation and R200,000 gross from a later retirement payout means you have R600,000 of prior relevant gross benefits to report (subject to the applicable SARS dates and classifications).</p>
+  <p class="lead">Retiring, resigning or retrenched? Enter your fund amounts to compare your estimated cash, tax and preservation options.</p>
+  <p class="help">Indicative 2026/27 SARS estimates, not a tax directive or financial advice. No contact details needed to see results.</p>
+  <details class="quick-disclosure"><summary>Privacy and important limitations</summary>
+    <p>Calculations run in this browser. Nothing is sent to an adviser automatically. Contact or appointment details are sent only if you choose to submit them.</p>
+    <p>Results depend on fund rules, previous lump sums and fund components. Confirm any final decision with your fund and SARS tax directive. This tool is independent and is not sanctioned or approved by Absa.</p>
   </details>
 </section>
 
-<section id="options">
-  <h2>Retiring or leaving your job? Know your options</h2>
-  <p class="lead">Your fund and your severance pay are two different things. Decide on each separately.</p>
-  <div class="opts">
-    <div class="opt">
-      <span class="tag">At retirement</span>
-      <h3>Cash plus annuity</h3>
-      <p>You can usually take the savings component, one-third of non-protected vested benefits, and any confirmed protected provident rights in cash. Small-benefit exceptions and fund rules may change the result.</p>
-    </div>
-    <div class="opt cash">
-      <span class="tag t2">Leaving your job</span>
-      <h3>Take cash now</h3>
-      <p>Depending on your fund and exit rules, vested-component cash generally uses the withdrawal lump-sum table, while any savings-component withdrawal uses normal income tax. The retirement component is generally preserved.</p>
-    </div>
-    <div class="opt sev">
-      <span class="tag t3">Leaving your job</span>
-      <h3>Preserve your fund</h3>
-      <p>An eligible tax-neutral transfer can preserve retirement savings. Retirement lump-sum tax is calculated under a different table; the first R550,000 may be tax-free only if prior relevant lump sums have not used it up.</p>
-    </div>
-  </div>
-  <div class="note">If you receive a <b>qualifying</b> employer severance benefit, it is separate from your fund and may be taxed using the retirement/severance table. Do not apply this tax treatment to ordinary resignation, leave or notice pay. Leave pay, notice pay and bonuses are taxed as normal salary and are not included.</div>
-</section>
+
+
+
 
 <section id="calculator">
   <h2>Simulator</h2>
@@ -592,6 +559,60 @@ h2{font-weight:800}
       <p class="report-small" id="decisionCautions"></p>
       <p class="report-small"><strong>Scope:</strong> 2026/27 SARS withdrawal and, when confirmed, retirement tax tables. Previous tax directives and protected-rights confirmations are required where applicable. The withdrawal comparison uses the table appropriate to the specifically selected, verified exit classification; savings withdrawals and severance are separate and receive their own reports when elected. No cash-flow or future-value projection is implied. Confirm the SARS directive and fund transfer rights.</p>
       <section class="directive-card" aria-label="Checks before acting"><h3>Before you act: confirm these details</h3><p class="directive-intro">This is a self-service estimate, not a SARS directive or a promise of cash entitlement.</p><ul class="directive-items"></ul><p class="directive-foot">You may obtain this information directly from your employer, fund administrator and SARS. Consulting a financial adviser is optional.</p></section>
+
+<section id="how" class="secondary-guide">
+  <details id="howDetails" class="guidance-toggle">
+    <summary><strong>How it works</strong> <span class="guide-hint">— optional step-by-step explanation</span></summary>
+  <p class="lead">Confirm your fund type and earlier tax history before relying on an estimate.</p>
+  <ol class="steps">
+    <li><div class="n">1</div><div><strong>Enter what is in your fund</strong><span class="d">Your fund statement shows up to three amounts: vested, savings and retirement. The simulator adds them up.</span></div></li>
+    <li><div class="n">2</div><div><strong>Say what you are doing</strong><span class="d">Retire, leave your job and take cash, or leave your job and preserve your fund.</span></div></li>
+    <li><div class="n">3</div><div><strong>Choose how much cash</strong><span class="d">When retiring, one third can usually be cash and the rest buys an annuity. You can take less.</span></div></li>
+    <li><div class="n">4</div><div><strong>Compare and save the result</strong><span class="d">Confirm previous lump sums, review full cash versus partial preservation versus full preservation, then save the comparison as a PDF. Adviser contact is optional.</span></div></li>
+  </ol>
+  <details>
+    <summary>Why is it not a flat percentage?</summary>
+    <p>Lump sums are taxed in bands. The first part is tax-free, and each higher part is taxed at a higher rate (18%, then 27%, then 36%). A bigger lump sum therefore has a higher overall percentage.</p>
+  </details>
+  <details>
+    <summary>What are the three pots in a two-pot fund?</summary>
+    <ul>
+      <li><b>Vested component:</b> generally accumulated before 1 September 2024, plus growth. Its cash-at-retirement rights depend partly on the fund type and any pre-2021 protected provident benefits.</li>
+      <li><b>Savings component:</b> generally one-third of new contributions since 1 September 2024, subject to fund allocations and initial seeding (generally 10% of the 31 August 2024 interest, capped at R30,000, where applicable). Pre-retirement withdrawals usually require at least R2,000 and are taxed as ordinary income; special exit exceptions can apply. At retirement, any remaining savings-component balance may be taken as part of a retirement lump sum and taxed under the retirement lump-sum table, not the pre-retirement ordinary-income rules.</li>
+      <li><b>Retirement component:</b> generally two-thirds of new contributions. Ordinarily preserved to retirement for an annuity, subject to exceptions including the small-benefit rule.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Why does the simulator ask about earlier lump sums?</summary>
+    <p>SARS counts your lump sums over your whole lifetime, not one at a time. Earlier payouts may have used lower tax bands, so a later benefit can be taxed at higher rates. For example, R400,000 gross from an earlier resignation and R200,000 gross from a later retirement payout means you have R600,000 of prior relevant gross benefits to report (subject to the applicable SARS dates and classifications).</p>
+  </details>
+  </details>
+</section>
+
+<section id="options" class="secondary-guide">
+  <details id="optionsDetails" class="guidance-toggle">
+    <summary><strong>Learn about your options</strong> <span class="guide-hint">— optional background</span></summary>
+  <p class="lead">Your fund and your severance pay are two different things. Decide on each separately.</p>
+  <div class="opts">
+    <div class="opt">
+      <span class="tag">At retirement</span>
+      <h3>Cash plus annuity</h3>
+      <p>You can usually take the savings component, one-third of non-protected vested benefits, and any confirmed protected provident rights in cash. Small-benefit exceptions and fund rules may change the result.</p>
+    </div>
+    <div class="opt cash">
+      <span class="tag t2">Leaving your job</span>
+      <h3>Take cash now</h3>
+      <p>Depending on your fund and exit rules, vested-component cash generally uses the withdrawal lump-sum table, while any savings-component withdrawal uses normal income tax. The retirement component is generally preserved.</p>
+    </div>
+    <div class="opt sev">
+      <span class="tag t3">Leaving your job</span>
+      <h3>Preserve your fund</h3>
+      <p>An eligible tax-neutral transfer can preserve retirement savings. Retirement lump-sum tax is calculated under a different table; the first R550,000 may be tax-free only if prior relevant lump sums have not used it up.</p>
+    </div>
+  </div>
+  <div class="note">If you receive a <b>qualifying</b> employer severance benefit, it is separate from your fund and may be taxed using the retirement/severance table. Do not apply this tax treatment to ordinary resignation, leave or notice pay. Leave pay, notice pay and bonuses are taxed as normal salary and are not included.</div>
+  </details>
+</section>
 <div class="report-actions noprint"><button class="btn book" type="button" id="downloadReport">Save my comparison as PDF</button><p class="report-small" style="grid-column:1/-1;margin:0">On Android, choose <strong>Save as PDF</strong> in the browser print screen. No appointment or contact details required.</p><a href="#appointment-request" class="btn ghost">Optional: speak to an adviser</a></div>
       <div class="print-footer"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACBElEQVR4nO2bQYrkMAxFv8aGLB2YA+Qozs2GPtLcID5KDjBgLwMJfxaya6ppGqoKkvKAtDCUeYsPwpa+XBHiwUg/HiUBQw011FBDDT0TlRoeSOMhMhcPoLTt+XQBhj6DRpJkBhAzgDRtAsCRJPkZPUeAoc+gpR4hPVZx9bqt5+0KAYa+gqYR4MdEyvweAYZ+H/7LTsiQuPqdKFcIMPQFNJBcAADFa92SGQDJ/RoBhj6OJhERGVG7jLgOBHBoS3iFAEMfCb0J78ZPadqkXoLh81Tq7VoNrX5rLtVvcWk3YfNb1hP2g0IdVcwAl0AicgeZHUnuaAvJ5e1aDa2p0PRkoLYaYYeaZYS9emfLVi+ozGGHzIGs6VkHqvNidjbL6Aa9VaXDM2n3N1DStAliHiHx93iuAEOfr1uAY7v/HO/q1hKsbvWDti7jlrLIHbogtMXqVm/oIVzCJkDx4ALH6pOtbnWE3uqWI+LqwTQCgpABLWPl584zBRj6QgffAghsx6r9tLrVF/rv7Vj9VppIne/G1d6Ou0Nvb8cyAyBXEW0w0mQz+H7Qu8mTdhQxO3IJLUcxO7sJO0bDJvJrHaiNof6p5lIBhj6BloH8mKrp0pRdK8DQb6N18IEACsA0OkjMhwfCHw+EfK4AQ1+ZPAFQ06V16/bwD9gsoxtU7KsFQw011FBD/yP0Lx8HRjrA94MBAAAAAElFTkSuQmCC" alt="QR code to contact adviser on WhatsApp"><strong>Want to discuss the options?</strong><p>Optional WhatsApp: 083 330 3214. Scan the code or visit wa.me/27833303214. No appointment is necessary to use this estimate.</p><p>Educational estimates only, not a tax directive, a fund quotation, personalised financial advice or an Absa-approved service. Not an actuarial GEPF estimate; qualifying retrenchment is shown only if classification is confirmed. SARS 2026/27 table: sars.gov.za/tax-rates/income-tax/retirement-lump-sum-benefits/. Do not make an irreversible withdrawal or transfer without checking with your fund and SARS.</p></div>
     </div>
@@ -1025,7 +1046,7 @@ function update(){
   show("stepPrevious", !workingOnly);
   show("workingSavingsFields", workingOnly);
   show("earlyRetirementField",scn==="retire" && Number.isFinite(clientAge) && clientAge<55);
-  show("grpProv", scn==="retire" || (clientAge>=55 && (scn==="cash" || scn==="preserve") && (fundType==="pension" || fundType==="provident")));
+  show("grpProv", !workingOnly && (fundType==="provident" || fundType==="provident-pres") && (scn==="retire" || (clientAge>=55 && (scn==="cash" || scn==="preserve"))));
   show("grpSev", scn==="cash" || scn==="preserve");
   show("grpAmt", scn==="retire" || scn==="cash");
   show("grpSavingsElection", scn==="cash" && p.s>0);
@@ -1443,6 +1464,12 @@ var _update=update; update=function(){ _update(); syncLive(); syncSplit(); };
   el.addEventListener("focus", function(){ if (this.value==="0") this.select(); });
   el.addEventListener("blur",  function(){ if (!this.value && this.id!=="camt") { this.value="0"; update(); } });
 });
+$('fundType').addEventListener('change', function(){
+  if(this.value!=='provident' && this.value!=='provident-pres'){
+    $('protected').value='0';
+    $('protectedVerified').checked=false;
+  }
+});
 [].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#fundType,#clientAge,#exitReason,#retrenchFundConfirmed,#earlyReason,#retireEligible,#protectedVerified,#sevVerified,#savingsElection,#savingsEligible,#incomeKnown,#ageGroup,#prevStatus,#workAge,#workEligible,#workIncomeConfirmed'), function(r){ r.addEventListener("change", update); });
 // Calculations run locally. Inputs are not automatically sent or retained on a server.
 $('downloadReport').addEventListener('click',function(){
@@ -1450,6 +1477,12 @@ $('downloadReport').addEventListener('click',function(){
   printActiveReport();
 });
 $('downloadSingle').addEventListener('click',printActiveReport);
+document.querySelectorAll('a[href="#how"],a[href="#options"]').forEach(function(link){
+  link.addEventListener('click', function(){
+    var detail = $(this.getAttribute('href')==='#how' ? 'howDetails' : 'optionsDetails');
+    if(detail) detail.open=true;
+  });
+});
 update();
 </script>
 </body>
