@@ -1073,7 +1073,7 @@ function printActiveReport(){
   current.querySelector('.ph-rem-value').textContent=remainingValue;
   var headline=current.querySelector('[id$="HeadlineLabel"]');
   if(headline)headline.textContent=label;
-  var moneyValue=function(x){return Number((x||'').replace(/[^\\d]/g,''))||0;};
+  var moneyValue=function(x){return Number((x||'').replace(/[^\d]/g,''))||0;};
   var n=moneyValue(estimateNet),t=moneyValue(estimateTax),gross=n+t;
   current.querySelector('.print-bar-net').style.width=(gross?100*n/gross:100)+'%';
   current.querySelector('.print-bar-tax').style.width=(gross?100*t/gross:0)+'%';
