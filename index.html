@@ -350,6 +350,14 @@ h2{font-weight:800}
   body.print-decision #decisionReport .print-footer {padding-top:3px!important;margin-top:3px!important;}
   body.print-decision #decisionReport .print-footer img {width:40px!important;height:40px!important;}
 }
+/* Clear, accessible input error treatment */
+.field-attention {outline:3px solid #f97316!important;outline-offset:4px;border-radius:10px;animation:attentionPulse .8s ease-in-out 2;scroll-margin-top:95px;}
+.field-attention input,.field-attention select {border-color:#c2410c!important;}
+.field-attention .money {border-color:#c2410c!important;}
+@keyframes attentionPulse {0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,0)}50%{box-shadow:0 0 0 8px rgba(249,115,22,.23)}}
+#actionFeedback {display:none;margin:12px 0;padding:14px;border:2px solid #ea580c;background:#fff7ed;color:#7c2d12;border-radius:12px;font-weight:650;scroll-margin-top:92px;}
+#actionFeedback:not(:empty){display:block}
+@media(prefers-reduced-motion:reduce){.field-attention{animation:none}}
 </style>
 </head>
 
@@ -539,6 +547,7 @@ h2{font-weight:800}
         </ul>
       </details>
     </div>
+    <div id="actionFeedback" role="alert" aria-live="assertive" tabindex="-1"></div>
     <div id="warn"></div>
   </div>
 
@@ -794,7 +803,7 @@ h2{font-weight:800}
 <button id="liveBar" type="button" aria-label="Jump to your result"><span><small id="liveLbl"></small><b id="liveVal"></b></span><span aria-hidden="true">&#8595;</span></button>
 
 <div class="bar-fixed" role="complementary" aria-label="Results and optional contact">
-  <a class="btn book" href="#result">View my results</a>
+  <button class="btn book" type="button" id="viewResultsButton">View my results</button>
   <a class="btn wa" href="mailto:nathis6040@gmail.com?subject=Lump%20Sum%20Tax%20Simulator%20enquiry" data-wa target="_blank" rel="noopener noreferrer">Email</a>
 </div>
 
@@ -856,7 +865,21 @@ function cashCalc(p, prev, mode, amt, inc, includeSavings, ageGroup, qualifyingR
 /* ===== PAGE ===== */
 var $ = function(id){ return document.getElementById(id); };
 function num(el){ var raw = (el && el.value || "").replace(/\D/g, ""); var value = Number(raw); return Number.isFinite(value) && value >= 0 ? value : 0; }
-function fmtInput(el){ var v=(el.value||"").replace(/\D/g,""); el.value = v ? Number(v).toLocaleString("en-ZA").replace(/\u00a0/g," ") : ""; }
+// Explicit spaces are used instead of locale-specific non-breaking spaces, so
+// R3 000 000 is equally legible on Android, iOS and desktop browsers.
+function fmtInput(el){
+  var raw=el.value||"";
+  var oldPos=el.selectionStart==null?raw.length:el.selectionStart;
+  var digitsBefore=(raw.slice(0,oldPos).match(/\d/g)||[]).length;
+  var digits=raw.replace(/\D/g,"").replace(/^0+(?=\d)/,"");
+  var formatted=digits.replace(/\B(?=(\d{3})+(?!\d))/g," ");
+  if(el.value!==formatted)el.value=formatted;
+  if(document.activeElement===el && el.setSelectionRange){
+    var pos=0,seen=0;
+    while(pos<formatted.length && seen<digitsBefore){if(/\d/.test(formatted.charAt(pos)))seen++;pos++;}
+    try{el.setSelectionRange(pos,pos);}catch(e){}
+  }
+}
 function R(n){ return "R" + Math.round(n).toLocaleString("en-ZA").replace(/\u00a0/g," "); }
 function pct(a,b){ return b>0 ? (a/b*100).toFixed(1)+"%" : "0%"; }
 function radio(name){ var r=document.querySelector('input[name="'+name+'"]:checked'); return r?r.value:""; }
@@ -1445,7 +1468,8 @@ function setTheme(t,save){
 setTheme(document.documentElement.getAttribute("data-theme"),false);
 [].forEach.call(document.querySelectorAll('input[name="theme"]'),function(r){ r.addEventListener("change",function(){ setTheme(this.value,true); }); });
 function openSheet(){ var d=$("themeSheet"); if(d.showModal) d.showModal(); else d.setAttribute("open",""); }
-$("themeBtn").addEventListener("click",openSheet); $("themeBtn2").addEventListener("click",openSheet);
+$("themeBtn").addEventListener("click",openSheet);
+if($("themeBtn2")) $("themeBtn2").addEventListener("click",openSheet);
 $("themeDone").addEventListener("click",function(){ $("themeSheet").close(); });
 $("themeSheet").addEventListener("click",function(e){ if(e.target===this) this.close(); });
 var resultInView=false;
@@ -1460,6 +1484,7 @@ $("liveBar").addEventListener("click",function(){ $("result").scrollIntoView({be
 var _update=update; update=function(){ _update(); syncLive(); syncSplit(); };
 
 [].forEach.call(document.querySelectorAll("[data-money]"), function(el){
+  fmtInput(el);
   el.addEventListener("input", function(){ fmtInput(this); update(); });
   el.addEventListener("focus", function(){ if (this.value==="0") this.select(); });
   el.addEventListener("blur",  function(){ if (!this.value && this.id!=="camt") { this.value="0"; update(); } });
@@ -1477,10 +1502,71 @@ $('downloadReport').addEventListener('click',function(){
   printActiveReport();
 });
 $('downloadSingle').addEventListener('click',printActiveReport);
+/* All result actions validate, explain, highlight, and navigate to the relevant input. */
+function clearFieldAttention(){
+  document.querySelectorAll('.field-attention').forEach(function(n){n.classList.remove('field-attention');});
+  document.querySelectorAll('[aria-invalid="true"]').forEach(function(n){n.removeAttribute('aria-invalid');});
+  $('actionFeedback').textContent='';
+}
+function attentionFor(controlId, message){
+  var el=$(controlId);
+  if(!el) return false;
+  var wrap=el.closest('.field') || el.closest('.check') || el.closest('.money') || el.parentElement;
+  if(wrap) wrap.classList.add('field-attention');
+  el.setAttribute('aria-invalid','true');
+  $('actionFeedback').textContent='Please complete or confirm: '+message+'. The highlighted field needs your attention.';
+  if(wrap) wrap.scrollIntoView({behavior:'smooth',block:'center'});
+  try{el.focus({preventScroll:true});}catch(e){el.focus();}
+  return true;
+}
+function showClientResults(){
+  clearFieldAttention();
+  update();
+  var scn=radio('scn'), working=scn==='workingSavings', age=$('clientAge').value.trim();
+  var missing=[];
+  if(working){
+    if(num($('workBalance'))<2000) missing.push(['workBalance','an eligible savings balance of at least R2,000']);
+    else if(num($('workAmount'))<2000 || num($('workAmount'))>num($('workBalance'))) missing.push(['workAmount','a withdrawal amount from R2,000 up to your available balance']);
+    if(!$('workEligible').checked) missing.push(['workEligible','savings-pot withdrawal eligibility']);
+    if(!$('workIncome').value.trim() || !$('workIncomeConfirmed').checked) missing.push(['workIncomeConfirmed','annual taxable income and its confirmation']);
+  } else {
+    if(num($('v'))+num($('s'))+num($('r'))<=0 && num($('sev'))<=0) missing.push(['v','your fund-component balances']);
+    if(!$('fundType').value) missing.push(['fundType','your type of retirement fund']);
+    if(!age || Number(age)<16 || Number(age)>100) missing.push(['clientAge','your age in completed years']);
+    if($('prevStatus').value==='unknown') missing.push(['prevStatus','your previous taxable lump-sum history']);
+    if(scn==='retire' && !$('retireEligible').checked) missing.push(['retireEligible','fund-confirmed retirement eligibility']);
+    if(scn==='retire' && Number(age)<55 && !$('earlyReason').value) missing.push(['earlyReason','an eligible early-retirement exception']);
+    if((scn==='cash'||scn==='preserve') && $('exitReason').value==='other') missing.push(['exitReason','the reason for leaving employment']);
+    if((scn==='cash'||scn==='preserve') && $('exitReason').value==='retrenchment' && !$('retrenchFundConfirmed').checked) missing.push(['retrenchFundConfirmed','written fund confirmation of retrenchment classification']);
+    if(num($('protected'))>0 && !$('protectedVerified').checked) missing.push(['protectedVerified','fund-confirmed protected provident rights']);
+    if(num($('sev'))>0 && !$('sevVerified').checked) missing.push(['sevVerified','the employer severance classification']);
+    if($('savingsElection').value==='withdraw' && scn==='cash'){
+      if(!$('savingsEligible').checked) missing.push(['savingsEligible','savings-component eligibility']);
+      if(!$('incomeKnown').checked || !$('inc').value.trim()) missing.push(['incomeKnown','annual taxable income confirmation']);
+    }
+  }
+  if(missing.length){
+    missing.forEach(function(item){var el=$(item[0]);if(el){var wrap=el.closest('.field')||el.closest('.check')||el.parentElement;if(wrap)wrap.classList.add('field-attention');el.setAttribute('aria-invalid','true');}});
+    attentionFor(missing[0][0],missing[0][1]);
+    return;
+  }
+  if($('result').style.display==='block'){
+    $('result').scrollIntoView({behavior:'smooth',block:'start'});
+  }else{
+    $('actionFeedback').textContent='The calculation needs additional fund or SARS confirmation. See the explanation directly below.';
+    $('warn').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+$('viewResultsButton').addEventListener('click',showClientResults);
+/* Explain why an existing result disappears after editing a required field. */
+[].forEach.call(document.querySelectorAll('#calculator input,#calculator select'),function(el){
+  el.addEventListener('input',function(){var box=this.closest('.field')||this.closest('.check')||this.parentElement;if(box)box.classList.remove('field-attention');this.removeAttribute('aria-invalid');$('actionFeedback').textContent='';});
+  el.addEventListener('change',function(){var box=this.closest('.field')||this.closest('.check')||this.parentElement;if(box)box.classList.remove('field-attention');this.removeAttribute('aria-invalid');$('actionFeedback').textContent='';});
+});
 document.querySelectorAll('a[href="#how"],a[href="#options"]').forEach(function(link){
   link.addEventListener('click', function(){
     var detail = $(this.getAttribute('href')==='#how' ? 'howDetails' : 'optionsDetails');
-    if(detail) detail.open=true;
+    if(detail){ detail.open=true; setTimeout(function(){detail.scrollIntoView({behavior:'smooth',block:'start'});},0); }
   });
 });
 update();
