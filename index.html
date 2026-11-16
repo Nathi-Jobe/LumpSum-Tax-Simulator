@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#121212">
-<script>(function(){var t;try{t=localStorage.getItem("lsts-theme")}catch(e){}if(!/^(graphite|slate|stone)$/.test(t||""))t="graphite";document.documentElement.setAttribute("data-theme",t)})()</script>
+<script>(function(){var t;try{t=localStorage.getItem("lsts-theme")}catch(e){}if(!/^(graphite|slate|stone|sunrise)$/.test(t||""))t="sunrise";document.documentElement.setAttribute("data-theme",t)})()</script>
 <title>Lump Sum Tax Simulator</title>
 <meta name="description" content="Retiring, resigning or retrenched? See the tax on your retirement fund lump sum and what you keep, including the two-pot system (SARS 2026/27 tables).">
 <meta property="og:title" content="Lump Sum Tax Simulator">
@@ -138,6 +138,29 @@ footer{padding:24px 0 10px;color:var(--muted);font-size:.85rem}
 [data-theme=slate]{--ink:#fff;--muted:#9ca3af;--line:#374151;--bg:#111827;--card:#1f2937;--accent:#1d7a5a;--gtext:#3ba383;--rfill:#a8372c;--soft:#1a2f2e;--wa:#1d7a5a;--hdr:rgba(17,24,39,.92);--hero:linear-gradient(160deg,#1d3a3a,#1f2937 70%);--shadow:0 8px 24px rgba(0,0,0,.35);--accent-ink:#fff;--warn:#2a2412;--warn-line:#5a4a1d;--wa-ink:#fff;--bad:#ff8a80;--c2:#fb923c;--c3:#8ab4ff;--r:18px;--lr:12px;--chip:#e5e7eb;--chip-ink:#111;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
 [data-theme=stone]{--ink:#111;--muted:#4b5563;--line:#d1d5db;--bg:#f3f4f6;--card:#fff;--accent:#1b6b4a;--gtext:#1b6b4a;--rfill:#a63228;--soft:#e6f1ec;--wa:#1b6b4a;--hdr:rgba(255,255,255,.92);--hero:linear-gradient(160deg,#e6f1ec,#fff 75%);--shadow:0 1px 2px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.07);--accent-ink:#fff;--warn:#fff6e0;--warn-line:#efd89a;--wa-ink:#fff;--bad:#b3261e;--c2:#c2410c;--c3:#1d4ed8;--r:18px;--lr:12px;--chip:#e5e7eb;--chip-ink:#111;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
 
+/* Colour-forward accessible light theme: indigo, teal, coral and amber. */
+[data-theme=sunrise]{--ink:#17233c;--muted:#526079;--line:#dce5f4;--bg:#f3f7ff;--card:#ffffff;--accent:#4f46e5;--gtext:#4338ca;--rfill:#f97363;--soft:#eef2ff;--wa:#087c65;--hdr:rgba(255,255,255,.96);--hero:linear-gradient(135deg,#e0e7ff,#dcfce7 55%,#fff1d6);--shadow:0 8px 30px rgba(49,65,138,.10);--accent-ink:#fff;--warn:#fff5db;--warn-line:#f3cb67;--wa-ink:#fff;--bad:#b91c1c;--c2:#ea580c;--c3:#2563eb;--r:18px;--lr:12px;--chip:#e0e7ff;--chip-ink:#17233c;--hf:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+[data-theme=sunrise] h1{color:#312e81}
+[data-theme=sunrise] .card{box-shadow:var(--shadow)}
+[data-theme=sunrise] .steps li:nth-child(3n+1){border-left:5px solid #4f46e5}
+[data-theme=sunrise] .steps li:nth-child(3n+2){border-left:5px solid #0d9488}
+[data-theme=sunrise] .steps li:nth-child(3n){border-left:5px solid #f59e0b}
+[data-theme=sunrise] .choice:has(input:checked){background:#eaeaff;border-color:#635bff;box-shadow:0 3px 14px rgba(79,70,229,.1)}
+[data-theme=sunrise] .keep{background:linear-gradient(115deg,#e9eaff,#e0faf2)}
+[data-theme=sunrise] .decision-metrics>div:first-child{background:#fff2e9;border-color:#f8cfb6}
+[data-theme=sunrise] .decision-metrics>div:last-child{background:#e6f8f2;border-color:#9bd9ca}
+[data-theme=sunrise] .decision-table thead{background:#e0e7ff}
+[data-theme=sunrise] .btn.book{background:linear-gradient(95deg,#4f46e5,#7c3aed)}
+.age-guide{background:linear-gradient(115deg,#eaf1ff,#e4f8f2);border:1px solid #a5c4ec;border-radius:16px;padding:15px;margin:12px 0 16px;color:#17233c}
+.age-guide h3{margin:0 0 7px;color:#312e81}
+.age-guide p{margin:0 0 9px;font-size:.94rem}
+.age-guide strong{color:#0f766e}
+.age-guide .btn{margin-top:8px;min-height:44px;background:#4f46e5;color:white}
+.age-input{width:100%;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:12px;font:700 1.1rem system-ui}
+.age-input:focus{outline:2px solid var(--accent)}
+.age-guide[hidden]{display:none!important}
+@media print{.age-guide,#ageField,#earlyRetirementField{display:none!important}}
+
 /* ===== MOBILE-FIRST POLISH ===== */
 html{-webkit-text-size-adjust:100%}
 body{font-size:16px;padding-bottom:140px;transition:background .25s,color .25s;-webkit-tap-highlight-color:transparent}
@@ -208,6 +231,112 @@ h2{font-weight:800}
 #tip{position:fixed;z-index:90;display:none;max-width:min(320px,calc(100vw - 24px));background:var(--card);color:var(--ink);border:1px solid var(--gtext);border-radius:14px;padding:12px 14px;font-size:.9rem;line-height:1.45;box-shadow:var(--shadow)}
 #tip b{color:var(--ink)}
 @media print{#tip,.info{display:none!important}.moved{display:block!important}#splitCard{display:none!important}}
+
+/* Review patch 2026-11-16: fixed-action accessibility and safe printing. */
+@media(max-width:759px){
+  body{padding-bottom:calc(154px + env(safe-area-inset-bottom,0px))}
+  .bar-fixed{padding-inline:max(12px,env(safe-area-inset-left,0px)) max(12px,env(safe-area-inset-right,0px))}
+  #liveBar{bottom:calc(82px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 24px)}
+  #result{scroll-margin-top:82px}
+}
+@media(max-width:340px){
+ .bar-fixed .btn{font-size:.77rem;padding:6px 2px;min-width:0}
+ #liveBar b{font-size:1rem}
+}
+@media print{
+  /* Only show a result when the calculator has produced one. */
+  body:not(.has-calculated-result) #result{display:none!important}
+  body:not(.has-calculated-result) #printEmptyMessage{display:block!important}
+  body.has-calculated-result #printEmptyMessage{display:none!important}
+  body{padding-bottom:0!important}
+}
+#printEmptyMessage{display:none}
+
+/* Client-first decision report */
+@page{size:A4;margin:7mm}
+#decisionReport{border:2px solid var(--accent);border-radius:16px;padding:20px;margin:18px 0;background:var(--card);break-inside:avoid}
+#decisionReport h2{margin:0 0 8px;font-size:1.5rem}
+.decision-summary{font-size:1.05rem;line-height:1.55;margin:12px 0}
+.decision-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin:14px 0}
+.decision-table th,.decision-table td{padding:11px 9px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+.decision-table th:first-child,.decision-table td:first-child{text-align:left}
+.decision-table thead{background:var(--line)}
+.decision-table th{font-size:.88rem}
+.decision-table td{font-weight:650}
+.decision-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.decision-metrics>div{border:1px solid var(--line);padding:14px;border-radius:12px}
+.decision-metrics b{display:block;font-size:1.4rem;margin-top:4px}
+.report-small{font-size:.88rem;color:var(--muted);line-height:1.55}
+.report-control{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.report-control input{width:180px;max-width:100%;padding:10px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;font:inherit}
+.report-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.print-head,.print-footer{display:none}
+@media(max-width:600px){.decision-table{font-size:.82rem}.decision-table th,.decision-table td{padding:9px 4px}.decision-metrics{grid-template-columns:1fr}.report-actions{grid-template-columns:1fr}#decisionReport{padding:12px}}
+@media print{#intro,#calculator>h2,#calculator>.lead,footer{display:none!important}#decisionReport{font-size:9pt!important}#decisionReport h2{font-size:15pt!important}#decisionReport .decision-table th,#decisionReport .decision-table td{padding:6px 5px!important}#decisionReport .decision-metrics>div{padding:8px!important}#decisionReport .decision-metrics b{font-size:14pt!important}#decisionReport .report-small{font-size:8pt!important}#decisionReport .print-footer img{width:58px;height:58px} #decisionReport{border:1px solid #888;background:#fff;color:#000;margin:0 0 16px;padding:12px}#decisionReport *{color:#000!important}.report-control,.report-actions,.hide-on-print{display:none!important}.print-head,.print-footer{display:block!important}.print-head{border-bottom:2px solid #222;margin-bottom:12px;padding-bottom:8px}.print-footer{border-top:1px solid #aaa;padding-top:12px;margin-top:12px}.print-footer img{width:78px;height:78px;float:right;margin-left:12px}.decision-table thead{background:#eee!important}.decision-metrics>div{border:1px solid #888}.cta,#splitCard,#cmpCard,#barCard,.keep,#result>.card:not(#decisionReport):not(#singleReport){display:none!important}#result{display:block!important}}
+@media print{#decisionReport{padding:7px!important;margin:0!important;font-size:8pt!important}#decisionReport .decision-summary{margin:5px 0!important;line-height:1.25!important;font-size:9pt!important}#decisionReport .report-small{font-size:7.3pt!important;line-height:1.25!important;margin:5px 0!important}#decisionReport .decision-table{margin:6px 0!important}#decisionReport .decision-table td,#decisionReport .decision-table th{padding:3px 4px!important}#decisionReport .decision-metrics{margin:6px 0!important}#decisionReport .decision-metrics>div{padding:5px!important}#decisionReport .print-footer{padding-top:6px;margin-top:6px}#decisionReport .print-footer img{width:54px!important;height:54px!important}#decisionReport h2{font-size:13pt!important;margin-bottom:4px!important}.print-head{padding-bottom:4px!important;margin-bottom:5px!important}}
+
+/* Scenario-specific reports: resignation and non-resignation never print together. */
+#singleReport{border:2px solid var(--accent);border-radius:16px;padding:20px;margin:18px 0;background:var(--card)}
+#singleReport h2{margin:0 0 8px;font-size:1.5rem}
+@media(max-width:600px){#singleReport{padding:12px}}
+@media print{
+ #result > #singleReport{display:block!important;border:1px solid #888;background:#fff;color:#000;padding:9px!important;margin:0!important;font-size:9pt!important}
+ #singleReport *{color:#000!important}
+ #singleReport h2{font-size:15pt!important}
+ #singleReport .report-small{font-size:8pt!important;line-height:1.35}
+ #singleReport .decision-table th,#singleReport .decision-table td{padding:6px 4px!important}
+ #singleReport .print-footer img{width:62px;height:62px}
+ body.print-single #result > #decisionReport{display:none!important}
+ body.print-decision #result > #singleReport{display:none!important}
+ body:not(.print-decision):not(.print-single) #decisionReport,body:not(.print-decision):not(.print-single) #singleReport{display:none!important}
+}
+
+/* Release review: client decision prioritisation and risk labels */
+.decision-guide{border-radius:16px;padding:15px 18px;margin:14px 0;background:linear-gradient(110deg,#e9f9f5,#ecf0ff 65%,#fff1df);border:1px solid #a9d4d0;color:#17304c}
+.decision-guide strong{display:block;font-size:1.08rem;margin-bottom:5px;color:#172452}
+.decision-guide p{margin:5px 0;font-size:.94rem;line-height:1.5}
+.decision-guide .pill{display:inline-block;padding:4px 10px;margin:3px 4px 5px 0;border-radius:30px;background:#fff;color:#214a77;font-weight:700;font-size:.79rem;border:1px solid #bbd8f0}
+.safety-check{border-radius:12px;background:#fff5e7;border:1px solid #e5b65e;padding:12px;margin-top:10px;color:#623e0b}
+.report-small{overflow-wrap:anywhere}
+@media print{.decision-guide,.safety-check{display:none!important}}
+
+.fund-route-guide{border:1px solid var(--accent);border-left:5px solid var(--accent);border-radius:13px;padding:14px;margin-top:12px;background:var(--card);font-size:.94rem;line-height:1.5}
+.fund-route-guide strong{display:block;margin-bottom:4px}
+.fund-route-guide p{margin:4px 0 0}
+.fund-route-guide small{display:block;color:var(--muted);margin-top:6px}
+@media print {.fund-route-guide{display:none!important}}
+</style>
+<style>
+.directive-card{margin:14px 0;padding:14px 17px;border-radius:14px;background:#f0f7ff;border:1px solid #b3d5fb;color:#173253;break-inside:avoid-page}
+.directive-card h3{margin:0 0 7px;font-size:1rem;color:#154c93}
+.directive-card p{margin:5px 0;font-size:.82rem;line-height:1.4}
+.directive-card ul{margin:8px 0;padding-left:18px;font-size:.82rem;line-height:1.38}
+.directive-card li{margin-bottom:5px}
+.directive-foot{color:#385876}
+@media print{.directive-card{background:#fff!important;border:1px solid #839bb3;padding:8px 11px;margin:8px 0;break-inside:auto}.directive-card h3{font-size:10pt}.directive-card li,.directive-card p{font-size:8.2pt;line-height:1.21;margin-bottom:3px}}
+
+/* GitHub release: compact the four-column client PDF to one A4 sheet. */
+@media print {
+  @page { size: A4; margin: 8mm 9mm; }
+  body.print-decision #decisionReport {font-size:7.5pt!important;line-height:1.15!important;padding:4px!important;border:0!important;}
+  body.print-decision #decisionReport h2 {font-size:11pt!important;margin:0 0 2px!important;}
+  body.print-decision #decisionReport .print-head {margin:0 0 3px!important;padding:0 0 3px!important;}
+  body.print-decision #decisionReport .report-small {font-size:6.6pt!important;line-height:1.12!important;margin:3px 0!important;}
+  body.print-decision #decisionReport .decision-summary {font-size:7.5pt!important;line-height:1.1!important;margin:3px 0!important;}
+  body.print-decision #decisionReport .decision-table {font-size:7pt!important;margin:3px 0!important;}
+  body.print-decision #decisionReport .decision-table td,
+  body.print-decision #decisionReport .decision-table th {padding:2px 3px!important;line-height:1.13!important;}
+  body.print-decision #decisionReport .decision-metrics {margin:3px 0!important;}
+  body.print-decision #decisionReport .decision-metrics>div {padding:3px!important;}
+  body.print-decision #decisionReport .decision-metrics b {font-size:10pt!important;}
+  body.print-decision #decisionReport .directive-card {padding:4px 7px!important;margin:4px 0!important;}
+  body.print-decision #decisionReport .directive-card h3 {font-size:8pt!important;margin:0 0 2px!important;}
+  body.print-decision #decisionReport .directive-card p,
+  body.print-decision #decisionReport .directive-card li {font-size:6.5pt!important;line-height:1.12!important;margin:0 0 2px!important;}
+  body.print-decision #decisionReport .directive-card ul {margin:3px 0!important;}
+  body.print-decision #decisionReport .print-footer {padding-top:3px!important;margin-top:3px!important;}
+  body.print-decision #decisionReport .print-footer img {width:40px!important;height:40px!important;}
+}
 </style>
 </head>
 
@@ -236,7 +365,7 @@ h2{font-weight:800}
   <details><summary>How your information is handled</summary><p>Your calculations run in this browser. Nothing is sent to the adviser automatically. If you request a consultation, only the contact details you submit are sent through the booking service. If you deliberately include a result in a WhatsApp message, that summary will be shared when you send it.</p></details>
   <div class="note" role="note"><b>Important:</b> Results are illustrative, not a SARS tax directive or confirmation that a fund will permit the selected withdrawal. Previous lump sums, fund-specific vested rights and savings-component access may materially change the result. Verify the figures before making a financial decision.</div>
   <a class="btn book" href="#calculator">Start the simulator</a>
-  <a class="btn ghost" href="#appointment-request" style="margin-top:10px">Request personal guidance</a>
+  <p class="help">You can review and save your results before deciding whether to speak to an adviser.</p>
    <button class="btn ghost" type="button" id="themeBtn2" style="width:100%;margin-top:10px">&#127912; Choose your look</button>
 </section>
 
@@ -247,7 +376,7 @@ h2{font-weight:800}
     <li><div class="n">1</div><div><strong>Enter what is in your fund</strong><span class="d">Your fund statement shows up to three amounts: vested, savings and retirement. The simulator adds them up.</span></div></li>
     <li><div class="n">2</div><div><strong>Say what you are doing</strong><span class="d">Retire, leave your job and take cash, or leave your job and preserve your fund.</span></div></li>
     <li><div class="n">3</div><div><strong>Choose how much cash</strong><span class="d">When retiring, one third can usually be cash and the rest buys an annuity. You can take less.</span></div></li>
-    <li><div class="n">4</div><div><strong>Add earlier lump sums</strong><span class="d">Gross benefits from earlier withdrawals, retirement payouts or qualifying severance affect the tax rate. Then review your estimated result and warnings.</span></div></li>
+    <li><div class="n">4</div><div><strong>Compare and save the result</strong><span class="d">Confirm previous lump sums, review full cash versus partial preservation versus full preservation, then save the comparison as a PDF. Adviser contact is optional.</span></div></li>
   </ol>
   <details>
     <summary>Why is it not a flat percentage?</summary>
@@ -299,7 +428,7 @@ h2{font-weight:800}
     <!-- STEP 1 -->
     <div class="field" id="stepBalances">
       <label class="q">1. What is in your fund?</label>
-      <p class="help">Find these three amounts on your fund statement or app. If your fund has not been split into pots, put the whole balance under vested.</p>
+      <p class="help">Find these three amounts on your fund statement or app. Use the balances shown on your fund statement. If your fund is exempt from the two-pot structure or does not report these components, do not assume the entire balance is vested; ask your administrator for the correct breakdown.</p>
 
       <span class="sub">Vested pot</span>
       <div class="money"><span>R</span><input data-money id="v" inputmode="numeric" autocomplete="off" value="0" aria-label="Vested pot in rand"></div>
@@ -317,19 +446,47 @@ h2{font-weight:800}
       <p class="help">Fund type affects whether leaving your job gives access to cash. An RA also has savings, vested and retirement components under the two-pot system, but resignation from an employer does <b>not</b> ordinarily unlock an RA. Preservation funds have their own withdrawal and transfer conditions. If unsure, check your benefit statement.</p>
       <select id="fundType" required class="form-select"><option value="">Select your fund type</option><option value="pension">Occupational pension fund</option><option value="provident">Occupational provident fund</option><option value="pension-pres">Pension preservation fund</option><option value="provident-pres">Provident preservation fund</option><option value="ra">Retirement annuity (RA)</option><option value="gepf">Government Employees Pension Fund (GEPF)</option><option value="other">Other / Not sure</option></select>
       <p id="fundLimit" class="help" role="status">Choose your fund type to see supported calculations.</p>
+      <div id="fundRouteGuide" class="fund-route-guide" role="status" aria-live="polite"><strong>Fund-specific decision guide</strong><p>Choose a fund type and age to see what this calculator can and cannot estimate.</p></div>
       <label class="check"><input type="checkbox" id="retireEligible"><span><b>For retirement estimates:</b> my fund has confirmed I am eligible to retire or receive this retirement benefit now.</span></label>
     </div>
+    <div class="field" id="ageField">
+      <label class="q" for="clientAge">3. How old are you?</label>
+      <p class="help">Your age changes which retirement routes may be available. Age alone never guarantees a fund payout or the retirement tax table.</p>
+      <input id="clientAge" class="age-input" type="number" inputmode="numeric" min="16" max="100" placeholder="Your age in completed years" aria-describedby="ageGuide" />
+      <div id="ageGuide" class="age-guide" role="status" aria-live="polite"><h3>Select your age to see which options may be available</h3><p>Below 55 and aged 55 or older can have different retirement options. Eligibility also depends on your fund and reason for leaving.</p></div>
+      <div id="earlyRetirementField" class="field hide">
+        <label class="q" for="earlyReason">Retirement before 55: what exception has your fund confirmed?</label>
+        <select id="earlyReason" class="form-select">
+          <option value="">Select confirmed exception</option>
+          <option value="illhealth">Ill-health, incapacity or disability retirement under fund rules</option>
+          <option value="other">Another specific early-retirement entitlement confirmed in writing by the administrator</option>
+        </select>
+        <p class="help">An ordinary resignation below 55 does not qualify as retirement merely because the member wants to stop working. Do not use retirement tax rates without confirmed eligibility.</p>
+      </div>
+    </div>
     <div class="field">
-      <label class="q" id="q2">3. What are you doing?</label>
+      <label class="q" id="q2">4. What are you doing?</label>
       <div class="choices" role="radiogroup" aria-labelledby="q2">
         <label class="choice"><input type="radio" name="scn" value="retire" checked>
           <div><b>I am retiring</b><span>Take some cash and buy an annuity with the rest.</span></div></label>
         <label class="choice"><input type="radio" name="scn" value="cash">
-          <div><b>I am leaving my job and taking cash</b><span>Resigned or retrenched, and cashing out my fund.</span></div></label>
+          <div><b>I am leaving my job and taking cash</b><span>Choose your reason for leaving below. Ordinary resignation and qualifying retrenchment may have different tax treatment.</span></div></label>
         <label class="choice"><input type="radio" name="scn" value="preserve">
-          <div><b>I am leaving my job and preserving my fund</b><span>Keep it invested, no cash now.</span></div></label>
+          <div><b>I am leaving my job and preserving my fund</b><span>Keep your eligible fund balance invested; qualifying employer severance is shown separately.</span></div></label>
         <label class="choice"><input type="radio" name="scn" value="workingSavings">
           <div><b>I'm still working — withdraw from my savings pot</b><span>Estimate additional income tax and net cash without resigning or retiring.</span></div></label>
+      </div>
+
+      <div id="exitReasonField" class="field hide" style="margin-top:14px">
+        <label class="q" for="exitReason">Why are you leaving employment?</label>
+        <select id="exitReason" class="form-select">
+          <option value="ordinary">Ordinary resignation or dismissal</option>
+          <option value="retrenchment">Redundancy / retrenchment / employer ceased trading</option>
+          <option value="other">Other termination or uncertain classification</option>
+        </select>
+        <label class="check" style="margin-top:10px"><input type="checkbox" id="retrenchFundConfirmed"><span><b>My fund administrator has confirmed in writing</b> that the fund lump sum qualifies as a retirement-fund benefit due to redundancy/retrenchment or termination of the employer’s trade (rather than an ordinary withdrawal). This does not confirm a separate employer severance payment.</span></label>
+        <div id="exitRouteNotice" class="note" style="margin-top:10px" role="status" aria-live="polite">Ordinary withdrawal tax rates normally apply to a resignation benefit. Fund and SARS confirmation is still needed.</div>
+        <p class="help">A retrenchment payment from your employer and a retirement-fund lump sum are <strong>separate benefits</strong>. If you are retrenched, the fund benefit may qualify for retirement-lump-sum tax treatment—even below age 55—subject to the reason, fund documentation and SARS classification. Notice pay, leave pay and bonuses remain ordinary remuneration.</p>
       </div>
 
       <div id="workingSavingsFields" class="field hide" style="margin-top:14px" aria-label="Savings pot withdrawal while employed">
@@ -353,6 +510,7 @@ h2{font-weight:800}
         <label class="q" for="protected">Protected provident rights within the vested component (if known)</label>
         <p class="help">Enter ONLY the amount confirmed by your fund as fully commutable protected provident benefits, including applicable growth. For provident members younger than 55 on 1 March 2021, qualifying pre-1 March 2021 balances and growth may be fully commutable at retirement; for qualifying members aged 55+ on that date, further protection may apply if the fund-membership conditions are met. All rights require administrator confirmation. Do not enter the full vested-component value merely because you have a provident fund. If unknown, leave at R0: the simulator will use the conservative one-third rule and flag that your actual entitlement may be higher.</p>
         <div class="money"><span>R</span><input data-money id="protected" inputmode="numeric" autocomplete="off" value="0" aria-label="Confirmed fully commutable protected rights in rand"></div>
+        <label class="check safety-check"><input type="checkbox" id="protectedVerified"><span><b>Fund confirmation:</b> The protected amount entered above is taken from a current administrator statement or written confirmation. If not confirmed, keep it at R0 and request the fund's breakdown; a higher retirement-cash figure must not be assumed.</span></label>
       </div>
 
       <div id="grpSev" class="hide" style="margin-top:14px">
@@ -399,10 +557,10 @@ h2{font-weight:800}
 
     <!-- STEP 4 -->
     <div class="field" id="stepPrevious" style="margin-bottom:0">
-      <label class="q" for="prev">5. Lump sums you took before</label>
+      <label class="q" for="prev">5. Have you received previous taxable retirement or severance lump sums?</label>
       <p class="help">Enter the combined GROSS amount of prior relevant retirement-fund lump sums (from 1 October 2007), retirement-fund withdrawal benefits (from 1 March 2009) and severance benefits (from 1 March 2011), including amounts withheld as tax. Exclude two-pot savings-component withdrawals taxed as ordinary income. Leave R0 only if you know you had none.</p>
-      <select id="prevStatus" class="form-select" aria-label="Whether previous lump sums are known"><option value="unknown">I don't know / have not checked previous benefits</option><option value="none">I have confirmed no relevant previous lump sums</option><option value="known">I know the combined gross amount</option></select>
-      <div id="prevInput" class="hide"><div class="money"><span>R</span><input data-money id="prev" inputmode="numeric" autocomplete="off" value="0" aria-label="Total of earlier lump sums in rand"></div></div>
+      <select id="prevStatus" class="form-select" aria-label="Whether previous lump sums are known"><option value="unknown">I don't know / have not checked previous benefits</option><option value="none">I have confirmed no relevant previous lump sums</option><option value="known">Yes — earlier lump sums need a directive-level check</option></select>
+      <div id="prevInput" class="hide"><p class="safety-check">Your earlier benefits may involve different accrual dates, taxable portions, deductions and benefit types. You can enter an approximate gross total for discussion, but the app will <b>not</b> produce a definitive tax comparison from this figure alone. Obtain the SARS directive history; adviser assistance is optional.</p><div class="money"><span>R</span><input data-money id="prev" inputmode="numeric" autocomplete="off" value="0" aria-label="Total of earlier lump sums in rand"></div></div>
       <details style="margin-top:10px">
         <summary>What counts as an earlier lump sum?</summary>
         <ul>
@@ -417,8 +575,37 @@ h2{font-weight:800}
     <div id="warn"></div>
   </div>
 
+  <p id="printEmptyMessage">No calculation has been completed. Return to the simulator, confirm the required inputs and calculate before printing a result.</p>
   <!-- RESULT -->
   <div id="result" aria-live="polite">
+    <div id="decisionReport" class="card" style="display:none">
+      <div class="print-head"><strong>LUMP SUM TAX SIMULATOR — CLIENT DECISION SUMMARY · 2026/27 ESTIMATE</strong><p>Independent educational estimate | Prepared <span id="printDate"></span></p></div>
+      <h2 id="decisionHeading">Your choices, side by side</h2>
+      <div class="decision-guide" id="decisionGuide"><strong>Your money, your choice</strong><span class="pill">Cash now</span><span class="pill">Tax today</span><span class="pill">Keep invested</span><p>See the outcome of each permitted route before deciding whether to seek advice. Figures are indicative—not a tax directive or guarantee.</p></div>
+      <p class="decision-summary" id="decisionIntro"></p>
+      <p id="decisionAssumptions" class="report-small"></p>
+      <div class="report-control hide-on-print"><label for="comparePartial"><strong>Partial withdrawal from vested component (gross):</strong></label><div class="money" style="width:190px"><span>R</span><input data-money id="comparePartial" inputmode="numeric" value="" placeholder="Half of vested pot" aria-label="Gross amount to withdraw for the partial-preservation comparison"></div></div>
+      <div style="overflow-x:auto"><table class="decision-table" aria-label="Side by side withdrawal and preservation comparison"><thead><tr><th>What happens?</th><th>Full vested withdrawal</th><th>Partial withdrawal</th><th>Preserve all</th><th id="retirementColumnHeading" class="hide">Qualifying retirement (55+)</th></tr></thead><tbody id="decisionRows"></tbody></table></div>
+      <div class="decision-metrics"><div><span>Estimated tax not paid today: partial versus full</span><b id="decisionSaved"></b><span class="report-small">Tax deferred or avoided at this exit, not necessarily a permanent lifetime saving.</span></div><div><span>Amount remaining invested: partial option</span><b id="decisionPreserved"></b><span class="report-small">Future value and income depend on investment returns, charges and retirement rules.</span></div></div>
+      <p class="report-small" id="retirementEligibilityNote"></p>
+      <p class="report-small" id="decisionMeaning"></p>
+      <p class="report-small" id="decisionCautions"></p>
+      <p class="report-small"><strong>Scope:</strong> 2026/27 SARS withdrawal and, when confirmed, retirement tax tables. Previous tax directives and protected-rights confirmations are required where applicable. The withdrawal comparison uses the table appropriate to the specifically selected, verified exit classification; savings withdrawals and severance are separate and receive their own reports when elected. No cash-flow or future-value projection is implied. Confirm the SARS directive and fund transfer rights.</p>
+      <section class="directive-card" aria-label="Checks before acting"><h3>Before you act: confirm these details</h3><p class="directive-intro">This is a self-service estimate, not a SARS directive or a promise of cash entitlement.</p><ul class="directive-items"></ul><p class="directive-foot">You may obtain this information directly from your employer, fund administrator and SARS. Consulting a financial adviser is optional.</p></section>
+<div class="report-actions noprint"><button class="btn book" type="button" id="downloadReport">Save my comparison as PDF</button><p class="report-small" style="grid-column:1/-1;margin:0">On Android, choose <strong>Save as PDF</strong> in the browser print screen. No appointment or contact details required.</p><a href="#appointment-request" class="btn ghost">Optional: speak to an adviser</a></div>
+      <div class="print-footer"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACBElEQVR4nO2bQYrkMAxFv8aGLB2YA+Qozs2GPtLcID5KDjBgLwMJfxaya6ppGqoKkvKAtDCUeYsPwpa+XBHiwUg/HiUBQw011FBDDT0TlRoeSOMhMhcPoLTt+XQBhj6DRpJkBhAzgDRtAsCRJPkZPUeAoc+gpR4hPVZx9bqt5+0KAYa+gqYR4MdEyvweAYZ+H/7LTsiQuPqdKFcIMPQFNJBcAADFa92SGQDJ/RoBhj6OJhERGVG7jLgOBHBoS3iFAEMfCb0J78ZPadqkXoLh81Tq7VoNrX5rLtVvcWk3YfNb1hP2g0IdVcwAl0AicgeZHUnuaAvJ5e1aDa2p0PRkoLYaYYeaZYS9emfLVi+ozGGHzIGs6VkHqvNidjbL6Aa9VaXDM2n3N1DStAliHiHx93iuAEOfr1uAY7v/HO/q1hKsbvWDti7jlrLIHbogtMXqVm/oIVzCJkDx4ALH6pOtbnWE3uqWI+LqwTQCgpABLWPl584zBRj6QgffAghsx6r9tLrVF/rv7Vj9VppIne/G1d6Ou0Nvb8cyAyBXEW0w0mQz+H7Qu8mTdhQxO3IJLUcxO7sJO0bDJvJrHaiNof6p5lIBhj6BloH8mKrp0pRdK8DQb6N18IEACsA0OkjMhwfCHw+EfK4AQ1+ZPAFQ06V16/bwD9gsoxtU7KsFQw011FBD/yP0Lx8HRjrA94MBAAAAAElFTkSuQmCC" alt="QR code to contact adviser on WhatsApp"><strong>Want to discuss the options?</strong><p>Optional WhatsApp: 083 330 3214. Scan the code or visit wa.me/27833303214. No appointment is necessary to use this estimate.</p><p>Educational estimates only, not a tax directive, a fund quotation, personalised financial advice or an Absa-approved service. Not an actuarial GEPF estimate; qualifying retrenchment is shown only if classification is confirmed. SARS 2026/27 table: sars.gov.za/tax-rates/income-tax/retirement-lump-sum-benefits/. Do not make an irreversible withdrawal or transfer without checking with your fund and SARS.</p></div>
+    </div>
+    <div id="singleReport" class="card" style="display:none" aria-label="Client calculation report">
+      <div class="print-head"><strong>LUMP SUM TAX SIMULATOR — CLIENT ESTIMATE · 2026/27 ESTIMATE</strong><p>Independent educational estimate | Prepared <span id="singleDate"></span></p></div>
+      <h2 id="singleTitle">Your estimate</h2>
+      <p id="singleIntro" class="decision-summary"></p>
+      <table class="decision-table" aria-label="Estimated gross withdrawal tax and amount remaining"><tbody id="singleRows"></tbody></table>
+      <p id="singleAssumptions" class="report-small"></p>
+      <p id="singleCautions" class="report-small"></p>
+      <section class="directive-card" aria-label="Checks before acting"><h3>Before you act: confirm these details</h3><p class="directive-intro">This is a self-service estimate, not a SARS directive or a promise of cash entitlement.</p><ul class="directive-items"></ul><p class="directive-foot">You may obtain this information directly from your employer, fund administrator and SARS. Consulting a financial adviser is optional.</p></section>
+<div class="report-actions noprint"><button type="button" class="btn book" id="downloadSingle">Save my result as PDF</button><p class="report-small" style="grid-column:1/-1;margin:0">On Android, choose <strong>Save as PDF</strong> in the browser print screen. No appointment or contact details required.</p><a href="#appointment-request" class="btn ghost">Optional: speak to an adviser</a></div>
+<div class="print-footer"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACBElEQVR4nO2bQYrkMAxFv8aGLB2YA+Qozs2GPtLcID5KDjBgLwMJfxaya6ppGqoKkvKAtDCUeYsPwpa+XBHiwUg/HiUBQw011FBDDT0TlRoeSOMhMhcPoLTt+XQBhj6DRpJkBhAzgDRtAsCRJPkZPUeAoc+gpR4hPVZx9bqt5+0KAYa+gqYR4MdEyvweAYZ+H/7LTsiQuPqdKFcIMPQFNJBcAADFa92SGQDJ/RoBhj6OJhERGVG7jLgOBHBoS3iFAEMfCb0J78ZPadqkXoLh81Tq7VoNrX5rLtVvcWk3YfNb1hP2g0IdVcwAl0AicgeZHUnuaAvJ5e1aDa2p0PRkoLYaYYeaZYS9emfLVi+ozGGHzIGs6VkHqvNidjbL6Aa9VaXDM2n3N1DStAliHiHx93iuAEOfr1uAY7v/HO/q1hKsbvWDti7jlrLIHbogtMXqVm/oIVzCJkDx4ALH6pOtbnWE3uqWI+LqwTQCgpABLWPl584zBRj6QgffAghsx6r9tLrVF/rv7Vj9VppIne/G1d6Ou0Nvb8cyAyBXEW0w0mQz+H7Qu8mTdhQxO3IJLUcxO7sJO0bDJvJrHaiNof6p5lIBhj6BloH8mKrp0pRdK8DQb6N18IEACsA0OkjMhwfCHw+EfK4AQ1+ZPAFQ06V16/bwD9gsoxtU7KsFQw011FBD/yP0Lx8HRjrA94MBAAAAAElFTkSuQmCC" alt="QR code to contact adviser on WhatsApp"><strong>Want to discuss the options?</strong><p>Optional WhatsApp: 083 330 3214. Scan the code or visit wa.me/27833303214. No appointment is necessary to use this estimate.</p><p>Educational estimates only, not a tax directive, a fund quotation, personalised financial advice or an Absa-approved service. Not an actuarial GEPF estimate; qualifying retrenchment is shown only if classification is confirmed. SARS 2026/27 table: sars.gov.za/tax-rates/income-tax/retirement-lump-sum-benefits/. Do not make an irreversible withdrawal or transfer without checking with your fund and SARS.</p></div>
+    </div>
     <div class="card" id="splitCard"><div class="splitlbl"><span>Net cash</span><span>SARS tax</span></div><div class="split"><div id="spN"><span class="chip" id="chN"></span></div><div id="spT"><span class="chip" id="chT"></span></div></div></div>
     <div class="card">
       <div class="small" id="taxLbl">Estimated tax</div>
@@ -447,12 +634,12 @@ h2{font-weight:800}
     </div>
 
     <div class="cta">
-      <h2>Want help making sense of this?</h2>
-      <p class="lead" style="margin-bottom:0">Need help understanding the result? You can request an appointment or contact the adviser. Your estimated figures are <b>not shared automatically</b>. You can explicitly opt in to include a short summary in a WhatsApp draft; you still choose whether to send it.</p>
+      <h2>Would you like independent guidance?</h2>
+      <p class="lead" style="margin-bottom:0">Your comparison is available above and you can save it without contacting anyone. If you would like to discuss implementation, you may request an appointment or contact the adviser. Your estimated figures are <b>not shared automatically</b>. You can explicitly opt in to include a short summary in a WhatsApp draft; you still choose whether to send it.</p>
       <div class="btns">
         <a class="btn book" href="#appointment-request">Request an appointment</a>
         <a class="btn wa" href="mailto:nathis6040@gmail.com?subject=Lump%20Sum%20Tax%20Simulator%20enquiry" data-wa target="_blank" rel="noopener noreferrer">Email the adviser</a>
-        <button class="btn ghost noprint" type="button" onclick="window.print()">Save or print this result</button>
+        <button class="btn ghost noprint" type="button" onclick="printActiveReport()">Save the result as PDF (Print → Save as PDF)</button>
       </div>
       <label class="check hide" id="shareSummaryRow"><input id="shareSummary" type="checkbox"><span><b>Optional:</b> include my estimated cash and tax figures in the pre-filled WhatsApp message. I understand that the message will be shared with WhatsApp and the adviser <b>only if I choose to send it</b>.</span></label>
       <p id="contact" class="small">The appointment-request form below sends only the contact and scheduling details you enter. It does not send your pot balances or simulator results. Requests are not confirmed appointments. The WhatsApp action becomes available after the adviser confirms their WhatsApp Business number. Until then, the contact button opens your email app. Appointment requests are processed by Formspree, not by WhatsApp.</p>
@@ -570,7 +757,7 @@ h2{font-weight:800}
 
 <footer>
   <p><b>Important:</b> This educational simulator provides estimates, not financial, tax or legal advice, an official SARS tax directive, or a recommendation to withdraw. Verify all rights, components and benefits with your retirement fund, and obtain an actual SARS directive. The tool is independently prepared and is not approved, sponsored or endorsed by Absa or any employer. No financial input is sent to the adviser automatically.</p>
-  <p>Nathi Sithole, Financial Adviser. Adviser code in prior draft: 236694 <b>(FSP licence number not verified)</b>. Contact: <a href="mailto:nathis6040@gmail.com">nathis6040@gmail.com</a>.</p>
+  <p>Nathi Sithole, Financial Adviser. Independent educational simulator. Contact: <a href="mailto:nathis6040@gmail.com">nathis6040@gmail.com</a>.</p>
   <p><b>Publication verification outstanding:</b> The authorised FSP's registered name, FSP licence number, conflicts-of-interest disclosure and formal complaints process must be added and checked against the applicable FSCA and employer requirements before public deployment. No unverified licence claim is made in this draft.</p>
 </footer>
 
@@ -578,18 +765,20 @@ h2{font-weight:800}
 
 <div id="tip" role="tooltip"></div>
 <dialog id="themeSheet" aria-label="Choose appearance"><div class="sheet"><h2 style="margin-bottom:2px">Choose your look</h2><p class="small" style="margin:0 0 6px">Saved on this phone only.</p>
+<label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#4f46e5"></i><i style="background:#0d9488"></i><i style="background:#f97363"></i></span><span><b>D · Colourful Horizon</b><span class="d">Bright indigo, teal and coral. Recommended.</span></span><input type="radio" name="theme" value="sunrise"></label>
 <label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#121212"></i><i style="background:#1c1c1e"></i><i style="background:#1f7a55"></i></span><span><b>A · Graphite Emerald</b><span class="d">Charcoal and deep green. Default.</span></span><input type="radio" name="theme" value="graphite"></label>
 <label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#111827"></i><i style="background:#1f2937"></i><i style="background:#1d7a5a"></i></span><span><b>B · Slate Forest</b><span class="d">Blue-grey with teal green.</span></span><input type="radio" name="theme" value="slate"></label>
 <label class="tcard"><span class="sw" aria-hidden="true"><i style="background:#f3f4f6"></i><i style="background:#ffffff"></i><i style="background:#1b6b4a"></i></span><span><b>C · Light Stone</b><span class="d">Light gray and white. Best in daylight.</span></span><input type="radio" name="theme" value="stone"></label>
 <button class="btn book" type="button" id="themeDone" style="width:100%;margin-top:8px">Done</button></div></dialog>
 <button id="liveBar" type="button" aria-label="Jump to your result"><span><small id="liveLbl"></small><b id="liveVal"></b></span><span aria-hidden="true">&#8595;</span></button>
 
-<div class="bar-fixed" role="complementary" aria-label="Contact Nathi">
-  <a class="btn book" href="#appointment-request">Request appointment</a>
+<div class="bar-fixed" role="complementary" aria-label="Results and optional contact">
+  <a class="btn book" href="#result">View my results</a>
   <a class="btn wa" href="mailto:nathis6040@gmail.com?subject=Lump%20Sum%20Tax%20Simulator%20enquiry" data-wa target="_blank" rel="noopener noreferrer">Email</a>
 </div>
 
 <script>
+/* GitHub Pages static release: 2026-11-16. No build step or runtime dependencies. */
 /* ========================= EDIT ME ========================= */
 var WHATSAPP_NUMBER = "27833303214"; /* Set only after verifying your actual WhatsApp Business number: 27 followed by nine digits. Empty => email fallback, never a dead link. */
 var BOOKING_EMAIL   = "nathis6040@gmail.com";
@@ -631,14 +820,14 @@ function retireCalc(p, prev, mode, amt, protectedRights){
   return {total:total, dem:dem, max:max, cash:cash, tax:tax, net:cash-tax, annuity:total-cash, mandatoryAnnuity:mandatoryAnnuity, protectedRights:pr, ordinaryVested:ordinaryVested, over:(mode!=="max" && amt>max)};
 }
 /* Leaving job: cash from vested then savings. Retirement pot locked */
-function cashCalc(p, prev, mode, amt, inc, includeSavings, ageGroup){
+function cashCalc(p, prev, mode, amt, inc, includeSavings, ageGroup, qualifyingRetrenchment){
   // Existing arithmetic-only tests passing six arguments are preserved: omitted
   // includeSavings means historical behaviour; the UI always passes an election.
   var takeSavings = includeSavings === undefined ? true : !!includeSavings;
   var acc = p.v + (takeSavings ? p.s : 0);
   var x = mode==="max" ? acc : Math.min(amt,acc);
   var fromV = Math.min(x,p.v), fromS = x-fromV;
-  var taxV = lumpTax(WDR, prev, fromV);
+  var taxV = lumpTax(qualifyingRetrenchment ? RET : WDR, prev, fromV);
   var taxS = fromS>0 ? Math.round(incTax(inc+fromS,ageGroup)-incTax(inc,ageGroup)) : 0;
   return {acc:acc, x:x, fromV:fromV, fromS:fromS, taxV:taxV, taxS:taxS, tax:taxV+taxS, net:x-taxV-taxS, left:p.v+p.s-x, locked:p.r, over:(mode!=="max" && amt>acc)};
 }
@@ -655,17 +844,179 @@ function row(l,v,strong){ return '<div class="row'+(strong?' strong':'')+'"><spa
 
 var SCN_NAME = {retire:"Retiring", cash:"Leaving my job and taking cash", preserve:"Leaving my job and preserving my fund"};
 
+function renderDecisionReport(p, prev, sev, fundType, scn){
+  var box=$('decisionReport');
+  var isRetrench=$('exitReason').value==='retrenchment' && $('retrenchFundConfirmed').checked;
+  var cashIncludesSavings=scn==='cash' && $('savingsElection').value==='withdraw' && p.s>0;
+  var eligible=(scn==='cash'||scn==='preserve') && (fundType==='pension'||fundType==='provident') && p.v>0 && sev===0 && !cashIncludesSavings;
+  box.style.display=eligible?'block':'none';
+  if(!eligible)return;
+  // All columns start from exactly the same fund balance. Savings-component withdrawals
+  // and employer severance are excluded from the exit-withdrawal columns.
+  var age=Number($('clientAge').value), atRetirementAge=age>=55 && !isRetrench;
+  var confirmedRetirement=atRetirementAge && $('retireEligible').checked;
+  var priorForExit=prev+(sev>0?sev:0);
+  var grossFull=p.v, inp=$('comparePartial');
+  var grossPart=inp.value.trim()===''?Math.round(grossFull/2):Math.min(grossFull,num(inp));
+  var exitTable=isRetrench?RET:WDR;
+  var taxFull=lumpTax(exitTable,priorForExit,grossFull), taxPart=lumpTax(exitTable,priorForExit,grossPart);
+  var netFull=grossFull-taxFull, netPart=grossPart-taxPart;
+  var total=p.v+p.s+p.r, preservePart=total-grossPart;
+  var retirement=confirmedRetirement?retireCalc(p,prev,'max',0,num($('protected'))):null;
+  $('retirementColumnHeading').classList.toggle('hide',!atRetirementAge);
+  $('decisionHeading').textContent=isRetrench?'Confirmed qualifying retrenchment · compare cash and preservation':atRetirementAge?'Your age-based exit choices at '+age:'Your withdrawal and preservation choices';
+  $('decisionIntro').textContent=isRetrench?'Compare three alternative decisions using today’s confirmed qualifying retrenchment fund classification. This is a retirement-FUND benefit, not employer severance. This illustration excludes simultaneous severance, historic lump sums, and savings-pot cash.':'Compare options from the same starting fund value of '+R(total)+'. Withdrawal and preservation are modelled separately from qualifying retirement, which has its own cash limits and tax table.';
+  $('decisionAssumptions').textContent=(isRetrench?'RETIREMENT-FUND RETRENCHMENT BENEFIT CLASSIFICATION SELF-CONFIRMED; employer severance R0; previous taxable lump sums none; ':'')+'Age '+age+'; fund: '+(fundType==='pension'?'occupational pension':'occupational provident')+'; vested '+R(p.v)+', savings '+R(p.s)+', retirement '+R(p.r)+'; confirmed protected provident rights '+R(num($('protected')))+'; previous qualifying gross lump sums '+R(prev)+'; separately assumed qualifying severance '+R(sev)+'. Values at today’s date, before fees or future growth. Retirement eligibility '+(confirmedRetirement?'self-confirmed by client':atRetirementAge?'not yet confirmed':'not assumed under 55')+'.';
+  var cells=function(label,a,b,c,d){return '<tr><th scope="row">'+label+'</th><td>'+a+'</td><td>'+b+'</td><td>'+c+'</td>'+(atRetirementAge?'<td>'+d+'</td>':'')+'</tr>';};
+  var tbd=retirement?'': 'Not confirmed';
+  $('decisionRows').innerHTML=
+    cells('Gross cash now',R(grossFull),R(grossPart),R(0),retirement?R(retirement.cash):tbd)+
+    cells('Estimated lump-sum tax',R(taxFull),R(taxPart),R(0),retirement?R(retirement.tax):tbd)+
+    cells('Net cash now',R(netFull),R(netPart),R(0),retirement?R(retirement.net):tbd)+
+    cells('Net cash as % of gross withdrawal',pct(netFull,grossFull),grossPart?pct(netPart,grossPart):'No withdrawal','No withdrawal',retirement?pct(retirement.net,retirement.cash):tbd)+
+    cells('Fund balance remaining before fees',R(total-grossFull),R(preservePart),R(total),retirement?R(retirement.annuity):tbd)+
+    cells('Original fund balance retained',pct(total-grossFull,total),pct(preservePart,total),'100%',retirement?pct(retirement.annuity,total):tbd)+
+    cells('Retirement annuity allocation', 'Not allocated', 'Not allocated', 'Not allocated', retirement?R(retirement.annuity):tbd)+
+    cells('Tax not paid today vs full withdrawal',R(0),R(taxFull-taxPart),R(taxFull),retirement?'Not like-for-like':'Not comparable');
+  $('decisionSaved').textContent=R(taxFull-taxPart);
+  $('decisionPreserved').textContent=R(preservePart);
+  $('retirementEligibilityNote').textContent=isRetrench?'QUALIFYING RETRENCHMENT: tax estimates use the retirement/severance lump-sum table only because you confirmed the fund classification. This does not mean you have retired or that you may cash out the retirement component. Get a SARS directive before payment.':atRetirementAge?(retirement?'RETIREMENT ROUTE: You confirmed eligibility under your fund rules. Only the maximum permitted retirement cash is estimated; the remaining '+R(retirement.annuity)+' is allocated to an annuity. This cannot be read as additional cash accessible on resignation.':'RETIREMENT ROUTE NOT YET CONFIRMED: Tick “My fund has confirmed I am eligible to retire” above to display an indicative retirement column. Turning 55 alone does not authorise the retirement-tax treatment.'):'UNDER AGE 55: ordinary resignation does not normally give access to the retirement route. Specific fund-confirmed early-retirement exceptions are considered separately in the retirement calculator.';
+  $('decisionMeaning').textContent=(isRetrench?'Confirmed qualifying retrenchment fund cash: ':'Ordinary withdrawal: ')+'Full vested cash produces '+R(netFull)+' estimated net cash. A '+R(grossPart)+' partial withdrawal produces '+R(netPart)+' estimated net cash while '+R(preservePart)+' remains invested. Full preservation leaves '+R(total)+' invested, with no cash today.'+(retirement?' If retirement is approved, the estimated maximum permitted retirement cash is '+R(retirement.net)+' net, with '+R(retirement.annuity)+' for an annuity.': '');
+  $('decisionCautions').textContent=(isRetrench?'QUALIFYING RETRENCHMENT ASSUMPTION: Fund-confirmed classification is user-attested, not independently checked. Retirement/severance tax table is used for vested fund cash. Separate employer severance, historical payouts, restricted pots, and SARS tax directive sequencing are excluded. Preserve-all assumes an eligible tax-neutral transfer; check this with the administrator. No future tax saving is guaranteed.':'The withdrawal columns model an ordinary resignation / dismissal, not a qualifying retrenchment. These are alternative legal and tax routes, NOT identical cash elections. Resignation cash from the vested component is taxed under the withdrawal table; approved retirement cash is taxed under the retirement table and subject to cash/annuitisation limits. Retirement is not guaranteed merely by age. Protected provident rights, previous benefits, employer severance, SARS directives and fund rules can materially change the estimate. The retirement component is not ordinary resignation cash; savings-pot withdrawals follow separate rules. No future investment growth or future tax is modelled.');
+  $('printDate').textContent=new Date().toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'});
+}
+
+
+function renderSingleReport(title, intro, pairs, assumptions, cautions){
+  var box=$('singleReport');
+  box.style.display='block';
+  $('singleTitle').textContent=title;
+  $('singleIntro').textContent=intro;
+  // Text nodes rather than HTML assembled from user inputs.
+  var tbody=$('singleRows');tbody.replaceChildren();
+  pairs.forEach(function(pair){
+    var tr=document.createElement('tr');
+    var th=document.createElement('th');th.scope='row';th.textContent=pair[0];
+    var td=document.createElement('td');td.textContent=pair[1];
+    tr.append(th,td);tbody.appendChild(tr);
+  });
+  $('singleAssumptions').textContent=assumptions;
+  $('singleCautions').textContent=cautions;
+  $('singleDate').textContent=new Date().toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'});
+}
+function printActiveReport(){
+  if($('result').style.display!=='block') {alert('Complete a supported calculation before saving a report.');return;}
+  var decision=$('decisionReport').style.display==='block';
+  var single=$('singleReport').style.display==='block';
+  if(!decision && !single){alert('No verified report is available for these inputs.');return;}
+  document.body.classList.remove('print-decision','print-single');
+  document.body.classList.add(decision?'print-decision':'print-single');
+  window.print();
+}
+
+function updateFundRouteGuide(age,fundType,scn){
+  var el=$('fundRouteGuide');
+  var ageText=Number.isInteger(age)&&age>=55?'Age 55+: retirement may be an additional route if the fund confirms eligibility.':'Under 55 / age not supplied: do not assume ordinary resignation is retirement.';
+  var details={
+    'pension':'Occupational pension: eligible vested benefits may be withdrawn or preserved on leaving employment; the retirement component stays restricted. Qualifying retirement must be confirmed with the fund.',
+    'provident':'Occupational provident: similar exit choices, but pre-1 March 2021 protected rights can change retirement cash limits. These require administrator confirmation.',
+    'pension-pres':'Pension preservation: leaving your current job does not automatically create a fresh withdrawal right in an existing preservation fund. Separate preservation withdrawal rules apply; this app pauses ordinary exit calculations.',
+    'provident-pres':'Provident preservation: the fund has separate withdrawal conditions and potentially protected provident rights; the app pauses ordinary exit calculations.',
+    'ra':'Retirement annuity: leaving your employer does not unlock an RA. Retirement at 55+ may be available subject to its rules; pre-55 retirement normally needs a recognised exception.',
+    'gepf':'GEPF: defined-benefit accrual and GEPF service/exit rules differ from occupational defined-contribution examples. Obtain an official benefit quotation; automatic cash estimates are paused.',
+    'other':'Fund type not yet confirmed: the simulator cannot safely establish cash entitlement; obtain your fund statement.'
+  };
+  var line=details[fundType]||'Choose your fund to see the options that may apply.';
+  var extra=(scn==='workingSavings')?'For savings-pot withdrawals while employed, the separate savings calculation applies. Confirm the fund permits a withdrawal.':'';
+  el.replaceChildren();
+  var title=document.createElement('strong');title.textContent='Your fund rules matter';el.appendChild(title);
+  var p1=document.createElement('p');p1.textContent=line;el.appendChild(p1);
+  var p2=document.createElement('small');p2.textContent=ageText+(extra?' '+extra:'')+' These are educational descriptions, not confirmation of eligibility.';el.appendChild(p2);
+}
+function describeAge(age,scn){
+  var guide=$('ageGuide');
+  if(!Number.isInteger(age)||age<16||age>100){
+    guide.innerHTML='<h3>Enter your age to see the relevant options</h3><p>We will separate ordinary resignation and preservation from a retirement benefit.</p>';
+    return;
+  }
+  if(age<55){
+    guide.innerHTML='<h3>Under 55 · Withdrawal or preservation</h3><p><strong>Ordinarily available when leaving an occupational fund:</strong> eligible vested withdrawal, partial vested withdrawal plus preservation, or preserving an eligible benefit. Your retirement component generally stays invested.</p><p><strong>Retirement is not the normal resignation route.</strong> Specific ill-health or other administrator-confirmed exceptions may apply. Qualifying retrenchment can also result in retirement/severance lump-sum tax treatment at any age where the relevant legal and fund requirements are met; it is not automatically retirement. A retirement calculation will be blocked without an exception and fund confirmation.</p>';
+  }else{
+    guide.innerHTML='<h3>Age '+age+' · You may have more choices</h3><p><strong>Withdrawal route:</strong> if you resign and take an ordinary withdrawal, the withdrawal tax table usually applies.</p><p><strong>Preservation route:</strong> you may keep eligible retirement savings invested or transfer them as permitted.</p><p><strong>Retirement route:</strong> you may be able to retire from the fund, take permitted retirement cash and use the remainder for an annuity. Confirm the fund’s earliest retirement age, your exit reason and eligibility first.</p><button type="button" id="chooseRetirement" class="btn">Explore retirement calculation</button>';
+    $('chooseRetirement').addEventListener('click',function(){document.querySelector('input[name="scn"][value="retire"]').checked=true;update();$('retireEligible').focus();});
+  }
+}
+
+function updateDirectiveReadiness(scn, exitReason, sev, fundType, includeSavings, priorStatus, protectedRights, age){
+  var checks=[];
+  if(scn==='workingSavings'){
+    checks.push('Confirm the available savings-component balance and the fund’s minimum withdrawal requirements.');
+    checks.push('Confirm that a savings-component withdrawal is available in this tax year and no previous permitted withdrawal was used.');
+    checks.push('Verify estimated annual taxable income, deductions and any other earnings; the annual-tax difference is only indicative.');
+    checks.push('Ask the fund for the SARS tax directive and check fees or outstanding SARS debt before committing to the withdrawal.');
+    document.querySelectorAll('.directive-items').forEach(function(list){
+      list.replaceChildren();
+      checks.forEach(function(c){var li=document.createElement('li');li.textContent=c;list.appendChild(li);});
+    });
+    return;
+  }
+  checks.push('Request a fund benefit statement showing the vested, savings and retirement components, and the cash/transfer options permitted for this specific fund.');
+  if(scn==='retire' || (age>=55 && (scn==='cash'||scn==='preserve'))){
+    checks.push('Confirm whether the fund permits retirement at this age, and whether the event is legally classified as retirement rather than resignation.');
+    checks.push('Ask the fund to confirm the maximum cash amount and compulsory annuity allocation, including any protected rights.');
+  }
+  if(exitReason==='retrenchment' && scn!=='retire'){
+    checks.push('Obtain written confirmation that the retirement-FUND payment qualifies as a retrenchment benefit for tax purposes; employer severance is a separate payment.');
+  }
+  if(sev>0){
+    checks.push('Ask payroll for a breakdown distinguishing qualifying employer severance from notice pay, leave pay and bonuses. These may have different tax treatment.');
+    checks.push('If employer severance and a retirement-fund lump sum both accrue, obtain directive-level tax calculations reflecting their sequence. Do not add two standalone tax-free allowances.');
+  }
+  if(priorStatus!=='none'){
+    checks.push('Verify past withdrawal, retirement and severance benefits and relevant SARS tax directives; historic benefits affect the cumulative tax calculation.');
+  } else {
+    checks.push('Retain evidence of the declaration that no relevant earlier taxable lump sums were received.');
+  }
+  if(protectedRights>0 || fundType==='provident'||fundType==='provident-pres'){
+    checks.push('Ask the administrator to confirm protected pre-March-2021 provident rights and which contributions remain subject to annuitisation.');
+  }
+  if(includeSavings){
+    checks.push('Confirm savings-pot eligibility, any earlier withdrawal this tax year, and your full taxable income before relying on marginal tax estimates.');
+  }
+  if(scn==='preserve'){
+    checks.push('Confirm that the selected preservation destination and the exact transfer route qualify as tax-neutral; confirm any future access restrictions.');
+  }
+  checks.push('Obtain the final SARS tax directive and the fund’s payment quotation before making an irreversible withdrawal, preservation transfer or retirement election.');
+  document.querySelectorAll('.directive-items').forEach(function(list){
+    while(list.firstChild) list.removeChild(list.firstChild);
+    checks.forEach(function(c){ var li=document.createElement('li'); li.textContent=c; list.appendChild(li); });
+  });
+}
+
 function update(){
   var p = {v:num($("v")), s:num($("s")), r:num($("r"))};
   var total = p.v+p.s+p.r, prev=num($("prev")), sev=num($("sev")), inc=num($("inc")), camt=num($("camt")), protectedRights=num($("protected"));
   var scn = radio("scn"), cmode = radio("cmode");
+  var exitReason = $('exitReason').value;
+  show('exitReasonField', scn==='cash' || scn==='preserve');
+  $('exitRouteNotice').textContent = exitReason==='retrenchment'
+    ? 'Retrenchment is not ordinary resignation: the fund benefit may fall under the retirement lump-sum table, while a qualifying employer severance payment is a separate benefit. A reliable combined tax estimate requires fund confirmation and SARS directive sequencing.'
+    : exitReason==='other'
+    ? 'The exit classification is uncertain. Obtain the employer and fund classification before relying on a withdrawal tax estimate.'
+    : 'Ordinary resignation / dismissal: eligible vested cash is modelled using the withdrawal tax table, subject to fund rules and historical benefits.';
   var fundType=$("fundType").value, priorStatus=$("prevStatus").value;
   if (priorStatus==="none") prev=0; // Never carry a hidden prior amount into a confirmed-none scenario.
   var includeSavings=$("savingsElection").value==="withdraw" && scn==="cash";
   var ageGroup=$("ageGroup").value;
+  var clientAgeRaw=$("clientAge").value.trim(), clientAge=clientAgeRaw===""?NaN:Number(clientAgeRaw);
+  describeAge(clientAge,scn);
+  updateFundRouteGuide(clientAge,fundType,scn);
   $("totalFund").textContent = R(total);
   show("smallFundHelper", false);
   lastSummary = "";
+  $("decisionReport").style.display="none";
+  $("singleReport").style.display="none";
+  document.body.classList.remove("print-decision","print-single");
 
   /* show/hide inputs */
   var workingOnly = scn === "workingSavings";
@@ -673,7 +1024,8 @@ function update(){
   show("stepFundType", !workingOnly);
   show("stepPrevious", !workingOnly);
   show("workingSavingsFields", workingOnly);
-  show("grpProv", scn==="retire");
+  show("earlyRetirementField",scn==="retire" && Number.isFinite(clientAge) && clientAge<55);
+  show("grpProv", scn==="retire" || (clientAge>=55 && (scn==="cash" || scn==="preserve") && (fundType==="pension" || fundType==="provident")));
   show("grpSev", scn==="cash" || scn==="preserve");
   show("grpAmt", scn==="retire" || scn==="cash");
   show("grpSavingsElection", scn==="cash" && p.s>0);
@@ -703,6 +1055,12 @@ function update(){
     $("rRows").innerHTML = row("Savings pot balance",R(balance)) + row("Requested gross withdrawal",R(amount)) + row("Annual taxable income before",R(income)) + row("Income including withdrawal",R(income+amount)) + row("Estimated extra income tax",R(impact.tax)) + row("Effective tax on withdrawal",pct(impact.tax,amount)) + row("Remaining savings pot",R(balance-amount),true);
     $("warn").innerHTML = '<div class="warnbox">Indicative only: final SARS directive withholding, outstanding tax debt, fund administration charges, other income, medical credits and final assessment can change the amount paid. Savings withdrawals reduce retirement savings. This is NOT the retirement lump-sum tax table.</div>';
     $("result").style.display = "block";
+    renderSingleReport('Savings-component withdrawal while employed',
+      'See how much of your requested savings-pot withdrawal you may receive after estimated additional income tax.',
+      [['Available savings-component balance',R(balance)],['Requested gross withdrawal',R(amount)],['Estimated additional income tax',R(impact.tax)],['Estimated net cash before fees and SARS debts',R(impact.net)],['Savings-component balance remaining',R(balance-amount)]],
+      '2026/27 tax year; annual taxable income before withdrawal '+R(income)+'; age group '+age+'. The calculation compares estimated annual income tax before and after the withdrawal. It assumes eligibility is confirmed; it does not include medical tax credits, fund charges or tax debts.',
+      'This is not a lump-sum withdrawal-table calculation or a SARS directive. SARS withholding may differ from final assessed tax. Confirm with your fund that you may withdraw this amount in the applicable tax year.');
+    updateDirectiveReadiness('workingSavings','',0,'',true,'none',0,0);
     lastSummary = "Situation: Still working — savings-component withdrawal\nGross withdrawal: " + R(amount) + "\nEstimated additional tax: " + R(impact.tax) + "\nEstimated net before fees and SARS debts: " + R(impact.net) + "\nRemaining savings pot: " + R(balance-amount);
     setLinks(); return;
   }
@@ -718,6 +1076,8 @@ function update(){
   var p2 = prev + (scn!=="retire" ? sev : 0);
 
   var blocks=[];
+  if(!Number.isInteger(clientAge)||clientAge<16||clientAge>100) blocks.push("Enter your age in completed years (16–100) to identify valid options.");
+  if(scn==="retire" && clientAge<55 && !$("earlyReason").value) blocks.push("Below age 55, ordinary resignation is not retirement. Select an exceptional fund-confirmed retirement reason, or choose withdrawal/preservation.");
   if (!fundType) blocks.push("Select the type of retirement fund first.");
   if (fundType==="other" || fundType==="gepf") blocks.push("This fund needs a manual benefit statement and specialised rules. The simulator will not invent a cash-entitlement figure.");
   if (fundType==="ra" && scn!=="retire") blocks.push("Resigning from employment does not normally make a retirement annuity withdrawable or transferable as an employment-exit benefit. Request an RA-specific review.");
@@ -725,25 +1085,42 @@ function update(){
   if (scn==="retire" && !$("retireEligible").checked) blocks.push("Confirm that the retirement fund permits retirement now before calculating a retirement lump sum.");
   if (protectedRights>0 && fundType!=="provident" && fundType!=="provident-pres") blocks.push("Fully commutable pre-2021 provident rights may only be entered for a relevant provident/provident-preservation fund; verify rights before calculating.");
   if (protectedRights>p.v) blocks.push("Protected rights cannot exceed the vested component. Correct the fund values.");
+  if (protectedRights>0 && !$('protectedVerified').checked) blocks.push("Protected provident rights must be confirmed in writing by the fund administrator. Tick the confirmation only when you have this evidence, or enter R0 to use the conservative estimate.");
+  if (priorStatus==="known") blocks.push("Earlier taxable lump sums require an individual SARS directive-history check. A combined gross total alone does not reliably establish the taxable portions and prior deductions. This automated estimate is paused; you may obtain the details from SARS or your fund without booking an adviser.");
   if (priorStatus==="unknown") blocks.push("Prior lump-sum history is unverified. Check historic tax directives and gross benefits before calculating a reliable estimate.");
-  if (priorStatus==="known" && prev===0) blocks.push("Choose 'No previous benefits' if confirmed, or enter a non-zero known previous gross amount.");
+
+  if ((scn==='cash' || scn==='preserve') && exitReason==='other') blocks.push('The reason for leaving is not yet classified. Confirm whether the payment is an ordinary withdrawal, qualifying retirement-fund retrenchment benefit, or another category before relying on tax estimates.');
+  if (scn==='cash' && exitReason==='retrenchment' && !$('retrenchFundConfirmed').checked) blocks.push('Obtain written confirmation from your fund administrator of qualifying retrenchment fund-benefit classification before estimating cash tax. The ordinary withdrawal table must not be substituted.');
+  if (scn==='cash' && exitReason==='retrenchment' && includeSavings) blocks.push('The qualifying retrenchment comparison cannot combine a savings-component cash election. Keep savings invested to compare vested withdrawal alternatives or obtain a fund directive.');
+  if ((scn==='cash'||scn==='preserve') && exitReason==='retrenchment' && protectedRights>0) blocks.push('Protected provident rights and qualifying retrenchment require an administrator-specific benefit calculation; do not use the simplified comparison.');
+  if (scn==='preserve' && exitReason==='retrenchment' && !$('retrenchFundConfirmed').checked) blocks.push('Confirm with your fund how a retrenchment benefit can be preserved or transferred. A tax-neutral transfer must be permitted and correctly executed.');
   if (sev>0 && scn!=="retire" && !$("sevVerified").checked) blocks.push("The employer must confirm the payment qualifies as severance. Ordinary notice, leave or termination payments cannot be taxed as qualifying severance by assumption.");
+  if (sev>0 && scn==="cash") blocks.push("A simultaneous severance benefit and retirement-fund withdrawal may require a combined SARS directive and correctly ordered historical benefits. This calculator does not verify the sequence or deductions. Calculate them separately or obtain a directive-level calculation before relying on the combined total.");
+  // An ordinary savings withdrawal below R2,000 is not a valid general election.
+  // Special termination exceptions are fund-specific and must not be silently assumed.
+  if (includeSavings && scn==='cash') {
+    var chosenCash=cmode==='max' ? p.v+p.s : Math.min(camt,p.v+p.s);
+    var chosenSavings=Math.max(0,chosenCash-p.v);
+    if (chosenSavings>0 && chosenSavings<2000) blocks.push('The selected savings-component cash is below the ordinary R2,000 minimum. Increase the separate savings cash amount or keep it invested; confirm any specific exit exception with your fund.');
+  }
   if (includeSavings && !$("savingsEligible").checked) blocks.push("Verify savings-component withdrawal eligibility with your fund before including it in a cash estimate.");
   if (includeSavings && !$("incomeKnown").checked) blocks.push("Confirm the full estimated 2026/27 taxable income before calculating tax on a savings-component withdrawal.");
+  if (includeSavings && !$("inc").value.trim()) blocks.push("Enter your annual taxable income before using the savings-component tax estimate. R0 must be explicitly entered if correct.");
   if (blocks.length){
     $("result").style.display="none";
-    $("warn").innerHTML='<div class="release-block"><b>Calculation paused — information or fund confirmation needed</b><ul>'+blocks.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul><p>Appointments remain available below. No payout or tax amount is shown because it could mislead you.</p></div>';
+    $("warn").innerHTML='<div class="release-block"><b>Calculation paused — information or fund confirmation needed</b><ul>'+blocks.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul><p>Please verify the missing information with your fund or SARS before relying on a tax estimate. An adviser is optional; no appointment is required to view other scenarios.</p></div>';
     setLinks(defaultMsg());return;
   }
   if (!total && !sev){ $("result").style.display="none"; $("warn").innerHTML=""; setLinks(defaultMsg()); return; }
 
   if (scn==="retire"){
+    if(clientAge<55) warns.push("Retirement before 55 requires a verified exceptional entitlement; this estimate does not constitute verification.");
     var c = retireCalc(p, prev, cmode, camt, protectedRights);
     $("maxLabel").textContent = "Most you can take as cash";
     $("maxCash").textContent = R(c.max);
     $("lblMax").textContent = "Take the maximum cash (" + R(c.max) + ")";
     $("maxWhy").textContent = c.dem
-      ? "Your amount ordinarily required for annuitisation (retirement component plus two-thirds of non-protected vested rights) is " + R(c.mandatoryAnnuity) + ", within the R240,000 2026/27 small-benefit limit. Full commutation may be possible, subject to fund confirmation."
+      ? "Your amount ordinarily required for annuitisation (retirement component plus two-thirds of non-protected vested rights) is " + R(c.mandatoryAnnuity) + ", within the R240,000 2026/27 two-pot compulsory-annuity threshold. Full commutation may be possible, subject to fund confirmation."
       : "Maximum estimate: savings " + R(p.s) + " + confirmed protected rights " + R(c.protectedRights) + " + one-third of non-protected vested " + R(c.ordinaryVested/3) + ". Estimated compulsory annuity portion: " + R(c.mandatoryAnnuity) + ".";
     if (c.dem) {
       $("smallFundHelper").textContent = "Small-benefit retirement rule: since 1 March 2026 SARS refers to a general R360,000 de minimis threshold. Under the two-pot method, the amount otherwise requiring an annuity (" + R(c.mandatoryAnnuity) + ") must generally be R240,000 or less. Your fund must confirm full cash commutation eligibility; total balance alone cannot establish it.";
@@ -765,10 +1142,15 @@ function update(){
            row("Buys an annuity", R(c.annuity), true);
     bar = {t:RET, prev:prev, amt:c.cash, free:FREE.ret};
     msg = "Situation: Retiring\nFund total: "+R(c.total)+"\nCash taken: "+R(c.cash)+"\nTax: "+R(c.tax)+"\nCash I keep: "+R(c.net)+"\nAnnuity: "+R(c.annuity);
+    renderSingleReport('Retirement cash and annuity estimate',
+      'Compare your estimated net retirement cash with the part expected to remain available for an annuity, using today’s balances only.',
+      [['Total fund balance',R(c.total)],['Maximum estimated retirement cash',R(c.max)],['Gross retirement cash selected',R(c.cash)],['Estimated retirement lump-sum tax',R(c.tax)],['Estimated net cash after tax',R(c.net)],['Estimated amount for annuity',R(c.annuity)]],
+      'Age '+clientAge+'; eligibility confirmed by the user; '+(clientAge<55?'specific early-retirement exception: '+$('earlyReason').value+'; ':'')+'2026/27 retirement lump-sum rates. Fund: '+fundType+'; vested '+R(p.v)+', savings '+R(p.s)+', retirement '+R(p.r)+'; protected provident rights entered '+R(protectedRights)+'; earlier gross relevant lump sums '+R(prev)+'. Current values only: no investment growth or annuity income projection.',
+      'Fund-specific protected rights and small-benefit commutation must be confirmed. Annuity income, SARS directive, historical benefits, charges and eventual tax may differ from this estimate.');
   }
 
   if (scn==="cash"){
-    var k = cashCalc(p, p2, cmode, camt, inc, includeSavings, ageGroup);
+    var k = cashCalc(p, p2, cmode, camt, inc, includeSavings, ageGroup, exitReason==='retrenchment' && $('retrenchFundConfirmed').checked);
     $("maxLabel").textContent = "Most you can take as cash";
     $("maxCash").textContent = R(k.acc);
     $("lblMax").textContent = "Take everything I can (" + R(k.acc) + ")";
@@ -788,7 +1170,7 @@ function update(){
     if (includeSavings) rows += row("Cash from savings pot", R(k.fromS)) + row("Tax on savings cash", R(k.taxS));
     rows += row("Total cash (before tax)", R(sev + k.x)) + row("Effective tax rate", pct(taxToday, sev + k.x));
     if (k.locked + k.left > 0) rows += row("Stays in your fund", R(k.locked + k.left), true);
-    if (k.fromV>0) bar = {t:WDR, prev:p2, amt:k.fromV, free:FREE.wdr};
+    if (k.fromV>0) bar = exitReason==='retrenchment'?{t:RET,prev:p2,amt:k.fromV,free:FREE.ret}:{t:WDR, prev:p2, amt:k.fromV, free:FREE.wdr};
     else if (sev>0) bar = {t:RET, prev:prev, amt:sev, free:FREE.ret};
     var later = retireCalc(p, p2, "max", 0, protectedRights);
     cmp = {title:"Cash now or retire later?",
@@ -821,7 +1203,43 @@ function update(){
     msg = "Situation: Leaving my job, preserving my fund\nFund total: "+R(total)+"\nTax today: "+R(taxToday);
   }
 
+  if(clientAge>=55 && scn!=="retire" && exitReason!=='retrenchment') warns.push("At age "+clientAge+", you may also qualify to retire instead of taking a resignation withdrawal. That is a separate route and may use the retirement lump-sum tax table. Confirm your fund rules before choosing.");
   if (scn!=="retire" && p.s>0) warns.push("Savings-component decisions are separate from vested-component withdrawals. Current election: " + (includeSavings ? "include separately eligible savings withdrawal" : "keep savings invested") + ".");
+  renderDecisionReport(p,prev,sev,fundType,scn);
+
+  // A three-way ordinary-withdrawal comparison is not interchangeable with a
+  // mixed savings-pot or employer-severance election. Give these a complete
+  // scenario-specific printable result instead of an incomplete comparison.
+  if(scn==='cash' && $('decisionReport').style.display!=='block') {
+    renderSingleReport('Employment-exit cash estimate',
+      'This report reflects the specific cash elections shown below, not a comparison against qualifying retirement.',
+      [['Starting retirement fund balance',R(total)],
+       ['Employer severance (separately verified)',R(sev)],
+       ['Vested component paid out',R(k.fromV)],
+       ['Savings component paid out',R(k.fromS)],
+       ['Estimated tax on employer severance',R(taxSev)],
+       ['Estimated withdrawal tax on vested cash',R(k.taxV)],
+       ['Estimated additional income tax on savings cash',R(k.taxS)],
+       ['Total gross cash',R(sev+k.x)],
+       ['Total estimated tax',R(taxToday)],
+       ['Estimated net cash before fees and SARS debts',R(netToday)],
+       ['Fund remaining invested / restricted',R(k.locked+k.left)]],
+      'Age '+clientAge+'; fund '+fundType+'; previous taxable lump sums confirmed none; vested '+R(p.v)+', savings '+R(p.s)+', retirement '+R(p.r)+'; savings cash election '+(includeSavings?'yes':'no')+'; annual taxable income for savings tax '+(includeSavings?R(inc):'not applicable')+'; 2026/27 tax tables.',
+      'The fund withdrawal, a separately qualified employer severance benefit, and savings-pot income tax are different tax categories. The displayed combined total is an illustration only, not one SARS directive. Verify eligibility, withholding, fund fees, severance status and any prior benefits. No guaranteed entitlement or recommendation is implied.');
+  }
+  if(scn==='preserve' && $('decisionReport').style.display!=='block') {
+    renderSingleReport('Preservation and any separate severance estimate',
+      'Preserving an eligible retirement benefit can defer current fund-withdrawal tax. Employer severance, if any, is a separate cash item.',
+      [['Starting retirement fund balance',R(total)],
+       ['Fund amount proposed for preservation',R(total)],
+       ['Estimated tax on eligible tax-neutral transfer',R(0)],
+       ['Separately confirmed employer severance',R(sev)],
+       ['Estimated tax on qualifying severance',R(taxSev)],
+       ['Estimated net employer severance before fees',R(sev-taxSev)],
+       ['Total proposed remaining retirement savings',R(total)]],
+      'Age '+clientAge+'; exit classification: '+(exitReason==='retrenchment'?'retrenchment selected (classification subject to confirmation)':'ordinary resignation/dismissal')+'; fund '+fundType+'; 2026/27 tax tables; previous taxable lump sums confirmed none. Fund transfer is assumed tax-neutral only if permitted and correctly processed.',
+      'A preservation transfer is not necessarily available for every fund or pot. Confirm destination, transfer conditions, protected rights and severance classification with the administrator. For retrenchment, any fund lump sum taken in cash needs separate fund/SARS classification and is not included here. Future withdrawals and retirement benefits may be taxable.');
+  }
   /* headline numbers */
   $("rTax").textContent = R(taxToday);
   $("rRows").innerHTML = rows;
@@ -839,6 +1257,8 @@ function update(){
       : "You have " + R(fb) + " of your " + R(bar.free) + " tax-free amount available. This lump sum uses " + R(used) + ", leaving " + R(left) + ".";
   }
 
+  /* Hide the earlier asymmetric cash-now versus future-retirement comparison for exits. */
+  if(scn==="cash" || scn==="preserve") cmp=null;
   /* comparison */
   show("cmpCard", !!cmp);
   if (cmp){
@@ -847,6 +1267,7 @@ function update(){
     $("cmpBody").innerHTML = box(cmp.a) + box(cmp.b);
   }
 
+  updateDirectiveReadiness(scn,exitReason,sev,fundType,includeSavings,priorStatus,protectedRights,clientAge);
   $("warn").innerHTML = warns.map(function(w){ return '<div class="warnbox">'+w+'</div>'; }).join("");
   $("result").style.display = "block";
 
@@ -992,9 +1413,9 @@ function syncSplit(){
   if(on){ $("spN").style.flex=Math.max(net,1)+" 1 0"; $("spT").style.flex=Math.max(tax,0)+" 1 0"; $("spT").style.display=tax>0?"flex":"none"; $("spN").style.display=net>0?"flex":"none"; $("chN").textContent=R(net); $("chT").textContent=R(tax); }
 }
 /* ===== THEMES + LIVE RESULT BAR ===== */
-var THEME_COLOR={graphite:"#121212",slate:"#111827",stone:"#f3f4f6"};
+var THEME_COLOR={sunrise:"#f3f7ff",graphite:"#121212",slate:"#111827",stone:"#f3f4f6"};
 function setTheme(t,save){
-  if(!THEME_COLOR[t]) t="graphite";
+  if(!THEME_COLOR[t]) t="sunrise";
   document.documentElement.setAttribute("data-theme",t);
   document.querySelector('meta[name="theme-color"]').setAttribute("content",THEME_COLOR[t]);
   var r=document.querySelector('input[name="theme"][value="'+t+'"]'); if(r) r.checked=true;
@@ -1009,6 +1430,7 @@ $("themeSheet").addEventListener("click",function(e){ if(e.target===this) this.c
 var resultInView=false;
 function syncLive(){
   var shown=$("result").style.display==="block";
+  document.body.classList.toggle("has-calculated-result",shown);
   if(shown){ $("liveLbl").textContent=$("netLbl").textContent; $("liveVal").textContent=$("rNet").textContent; }
   $("liveBar").classList.toggle("on",shown && !resultInView);
 }
@@ -1021,19 +1443,13 @@ var _update=update; update=function(){ _update(); syncLive(); syncSplit(); };
   el.addEventListener("focus", function(){ if (this.value==="0") this.select(); });
   el.addEventListener("blur",  function(){ if (!this.value && this.id!=="camt") { this.value="0"; update(); } });
 });
-[].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#fundType,#retireEligible,#sevVerified,#savingsElection,#savingsEligible,#incomeKnown,#ageGroup,#prevStatus,#workAge,#workEligible,#workIncomeConfirmed'), function(r){ r.addEventListener("change", update); });
-// In-memory only: prevent accidental navigation after editing calculator inputs.
-// Browser prompts are best-effort, and some mobile browsers do not show them.
-var unsavedCalculatorChanges = false;
-[].forEach.call(document.querySelectorAll('#calculator input, #calculator select'), function(el){
-  el.addEventListener('input', function(){ unsavedCalculatorChanges = true; });
-  el.addEventListener('change', function(){ unsavedCalculatorChanges = true; });
+[].forEach.call(document.querySelectorAll('input[name="scn"],input[name="cmode"],#fundType,#clientAge,#exitReason,#retrenchFundConfirmed,#earlyReason,#retireEligible,#protectedVerified,#sevVerified,#savingsElection,#savingsEligible,#incomeKnown,#ageGroup,#prevStatus,#workAge,#workEligible,#workIncomeConfirmed'), function(r){ r.addEventListener("change", update); });
+// Calculations run locally. Inputs are not automatically sent or retained on a server.
+$('downloadReport').addEventListener('click',function(){
+  if($('result').style.display!=='block' || $('decisionReport').style.display==='none'){alert('Complete an eligible exit comparison first.');return;}
+  printActiveReport();
 });
-window.addEventListener('beforeunload', function(event){
-  if (!unsavedCalculatorChanges) return;
-  event.preventDefault();
-  event.returnValue = '';
-});
+$('downloadSingle').addEventListener('click',printActiveReport);
 update();
 </script>
 </body>
