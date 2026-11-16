@@ -415,6 +415,60 @@ h2{font-weight:800}
  body.print-visual .print-footer{background:#f0f8f5!important;border-top:2px solid #19927f!important;padding:7px!important}
  body.print-visual #decisionReport .report-small,body.print-visual #singleReport .report-small{color:#283a4c!important}
 }
+
+.report-choice>span{display:block;width:100%}
+.report-choice:has(input:checked){box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 20%,transparent)}
+.report-choice::after{content:' ';display:block;align-self:flex-end;min-width:70px;height:90px;border-radius:6px;border:1px solid #cddbe2;background:linear-gradient(#0d5464 0 16%,#fff 16% 35%,#e8f2f3 35% 46%,#fff 46% 56%,#edf2f5 56% 67%,#fff 67% 78%,#e4f1eb 78%);box-shadow:0 2px 6px #0001}
+.report-choice:has(input[value="visual"])::after{background:linear-gradient(#0c5367 0 16%,#fff 16% 29%,#e4f6e5 29% 43%,#fff0eb 43% 55%,#e5f1ff 55% 66%,#fff 66% 74%,#e7f3ed 74%)}
+#infographicReport{display:none}
+@media print{
+ body.print-visual #result>:not(#infographicReport){display:none!important}
+ body.print-visual #infographicReport{display:block!important;color:#122a45!important;font:8pt/1.28 system-ui,sans-serif!important;background:#fff!important}
+ body.print-visual #infographicReport *{box-sizing:border-box;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ body.print-visual #infographicReport .inf-head{display:flex!important;flex-direction:column;background:linear-gradient(95deg,#0d3755,#08757b)!important;color:white!important;padding:12px 16px!important;border-bottom:4px solid #efc453;margin:0 0 9px}
+ body.print-visual #infographicReport .inf-head strong{font-size:17pt;color:white!important}
+ body.print-visual #infographicReport .inf-head small{color:#def6f5!important}
+ body.print-visual #infographicReport .inf-pill{display:inline-block;background:#0878a4!important;color:white!important;border-radius:25px;padding:3px 9px;font-weight:700}
+ body.print-visual #infographicReport .inf-title{font-size:19pt!important;color:#132850!important;margin:5px 0 3px}
+ body.print-visual #infographicReport .inf-subtitle{font-size:9pt;margin:0 0 10px;color:#43566a!important}
+ body.print-visual #infographicReport .inf-section{font-size:11pt!important;color:#173559!important;border-left:4px solid #28a745;padding:2px 8px;margin:9px 0 6px}
+ body.print-visual #infographicReport .inf-metrics{display:grid!important;grid-template-columns:repeat(3,1fr);gap:7px}
+ body.print-visual #infographicReport .inf-metric{background:#e7f8eb!important;border:1px solid #b0dbbb;border-radius:10px;padding:9px}
+ body.print-visual #infographicReport .inf-metric.tax{background:#fff0eb!important;border-color:#f0beb2}
+ body.print-visual #infographicReport .inf-metric.gross{background:#e5f3ff!important;border-color:#aacfed}
+ body.print-visual #infographicReport .inf-metric span{display:block;font-size:8pt;font-weight:700;color:#145d35!important}
+ body.print-visual #infographicReport .inf-metric.tax span{color:#a1382b!important}
+ body.print-visual #infographicReport .inf-metric.gross span{color:#135680!important}
+ body.print-visual #infographicReport .inf-metric b{display:block;font-size:15pt;color:#0c542f!important}
+ body.print-visual #infographicReport .inf-metric.tax b{color:#952c25!important}
+ body.print-visual #infographicReport .inf-metric.gross b{color:#173d70!important}
+ body.print-visual #infographicReport .inf-info-grid{display:grid!important;grid-template-columns:1fr 1fr;gap:11px;margin-top:10px}
+ body.print-visual #infographicReport .inf-panel{border:1px solid #d2dfe8;border-radius:9px;break-inside:avoid}
+ body.print-visual #infographicReport .inf-panel h3{background:#e6eef4!important;color:#193b5c!important;font-size:10pt!important;margin:0;padding:6px 9px}
+ body.print-visual #infographicReport .inf-table{width:100%;border-collapse:collapse;font-size:8pt}
+ body.print-visual #infographicReport .inf-table tr{border-bottom:1px solid #dde7ee}
+ body.print-visual #infographicReport .inf-table th{text-align:left;font-weight:500;padding:3px 7px}
+ body.print-visual #infographicReport .inf-table td{text-align:right;font-weight:750;padding:3px 7px}
+ body.print-visual #infographicReport .inf-ticks{margin:4px 5px;padding-left:20px}
+ body.print-visual #infographicReport .inf-ticks li{margin:3px 0}
+ body.print-visual #infographicReport .inf-ticks li::marker{color:#16a153}
+ body.print-visual #infographicReport .inf-compare{display:grid!important;grid-template-columns:repeat(2,1fr);gap:8px}
+ body.print-visual #infographicReport .inf-compare:has(>section:nth-child(3)){grid-template-columns:repeat(3,1fr)}
+ body.print-visual #infographicReport .inf-cmp{background:#f0fbf1!important;border:1px solid #b4dbc0;border-radius:9px;padding:8px;break-inside:avoid}
+ body.print-visual #infographicReport .inf-cmp.saved{background:#eaf4ff!important;border-color:#afcdec}
+ body.print-visual #infographicReport .inf-cmp.partial{background:#fff6e9!important;border-color:#ebd1b0}
+ body.print-visual #infographicReport .inf-cmp h3{font-size:10pt!important;color:#1c4a39!important;margin:0 0 5px}
+ body.print-visual #infographicReport .inf-cmp p{font-size:7.7pt;margin:3px 0}
+ body.print-visual #infographicReport .inf-notes{background:#f2f8fc!important;border:1px solid #cbdfe9;border-left:4px solid #2497b8;border-radius:9px;padding:8px 10px;margin-top:12px;break-inside:avoid}
+ body.print-visual #infographicReport .inf-notes h3{font-size:10pt!important;color:#183b59!important;margin:0 0 4px}
+ body.print-visual #infographicReport .inf-notes ul{padding-left:18px;margin:4px 0}
+ body.print-visual #infographicReport .inf-notes li{font-size:7.5pt;margin:2px 0}
+ body.print-visual #infographicReport .inf-caveat{font-size:7pt!important;color:#405161!important;line-height:1.2;margin:6px 0}
+ body.print-visual #infographicReport .inf-footer{background:#eaf6f2!important;border:1px solid #b8ded0;border-top:3px solid #139d81;border-radius:8px;padding:9px 11px;margin-top:9px;break-inside:avoid;font-size:7pt!important}
+ body.print-visual #infographicReport .inf-footer img{float:right;width:56px;height:56px;margin-left:8px}
+ body.print-visual #infographicReport .inf-footer p{font-size:7pt!important;margin:3px 0}
+}
+
 </style>
 </head>
 
@@ -724,6 +778,7 @@ h2{font-weight:800}
 <div class="report-actions noprint"><button type="button" class="btn book" id="downloadSingle">Save my result as PDF</button><p class="report-small" style="grid-column:1/-1;margin:0">On Android, choose <strong>Save as PDF</strong> in the browser print screen. No appointment or contact details required.</p><a href="#appointment-request" class="btn ghost">Optional: speak to an adviser</a></div>
 <div class="print-footer"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACBElEQVR4nO2bQYrkMAxFv8aGLB2YA+Qozs2GPtLcID5KDjBgLwMJfxaya6ppGqoKkvKAtDCUeYsPwpa+XBHiwUg/HiUBQw011FBDDT0TlRoeSOMhMhcPoLTt+XQBhj6DRpJkBhAzgDRtAsCRJPkZPUeAoc+gpR4hPVZx9bqt5+0KAYa+gqYR4MdEyvweAYZ+H/7LTsiQuPqdKFcIMPQFNJBcAADFa92SGQDJ/RoBhj6OJhERGVG7jLgOBHBoS3iFAEMfCb0J78ZPadqkXoLh81Tq7VoNrX5rLtVvcWk3YfNb1hP2g0IdVcwAl0AicgeZHUnuaAvJ5e1aDa2p0PRkoLYaYYeaZYS9emfLVi+ozGGHzIGs6VkHqvNidjbL6Aa9VaXDM2n3N1DStAliHiHx93iuAEOfr1uAY7v/HO/q1hKsbvWDti7jlrLIHbogtMXqVm/oIVzCJkDx4ALH6pOtbnWE3uqWI+LqwTQCgpABLWPl584zBRj6QgffAghsx6r9tLrVF/rv7Vj9VppIne/G1d6Ou0Nvb8cyAyBXEW0w0mQz+H7Qu8mTdhQxO3IJLUcxO7sJO0bDJvJrHaiNof6p5lIBhj6BloH8mKrp0pRdK8DQb6N18IEACsA0OkjMhwfCHw+EfK4AQ1+ZPAFQ06V16/bwD9gsoxtU7KsFQw011FBD/yP0Lx8HRjrA94MBAAAAAElFTkSuQmCC" alt="QR code to contact adviser on WhatsApp"><strong>Want to discuss the options?</strong><p>Optional WhatsApp: 083 330 3214. Scan the code or visit wa.me/27833303214. No appointment is necessary to use this estimate.</p><p>Educational estimates only, not a tax directive, a fund quotation, personalised financial advice or an Absa-approved service. Not an actuarial GEPF estimate; qualifying retrenchment is shown only if classification is confirmed. SARS 2026/27 table: sars.gov.za/tax-rates/income-tax/retirement-lump-sum-benefits/. Do not make an irreversible withdrawal or transfer without checking with your fund and SARS.</p></div>
     </div>
+    <div id="infographicReport" aria-label="Visual PDF report"></div>
     <div class="card" id="splitCard"><div class="splitlbl"><span>Net cash</span><span>SARS tax</span></div><div class="split"><div id="spN"><span class="chip" id="chN"></span></div><div id="spT"><span class="chip" id="chT"></span></div></div></div>
     <div class="card">
       <div class="small" id="taxLbl">Estimated tax</div>
@@ -755,10 +810,10 @@ h2{font-weight:800}
       <h3>Choose your PDF report</h3>
       <p class="small">Both versions use the same figures, assumptions, safeguards and adviser contact details. Only the presentation changes.</p>
       <div class="report-choice-grid" role="radiogroup" aria-label="PDF presentation">
-        <label class="report-choice"><input type="radio" name="pdfStyle" value="standard" checked><span><b>Standard · Simple & clear</b><small>Neat table, Navy & Emerald highlights, all explanatory text.</small></span></label>
-        <label class="report-choice"><input type="radio" name="pdfStyle" value="visual"><span><b>Visual · Colourful overview</b><small>Colour-coded result cards, visual comparison and the full explanatory text.</small></span></label>
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="standard" checked><span><b>Standard · Simple & clear</b><small>Navy & Emerald report with a straightforward calculation table.</small></span></label>
+        <label class="report-choice"><input type="radio" name="pdfStyle" value="visual"><span><b>Visual · Colourful overview</b><small>Three result cards, illustrated comparison and safeguards.</small></span></label>
       </div>
-      <button type="button" class="btn book" id="printChosenPdf" style="width:100%;margin-top:12px">Preview / Save selected PDF</button>
+      <button type="button" class="btn book" id="printChosenPdf" style="width:100%;margin-top:12px">Print / Save selected PDF</button>
       <p class="small">In the browser print window, choose <b>Save as PDF</b> and enable <b>Background graphics</b> for the most accurate colours. No contact details are required.</p>
     </div>
     <div class="cta">
@@ -1079,6 +1134,7 @@ function printActiveReport(){
   current.querySelector('.print-bar-tax').style.width=(gross?100*t/gross:0)+'%';
   document.body.classList.remove('print-decision','print-single','print-standard','print-visual');
   document.body.classList.add(decision?'print-decision':'print-single','print-'+selectedStyle);
+  if(selectedStyle==="visual")buildInfographicReport();
   window.print();
 }
 
@@ -1628,6 +1684,40 @@ $('decisionToggle').addEventListener('click',function(){
  this.setAttribute('aria-expanded',String(expanded));
  this.textContent=expanded?'Hide detailed comparison':'Compare withdrawal and preservation options';
 });
+
+function buildInfographicReport(){
+ var dest=$('infographicReport');dest.replaceChildren();
+ var scn=radio('scn'),work=scn==='workingSavings',decision=$('decisionReport').style.display==='block';
+ var source=decision?$('decisionReport'):$('singleReport');
+ function E(tag,cls,t,parent){var e=document.createElement(tag);if(cls)e.className=cls;if(t!==null&&t!==undefined)e.textContent=t;if(parent)parent.appendChild(e);return e;}
+ var h=E('div','inf-head',null,dest);E('strong','', 'RETIREMENT FUND TAX SIMULATOR',h);E('small','', 'CLIENT RESULTS REPORT · 2026/27 ESTIMATE · '+new Date().toLocaleDateString('en-ZA'),h);
+ E('span','inf-pill',work?'Two-Pot Retirement Fund':scn==='retire'?'Retirement':'Leaving Employment',dest);
+ E('h1','inf-title',work?'Savings-Pot Withdrawal Report':scn==='retire'?'Retirement — Results Summary':scn==='preserve'?'Preservation — Results Summary':'Leaving Employment — Results Summary',dest);
+ E('p','inf-subtitle',work?'Your estimated results for a withdrawal from your savings pot.':'Your estimated options for your retirement-fund benefit.',dest);
+ E('h2','inf-section','Key Results',dest);
+ var box=E('div','inf-metrics',null,dest),net=$('rNet').textContent,tax=$('rTax').textContent;
+ var gross=work?R(num($('workAmount'))):R(num($('v'))+num($('s'))+num($('r')));
+ [[scn==='preserve'?'Fund Preserved':'Net Cash to You',net,'cash'],['Estimated SARS Tax',tax,'tax'],[work?'Amount Withdrawn':'Fund Value',gross,'gross']].forEach(function(a){var c=E('div','inf-metric '+a[2],null,box);E('span','',a[0],c);E('b','',a[1],c)});
+ var grid=E('div','inf-info-grid',null,dest),inp=E('section','inf-panel',null,grid);E('h3','','Your Inputs',inp);
+ var t=E('table','inf-table',null,inp);
+ function row(x,y){var tr=E('tr','',null,t);E('th','',x,tr);E('td','',y,tr)}
+ if(work){row('Savings component balance',R(num($('workBalance'))));row('Requested cash',R(num($('workAmount'))));row('Annual taxable income',R(num($('workIncome'))));row('Age group',$('workAge').selectedOptions[0].textContent)}
+ else{row('Fund type',$('fundType').selectedOptions[0].textContent);row('Total fund balance',gross);row('Vested',R(num($('v'))));row('Savings',R(num($('s'))));row('Retirement',R(num($('r'))));row('Age',$('clientAge').value)}
+ var ex=E('section','inf-panel',null,grid);E('h3','','How the Result Works',ex);var ul=E('ul','inf-ticks',null,ex);
+ var rules=work?['The savings withdrawal is added to annual taxable income.','The simulator estimates income tax with and without the withdrawal.','Net cash is after estimated tax, before fees and SARS debts.']:scn==='retire'?['Cash entitlement depends on your fund and verified protected rights.','The retirement lump-sum tax table is applied to confirmed retirement cash.','The balance is intended for an annuity, subject to fund confirmation.']:scn==='preserve'?['A qualifying tax-neutral transfer generally attracts no immediate withdrawal tax.','Your retirement capital stays invested, subject to fund rules.','Future benefits may still be taxable.']:['The vested cash and exit classification determine the applicable tax table.','Ordinary resignation uses the retirement-fund withdrawal tax table.','Savings and retirement components have separate access rules.'];
+ rules.forEach(function(x){E('li','',x,ul)});
+ E('h2','inf-section',work?'Comparison: Take Cash or Leave It Invested':'Compare Your Options',dest);
+ var compare=E('div','inf-compare',null,dest);
+ function card(title,items,css){var c=E('section','inf-cmp '+css,null,compare);E('h3','',title,c);items.forEach(function(x){E('p','',x,c)});return c}
+ if(work){card('Take the Cash Now',['Gross withdrawal: '+gross,'Estimated SARS tax: '+tax,'You receive: '+net],'taken');card('Leave It Invested',['No withdrawal tax today','Withdrawal amount retained: '+gross,'Future returns and access are not guaranteed'],'saved')}
+ else if(decision){var trs=Array.from($('decisionRows').querySelectorAll('tr'));['Full vested withdrawal','Partial withdrawal','Preserve all'].forEach(function(name,i){var items=[];['Gross cash now','Estimated lump-sum tax','Net cash now','Fund balance remaining before fees'].forEach(function(k){var tr=trs.find(function(r){return r.cells[0]?.textContent===k});if(tr)items.push(k+': '+tr.cells[i+1].textContent)});card(name,items,i===0?'taken':i===1?'partial':'saved')})}
+ else{var trs=Array.from($('singleRows').querySelectorAll('tr'));card('Your Selected Option',trs.slice(0,9).map(function(tr){return tr.cells[0].textContent+': '+tr.cells[1].textContent}),'taken')}
+ var notes=E('section','inf-notes',null,dest);E('h3','','Before You Act — Important Checks',notes);
+ var checks=E('ul','',null,notes);source.querySelectorAll('.directive-items li').forEach(function(li){E('li','',li.textContent,checks)});
+ ['singleAssumptions','decisionAssumptions','singleCautions','decisionCautions'].forEach(function(id){var el=source.querySelector('#'+id);if(el&&el.textContent.trim())E('p','inf-caveat',el.textContent,dest)});
+ var footer=source.querySelector('.print-footer');if(footer){var copy=footer.cloneNode(true);copy.className='inf-footer';dest.appendChild(copy)}
+}
+
 /* ===== THEMES + LIVE RESULT BAR ===== */
 var THEME_COLOR={sunrise:"#f3f7ff",graphite:"#121212",slate:"#111827",stone:"#f3f4f6"};
 function setTheme(t,save){
